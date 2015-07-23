@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">VimeoApp</string>
+    <string name="txt_connection_fail">Connection failed</string>
+    <string name="txt_check_connection">Check your internet connection</string>
+    <string name="txt_close">Close</string>
+
+    <string name="client_id">0b2ba23666e807bfbb755a6225073142c111ca05</string>
+    <string name="client_secret">Pbx1h9pw+6EtTR8EugKCxYmYulMiqAYf0gApFfJYmywUmpGMloJq6jwcuxQUcTLxxa92DorvTzQG3u3HPDaMT9Jb9CuYIPhzwULS6D1jffcEoAqP9s+5zAxdiRhIm5hI</string>
+    <string name="callback_url">antoshchuk://example.com/vimeoapp</string>
+    <string name="authorization_address">https://api.vimeo.com/oauth/authorize</string>
 </resources>
