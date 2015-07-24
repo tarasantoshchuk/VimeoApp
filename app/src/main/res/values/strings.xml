@@ -8,4 +8,10 @@
     <string name="client_secret">Pbx1h9pw+6EtTR8EugKCxYmYulMiqAYf0gApFfJYmywUmpGMloJq6jwcuxQUcTLxxa92DorvTzQG3u3HPDaMT9Jb9CuYIPhzwULS6D1jffcEoAqP9s+5zAxdiRhIm5hI</string>
     <string name="callback_url">antoshchuk://example.com/vimeoapp</string>
     <string name="authorization_address">https://api.vimeo.com/oauth/authorize</string>
+    <string name="txt_videos">Videos</string>
+    <string name="txt_likes">Likes</string>
+    <string name="txt_following">Following</string>
+    <string name="txt_followers">Followers</string>
+    <string name="txt_groups">Groups</string>
+    <string name="txt_channels">Channels</string>
 </resources>

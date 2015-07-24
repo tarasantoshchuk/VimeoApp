@@ -5,4 +5,24 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="UserInfoTitle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_toLeftOf">@+id/txtUserHorizontalCenter</item>
+    </style>
+
+    <style name="UserInfoValue">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_toRightOf">@+id/txtUserHorizontalCenter</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
 </resources>
