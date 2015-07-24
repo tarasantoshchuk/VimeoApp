@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -52,7 +51,7 @@ public class StartActivity extends Activity {
 
 
 
-            if(AuthorizationInfo.hasAccessToken()) {
+            if(!AuthorizationInfo.hasAccessToken()) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(getAuthorizationAddress()));
                 startActivity(intent);
