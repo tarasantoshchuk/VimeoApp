@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".entity.user.UserListActivity"/>
+        <activity android:name=".entity.user.UserActivity"/>
+        <service android:name=".service.HttpRequestService"/>
     </application>
 
 </manifest>

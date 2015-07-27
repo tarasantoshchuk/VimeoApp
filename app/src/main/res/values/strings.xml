@@ -14,4 +14,6 @@
     <string name="txt_followers">Followers</string>
     <string name="txt_groups">Groups</string>
     <string name="txt_channels">Channels</string>
+    <string name="btn_prev">Previous</string>
+    <string name="btn_next">Next</string>
 </resources>

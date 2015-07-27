@@ -1,7 +1,10 @@
 package com.example.tarasantoshchuk.vimeoapp.util;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 
@@ -10,7 +13,7 @@ import java.util.HashMap;
  * after HttpRequestService is created HttpRequestInfo should be moved as HttpRequestService's
  * nested class
  */
-public class HttpRequestInfo {
+public class HttpRequestInfo implements Serializable {
     private static final String BASIC_URL = "https://api.vimeo.com";
     private static final String EMPTY = "";
 
@@ -32,7 +35,6 @@ public class HttpRequestInfo {
      * parameter strings
      */
     private static final String QUERY = "query";
-
 
     private enum RequestMethod {
         GET("GET"),

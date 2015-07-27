@@ -6,8 +6,16 @@ import android.os.Parcelable;
 import android.util.LruCache;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class User implements Parcelable{
+    private static final String DAY_FORMAT_STRING = "Joined %d day(s) ago";
+    private static final String MONTH_FORMAT_STRING = "Joined %d month(s) ago";
+    private static final String YEAR_FORMAT_STRING = "Joined %d year(s) ago";
+
+    private static final int DAYS_IN_MONTH = 30;
+    private static final int DAYS_IN_YEAR = 365;
+
     private static String sLoggedUserId;
 
     private static final int CACHE_SIZE = 2 * 1024 * 1024;
@@ -32,6 +40,13 @@ public class User implements Parcelable{
     private int mGroupsCount;
     private int mChannelsCount;
     private int mLikesCount;
+
+    public User(String name, String location, Date created, String pictureUrl) {
+        mName = name;
+        mLocation = location;
+        mDateCreated = created;
+        mPictureUrl = pictureUrl;
+    }
 
     public User(String mId, String mName, String mLocation, String mBio, String mPictureUrl,
                 Date mDateCreated, int mVideoCount, int mFollowingCount, int mFollowersCount,
@@ -115,6 +130,23 @@ public class User implements Parcelable{
         return mChannelsCount;
     }
 
+    public String getJoinedString() {
+        long joinedMillisCount = System.currentTimeMillis() - mDateCreated.getTime();
+
+        long joinedDaysCount = TimeUnit.DAYS.convert(joinedMillisCount, TimeUnit.MILLISECONDS);
+
+        if(joinedDaysCount < DAYS_IN_MONTH) {
+            return String.format(DAY_FORMAT_STRING, joinedDaysCount);
+        } else if (joinedDaysCount < DAYS_IN_YEAR) {
+            return String.format(MONTH_FORMAT_STRING, joinedDaysCount / DAYS_IN_MONTH);
+        } else {
+            return String.format(YEAR_FORMAT_STRING, joinedDaysCount / DAYS_IN_YEAR);
+        }
+    }
+
+    public boolean isPictureLoaded() {
+        return (sBitmapCache.get(mPictureUrl) != null);
+    }
 
     public Bitmap getPicture() {
         return sBitmapCache.get(mPictureUrl);
