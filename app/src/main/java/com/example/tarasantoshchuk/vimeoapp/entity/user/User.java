@@ -5,10 +5,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.LruCache;
 
+import java.util.Date;
+
 public class User implements Parcelable{
     private static String sLoggedUserId;
 
-    private static final int CACHE_SIZE = 4 * 1024 * 1024;
+    private static final int CACHE_SIZE = 2 * 1024 * 1024;
 
     private static LruCache<String, Bitmap> sBitmapCache = new LruCache<String, Bitmap>(CACHE_SIZE) {
         @Override
@@ -23,7 +25,7 @@ public class User implements Parcelable{
     private String mBio;
     private String mPictureUrl;
 
-    private int mDaysAgoJoined;
+    private Date mDateCreated;
     private int mVideoCount;
     private int mFollowingCount;
     private int mFollowersCount;
@@ -32,7 +34,7 @@ public class User implements Parcelable{
     private int mLikesCount;
 
     public User(String mId, String mName, String mLocation, String mBio, String mPictureUrl,
-                int mDaysAgoJoined, int mVideoCount, int mFollowingCount, int mFollowersCount,
+                Date mDateCreated, int mVideoCount, int mFollowingCount, int mFollowersCount,
                 int mGroupsCount, int mChannelsCount, int mLikesCount) {
         this.mId = mId;
         this.mName = mName;
@@ -40,7 +42,7 @@ public class User implements Parcelable{
         this.mBio = mBio;
         this.mPictureUrl = mPictureUrl;
 
-        this.mDaysAgoJoined = mDaysAgoJoined;
+        this.mDateCreated = mDateCreated;
         this.mVideoCount = mVideoCount;
         this.mFollowingCount = mFollowingCount;
         this.mFollowersCount = mFollowersCount;
@@ -56,7 +58,7 @@ public class User implements Parcelable{
         mBio = source.readString();
         mPictureUrl = source.readString();
 
-        mDaysAgoJoined = source.readInt();
+        mDateCreated = (Date) source.readSerializable();
         mVideoCount = source.readInt();
         mFollowingCount = source.readInt();
         mFollowersCount = source.readInt();
@@ -85,8 +87,8 @@ public class User implements Parcelable{
         return mPictureUrl;
     }
 
-    public int getDaysAgoJoined() {
-        return mDaysAgoJoined;
+    public Date getDateCreated() {
+        return mDateCreated;
     }
 
     public int getVideoCount() {
@@ -149,7 +151,7 @@ public class User implements Parcelable{
         dest.writeString(mBio);
         dest.writeString(mPictureUrl);
 
-        dest.writeInt(mDaysAgoJoined);
+        dest.writeSerializable(mDateCreated);
         dest.writeInt(mVideoCount);
         dest.writeInt(mFollowingCount);
         dest.writeInt(mFollowersCount);

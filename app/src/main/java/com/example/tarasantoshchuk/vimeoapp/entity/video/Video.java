@@ -1,0 +1,158 @@
+package com.example.tarasantoshchuk.vimeoapp.entity.video;
+
+import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.LruCache;
+
+import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
+
+import java.util.Date;
+
+public class Video implements Parcelable {
+    private static final int CACHE_SIZE = 2 * 1024 * 1024;
+
+    private static LruCache<String, Bitmap> sBitmapCache = new LruCache<String, Bitmap>(CACHE_SIZE) {
+        @Override
+        protected int sizeOf(String key, Bitmap value) {
+            return value.getByteCount();
+        }
+    };
+
+    private String mId;
+    private String mName;
+    private String mDescription;
+    private int mDuration;
+    private String mEmbedHtml;
+
+    private Date mDateCreated;
+    private String mPictureUrl;
+    private int mPlayCount;
+    private User mOwner;
+
+    private int mLikesCount;
+    private int mCommentsCount;
+
+    public Video(String mId, String mName, int mDuration, String mDescription,
+                 String mEmbedHtml, Date mDateCreated, String mPictureUrl, int mPlayCount,
+                 User mOwner, int mLikesCount, int mCommentsCount) {
+
+        this.mId = mId;
+        this.mName = mName;
+        this.mDuration = mDuration;
+        this.mDescription = mDescription;
+        this.mEmbedHtml = mEmbedHtml;
+
+        this.mDateCreated = mDateCreated;
+        this.mPictureUrl = mPictureUrl;
+        this.mPlayCount = mPlayCount;
+        this.mOwner = mOwner;
+
+        this.mLikesCount = mLikesCount;
+        this.mCommentsCount = mCommentsCount;
+    }
+
+    private Video(Parcel source) {
+        mId = source.readString();
+        mName = source.readString();
+        mDuration = source.readInt();
+        mDescription = source.readString();
+        mEmbedHtml = source.readString();
+
+        mDateCreated = (Date) source.readSerializable();
+        mPictureUrl = source.readString();
+        mPlayCount = source.readInt();
+        mOwner = source.readParcelable(User.class.getClassLoader());
+
+        mLikesCount = source.readInt();
+        mCommentsCount = source.readInt();
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public int getDuration() {
+        return mDuration;
+    }
+
+    public String getEmbedHtml() {
+        return mEmbedHtml;
+    }
+
+    public Date getDateCreated() {
+        return mDateCreated;
+    }
+
+    public String getPictureUrl() {
+        return mPictureUrl;
+    }
+
+    public int getPlayCount() {
+        return mPlayCount;
+    }
+
+    public User getOwner() {
+        return mOwner;
+    }
+
+    public int getLikesCount() {
+        return mLikesCount;
+    }
+
+    public int getCommentsCount() {
+        return mCommentsCount;
+    }
+
+    public Bitmap getPicture() {
+        return sBitmapCache.get(mPictureUrl);
+    }
+
+    public void setPicture(Bitmap picture) {
+        sBitmapCache.put(mPictureUrl, picture);
+    }
+
+    public static final Parcelable.Creator<Video> CREATOR =
+            new Parcelable.Creator<Video>() {
+
+                @Override
+                public Video createFromParcel(Parcel source) {
+                    return new Video(source);
+                }
+
+                @Override
+                public Video[] newArray(int size) {
+                    return new Video[size];
+                }
+            };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mId);
+        dest.writeString(mName);
+        dest.writeString(mDescription);
+        dest.writeInt(mDuration);
+        dest.writeString(mEmbedHtml);
+
+        dest.writeSerializable(mDateCreated);
+        dest.writeString(mPictureUrl);
+        dest.writeInt(mPlayCount);
+        dest.writeParcelable(mOwner, 0);
+
+        dest.writeInt(mLikesCount);
+        dest.writeInt(mCommentsCount);
+    }
+}

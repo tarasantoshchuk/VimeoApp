@@ -26,6 +26,7 @@ public class HttpRequestInfo {
     private static final String LIKES = "likes";
     private static final String FOLLOWERS = "followers";
     private static final String FOLLOWING = "following";
+    private static final String REPLIES = "replies";
 
     /**
      * parameter strings
@@ -398,6 +399,19 @@ public class HttpRequestInfo {
         commentsRequest.appendToEndpoint(COMMENTS);
 
         return commentsRequest;
+    }
+
+    public static HttpRequestInfo getCommentRepliesRequest(String videoId, String commentId) {
+        HttpRequestInfo repliesRequest =
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.COMMENT_LIST );
+
+        repliesRequest.appendToEndpoint(VIDEOS);
+        repliesRequest.appendToEndpoint(videoId);
+        repliesRequest.appendToEndpoint(COMMENTS);
+        repliesRequest.appendToEndpoint(commentId);
+        repliesRequest.appendToEndpoint(REPLIES);
+
+        return repliesRequest;
     }
 
     public static HttpRequestInfo getVideoLikesRequest(String videoId) {
