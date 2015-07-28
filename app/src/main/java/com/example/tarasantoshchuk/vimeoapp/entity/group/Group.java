@@ -75,7 +75,7 @@ public class Group implements Parcelable {
         return mDateCreated;
     }
 
-    public String getmPictureUrl() {
+    public String getPictureUrl() {
         return mPictureUrl;
     }
 
@@ -89,6 +89,10 @@ public class Group implements Parcelable {
 
     public User getOwner() {
         return mOwner;
+    }
+
+    public boolean isPictureLoaded() {
+        return (sBitmapCache.get(mPictureUrl) != null);
     }
 
     public Bitmap getPicture() {

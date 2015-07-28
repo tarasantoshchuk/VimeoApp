@@ -1,5 +1,6 @@
 package com.example.tarasantoshchuk.vimeoapp.entity.video;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 
@@ -92,7 +94,7 @@ public class VideoListAdapter extends BaseAdapter {
             }
 
             mHolderMap.put(holder, (BitmapDownloadTask)
-                    new BitmapDownloadTask(holder, currVideo).execute());
+                    new BitmapDownloadTask(holder, currVideo, mActivity).execute());
 
         }
 
@@ -127,37 +129,40 @@ public class VideoListAdapter extends BaseAdapter {
     private static class BitmapDownloadTask extends AsyncTask<String, Void, Bitmap> {
         private VideoViewHolder mHolder;
         private Video mVideo;
+        private Context mContext;
 
-        public BitmapDownloadTask(VideoViewHolder holder, Video video) {
+        public BitmapDownloadTask(VideoViewHolder holder, Video video, Context context) {
             mHolder = holder;
             mVideo = video;
+            mContext = context;
         }
 
         @Override
         protected Bitmap doInBackground(String... params) {
-            URL url = null;
-
             try {
-                url = new URL(mVideo.getPictureUrl());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
 
-            Bitmap image = null;
-            try {
-                image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                return image;
+                URL url = new URL(mVideo.getPictureUrl());
+                return BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new RuntimeException(e);
+                return null;
             }
         }
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            mHolder.imgVideoItem.setImageBitmap(bitmap);
-            mVideo.setPicture(bitmap);
+            if(bitmap == null) {
+
+                Toast.makeText(mContext, mContext.getString(R.string.txt_bitmap_load_fail),
+                        Toast.LENGTH_LONG).show();
+
+            } else {
+
+                mHolder.imgVideoItem.setImageBitmap(bitmap);
+                mVideo.setPicture(bitmap);
+
+            }
         }
     }
 }

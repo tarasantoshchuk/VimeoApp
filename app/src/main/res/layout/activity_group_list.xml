@@ -3,26 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/txtUserListTitle"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:layout_toRightOf="@+id/btnGroupListPrev"
-        android:layout_alignBottom="@+id/btnGroupListPrev"
-        android:layout_toLeftOf="@+id/btnGroupListNext"
-        android:layout_toStartOf="@+id/btnGroupListNext" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listUsers"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/btnGroupListPrev" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,4 +20,23 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/txtGroupListTitle"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btnGroupListPrev"
+        android:layout_alignBottom="@+id/btnGroupListPrev"
+        android:layout_toLeftOf="@+id/btnGroupListNext"
+        android:layout_toStartOf="@+id/btnGroupListNext"
+        android:gravity="center" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listGroups"
+        android:layout_below="@+id/txtGroupListTitle"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

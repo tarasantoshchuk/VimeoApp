@@ -1,6 +1,8 @@
-package com.example.tarasantoshchuk.vimeoapp.entity.user;
+package com.example.tarasantoshchuk.vimeoapp.entity.group;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,25 +18,25 @@ import android.widget.Toast;
 import com.example.tarasantoshchuk.vimeoapp.R;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserListAdapter extends BaseAdapter {
-    private UserList mList;
+public class GroupListAdapter extends BaseAdapter {
+    private ArrayList<Group> mList;
     private LayoutInflater mInflater;
-    private UserListActivity mActivity;
+    private GroupListActivity mActivity;
 
-    private HashMap<UserViewHolder, BitmapDownloadTask> mHolderMap =
-            new HashMap<UserViewHolder, BitmapDownloadTask>();
+    private HashMap<GroupViewHolder, BitmapDownloadTask> mHolderMap =
+            new HashMap<GroupViewHolder, BitmapDownloadTask>();
 
-    public UserListAdapter(LayoutInflater inflater, UserListActivity activity) {
-        mList = new UserList();
+    public GroupListAdapter(LayoutInflater inflater, GroupListActivity activity) {
+        mList = new ArrayList<Group>();
         mInflater = inflater;
         mActivity = activity;
     }
 
-    private User getUser(int position) {
+    private Group getGroup(int position) {
         return mList.get(position);
     }
 
@@ -55,32 +57,38 @@ public class UserListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final User currUser = getUser(position);
-        UserViewHolder holder;
+        final Group currGroup = getGroup(position);
+        GroupViewHolder holder;
 
         if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.user_item, null);
+            convertView = mInflater.inflate(R.layout.group_item, null);
 
-            holder = new UserViewHolder();
+            holder = new GroupViewHolder();
 
-            holder.imgUserItem = (ImageView) convertView.findViewById(R.id.imgUserItem);
+            holder.imgGroupItem = (ImageView) convertView.findViewById(R.id.imgGroupItem);
 
-            holder.txtUserItemName  = (TextView) convertView.findViewById(R.id.txtUserItemName);
-            holder.txtUserItemLocation = (TextView) convertView
-                    .findViewById(R.id.txtUserItemLocation);
-            holder.txtUserItemJoined = (TextView) convertView.findViewById(R.id.txtUserItemJoined);
+            holder.txtGroupItemName = (TextView) convertView.findViewById(R.id.txtGroupItemName);
+            holder.txtGroupItemOwner = (TextView) convertView.findViewById(R.id.txtGroupItemOwner);
+
+            holder.txtGroupItemUserCount = (TextView)
+                    convertView.findViewById(R.id.txtGroupItemUserCount);
+
+            holder.txtGroupItemVideoCount = (TextView)
+                    convertView.findViewById(R.id.txtGroupItemVideoCount);
 
             convertView.setTag(holder);
         } else {
-            holder = (UserViewHolder) convertView.getTag();
+            holder = (GroupViewHolder) convertView.getTag();
         }
 
-        holder.txtUserItemName.setText(currUser.getName());
-        holder.txtUserItemLocation.setText(currUser.getLocation());
-        holder.txtUserItemJoined.setText(currUser.getJoinedString());
+        holder.txtGroupItemName.setText(currGroup.getName());
+        holder.txtGroupItemOwner.setText(currGroup.getOwner().getName());
 
-        if(currUser.isPictureLoaded()) {
-            holder.imgUserItem.setImageBitmap(currUser.getPicture());
+        holder.txtGroupItemUserCount.setText(Integer.toString(currGroup.getUsersCount()));
+        holder.txtGroupItemVideoCount.setText(Integer.toString(currGroup.getVideosCount()));
+
+        if(currGroup.isPictureLoaded()) {
+            holder.imgGroupItem.setImageBitmap(currGroup.getPicture());
         } else {
             BitmapDownloadTask task = mHolderMap.get(holder);
 
@@ -89,17 +97,17 @@ public class UserListAdapter extends BaseAdapter {
             }
 
             mHolderMap.put(holder, (BitmapDownloadTask)
-                    new BitmapDownloadTask(holder, currUser, mActivity).execute());
+                    new BitmapDownloadTask(holder, currGroup, mActivity).execute());
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent userActivityIntent = new Intent(mActivity, UserActivity.class);
+                Intent groupActivityIntent = new Intent(mActivity, GroupActivity.class);
 
-                userActivityIntent.putExtras(UserActivity.getStartExtras(currUser));
+                groupActivityIntent.putExtras(GroupActivity.getStartExtras(currGroup));
 
-                mActivity.startActivity(userActivityIntent);
+                mActivity.startActivity(groupActivityIntent);
             }
         });
 
@@ -114,29 +122,32 @@ public class UserListAdapter extends BaseAdapter {
         }
     }
 
-    public void updateList(UserList list) {
+    public void updateList(ArrayList<Group> list) {
         cancelAllTasks();
-        mList.update(list);
+
+        mList.clear();
+        mList.addAll(list);
+
         notifyDataSetChanged();
     }
 
+
     private static class BitmapDownloadTask extends AsyncTask<String, Void, Bitmap> {
-        private UserViewHolder mHolder;
-        private User mUser;
+        private GroupViewHolder mHolder;
+        private Group mGroup;
         private Context mContext;
 
-        public BitmapDownloadTask(UserViewHolder holder, User user, Context context) {
+        public BitmapDownloadTask(GroupViewHolder holder, Group group, Context context) {
             mHolder = holder;
-            mUser = user;
+            mGroup = group;
             mContext = context;
         }
 
         @Override
         protected Bitmap doInBackground(String... params) {
-
             try {
 
-                URL url = new URL(mUser.getPictureUrl());
+                URL url = new URL(mGroup.getPictureUrl());
                 return BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
             } catch (IOException e) {
@@ -147,14 +158,14 @@ public class UserListAdapter extends BaseAdapter {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            if (bitmap == null) {
-
+            if(bitmap == null) {
                 Toast.makeText(mContext, mContext.getString(R.string.txt_bitmap_load_fail),
                         Toast.LENGTH_LONG).show();
-
             } else {
-                mHolder.imgUserItem.setImageBitmap(bitmap);
-                mUser.setPicture(bitmap);
+
+                mHolder.imgGroupItem.setImageBitmap(bitmap);
+                mGroup.setPicture(bitmap);
+
             }
         }
     }

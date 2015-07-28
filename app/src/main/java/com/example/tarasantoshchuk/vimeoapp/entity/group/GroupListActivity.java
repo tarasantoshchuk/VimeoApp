@@ -1,4 +1,4 @@
-package com.example.tarasantoshchuk.vimeoapp.entity.user;
+package com.example.tarasantoshchuk.vimeoapp.entity.group;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -14,60 +14,62 @@ import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
-public class UserListActivity extends Activity {
-    private static final String USER_LIST_REQUEST = "UserListRequest";
+import java.util.ArrayList;
+
+public class GroupListActivity extends Activity {
+    private static final String GROUP_LIST_REQUEST = "GroupListRequest";
     private static final String TITLE = "Title";
 
     private static final String LAST_REQUEST = "LastRequest";
 
-    public static Bundle getStartExtras(String title, HttpRequestInfo userListRequest) {
+    public static Bundle getStartExtras(String title, HttpRequestInfo groupListRequest) {
         Bundle bundle = new Bundle();
 
         bundle.putString(TITLE, title);
-        bundle.putSerializable(USER_LIST_REQUEST, userListRequest);
+        bundle.putSerializable(GROUP_LIST_REQUEST, groupListRequest);
 
         return bundle;
     }
 
     private String mTitle;
 
-    private TextView mTxtUserListTitle;
-    private ListView mUserList;
-    private Button mBtnUserListPrev;
-    private Button mBtnUserListNext;
+    private TextView mTxtGroupListTitle;
+    private ListView mGroupList;
+    private Button mBtnGroupListPrev;
+    private Button mBtnGroupListNext;
 
-    private UserListReceiver mReceiver;
+    private GroupListReceiver mReceiver;
 
     private HttpRequestInfo mLastRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+        setContentView(R.layout.activity_group_list);
 
         mTitle = getIntent().getStringExtra(TITLE);
 
-        mTxtUserListTitle = (TextView) findViewById(R.id.txtUserListTitle);
-        mTxtUserListTitle.setText(mTitle);
+        mTxtGroupListTitle = (TextView) findViewById(R.id.txtGroupListTitle);
+        mTxtGroupListTitle.setText(mTitle);
 
-        mBtnUserListPrev = (Button) findViewById(R.id.btnGroupListPrev);
-        mBtnUserListPrev.setEnabled(false);
-        mBtnUserListPrev.setVisibility(View.INVISIBLE);
+        mBtnGroupListPrev = (Button) findViewById(R.id.btnGroupListPrev);
+        mBtnGroupListPrev.setEnabled(false);
+        mBtnGroupListPrev.setVisibility(View.INVISIBLE);
 
-        mBtnUserListNext = (Button) findViewById(R.id.btnGroupListNext);
-        mBtnUserListNext.setEnabled(false);
-        mBtnUserListNext.setVisibility(View.INVISIBLE);
+        mBtnGroupListNext = (Button) findViewById(R.id.btnGroupListNext);
+        mBtnGroupListNext.setEnabled(false);
+        mBtnGroupListNext.setVisibility(View.INVISIBLE);
 
-        mUserList = (ListView) findViewById(R.id.listUsers);
+        mGroupList = (ListView) findViewById(R.id.listGroups);
 
-        mUserList.setAdapter(new UserListAdapter(getLayoutInflater(), this));
+        mGroupList.setAdapter(new GroupListAdapter(getLayoutInflater(), this));
 
-        mReceiver = new UserListReceiver();
+        mReceiver = new GroupListReceiver();
 
         if(savedInstanceState != null) {
             mLastRequest = (HttpRequestInfo) savedInstanceState.getSerializable(LAST_REQUEST);
         } else {
-            mLastRequest = (HttpRequestInfo) getIntent().getSerializableExtra(USER_LIST_REQUEST);
+            mLastRequest = (HttpRequestInfo) getIntent().getSerializableExtra(GROUP_LIST_REQUEST);
         }
     }
 
@@ -83,9 +85,20 @@ public class UserListActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        registerReceiver(mReceiver, HttpRequestService.getUserListIntentFilter());
+        registerReceiver(mReceiver, HttpRequestService.getGroupListIntentFilter());
 
         startHttpService(mLastRequest);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        GroupListAdapter listAdapter = (GroupListAdapter) mGroupList.getAdapter();
+
+        listAdapter.cancelAllTasks();
+
+        unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -95,47 +108,36 @@ public class UserListActivity extends Activity {
         outState.putSerializable(LAST_REQUEST, mLastRequest);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        UserListAdapter listAdapter = (UserListAdapter) mUserList.getAdapter();
-
-        listAdapter.cancelAllTasks();
-
-        unregisterReceiver(mReceiver);
-    }
-
-
-    private class UserListReceiver extends BroadcastReceiver {
+    private class GroupListReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            UserList list = intent.getParcelableExtra(HttpRequestService.USER_LIST);
+            ArrayList<Group> list =
+                    intent.getParcelableArrayListExtra(HttpRequestService.GROUP_LIST);
 
-            UserListAdapter adapter = (UserListAdapter) mUserList.getAdapter();
+            GroupListAdapter adapter = (GroupListAdapter) mGroupList.getAdapter();
 
             adapter.updateList(list);
 
             final HttpRequestInfo nextPage = (HttpRequestInfo)
                     intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
-            setButton(mBtnUserListNext, nextPage);
+            setButton(mBtnGroupListNext, nextPage);
 
             final HttpRequestInfo prevPage = (HttpRequestInfo)
                     intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
-            setButton(mBtnUserListPrev, prevPage);
+            setButton(mBtnGroupListPrev, prevPage);
         }
 
-        private void setButton(Button button, final HttpRequestInfo requestInfo) {
-            if(requestInfo != null) {
+        private void setButton(Button button, final HttpRequestInfo request) {
+            if(request != null) {
                 button.setEnabled(true);
                 button.setVisibility(View.VISIBLE);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startHttpService(requestInfo);
-                        mLastRequest = requestInfo;
+                        startHttpService(request);
+                        mLastRequest = request;
                     }
                 });
             } else {

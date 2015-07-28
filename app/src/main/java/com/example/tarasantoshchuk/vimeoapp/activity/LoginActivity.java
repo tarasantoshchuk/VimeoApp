@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.widget.Toast;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.entity.group.GroupListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.video.VideoListActivity;
 import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
@@ -102,6 +103,5 @@ public class LoginActivity extends Activity {
         };
 
         getAccessTokenTask.execute();
-
     }
 }

@@ -17,6 +17,7 @@ import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 public class VideoListActivity extends Activity {
     private static final String VIDEO_LIST_REQUEST = "VideoListRequest";
     private static final String TITLE = "Title";
+    private static final String LAST_REQUEST = "LastRequest";
 
     public static Bundle getStartExtras(String title, HttpRequestInfo videoListRequest) {
         Bundle bundle = new Bundle();
@@ -35,6 +36,8 @@ public class VideoListActivity extends Activity {
     private Button mBtnVideoListNext;
 
     private VideoListReceiver mReceiver;
+
+    private HttpRequestInfo mLastRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,11 @@ public class VideoListActivity extends Activity {
 
         mReceiver = new VideoListReceiver();
 
-        registerReceiver(mReceiver, HttpRequestService.getVideoListIntentFilter());
+        if(savedInstanceState != null) {
+            mLastRequest = (HttpRequestInfo) savedInstanceState.getSerializable(LAST_REQUEST);
+        } else {
+            mLastRequest = (HttpRequestInfo) getIntent().getSerializableExtra(VIDEO_LIST_REQUEST);
+        }
     }
 
     private void startHttpService(HttpRequestInfo requestInfo) {
@@ -77,12 +84,22 @@ public class VideoListActivity extends Activity {
 
         registerReceiver(mReceiver, HttpRequestService.getVideoListIntentFilter());
 
-        startHttpService((HttpRequestInfo) getIntent().getSerializableExtra(VIDEO_LIST_REQUEST));
+        startHttpService(mLastRequest);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable(LAST_REQUEST, mLastRequest);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        VideoListAdapter adapter = (VideoListAdapter) mVideoList.getAdapter();
+        adapter.cancelAllTasks();
 
         unregisterReceiver(mReceiver);
     }
@@ -115,6 +132,7 @@ public class VideoListActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         startHttpService(requestInfo);
+                        mLastRequest = requestInfo;
                     }
                 });
             } else {

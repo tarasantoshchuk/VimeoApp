@@ -12,8 +12,8 @@ public class UserList implements Parcelable {
         mList = new ArrayList<User>();
     }
 
-    public UserList(ArrayList<User> mList) {
-        this.mList = mList;
+    public UserList(ArrayList<User> list) {
+        mList = list;
     }
 
     private UserList(Parcel source) {

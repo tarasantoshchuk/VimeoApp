@@ -12,8 +12,8 @@ public class VideoList implements Parcelable {
         mList = new ArrayList<Video>();
     }
 
-    public VideoList(ArrayList<Video> mList) {
-        this.mList = mList;
+    public VideoList(ArrayList<Video> list) {
+        mList = list;
     }
 
     private VideoList(Parcel source) {

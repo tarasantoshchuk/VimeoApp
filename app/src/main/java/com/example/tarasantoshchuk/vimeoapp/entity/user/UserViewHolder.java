@@ -4,8 +4,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class UserViewHolder {
-    public ImageView imgUserItem;
-    public TextView txtUserItemName;
-    public TextView txtUserItemLocation;
-    public TextView txtUserItemJoined;
+    ImageView imgUserItem;
+    TextView txtUserItemName;
+    TextView txtUserItemLocation;
+    TextView txtUserItemJoined;
 }

@@ -20,4 +20,5 @@
     <string name="txt_plays">Plays</string>
     <string name="txt_empty" />
     <string name="txt_users">Users</string>
+    <string name="txt_bitmap_load_fail">failed to load bitmap</string>
 </resources>

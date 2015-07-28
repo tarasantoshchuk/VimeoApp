@@ -28,6 +28,9 @@
         <activity android:name=".entity.video.VideoActivity"/>
         <activity android:name=".entity.video.VideoListActivity"/>
 
+        <activity android:name=".entity.group.GroupListActivity"/>
+        <activity android:name=".entity.group.GroupActivity"/>
+
         <service android:name=".service.HttpRequestService"/>
     </application>
 
