@@ -1,4 +1,4 @@
-package com.example.tarasantoshchuk.vimeoapp.entity.user;
+package com.example.tarasantoshchuk.vimeoapp.entity.video;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,21 +18,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-public class UserListAdapter extends BaseAdapter {
-    private UserList mList;
+public class VideoListAdapter extends BaseAdapter {
+    private VideoList mList;
     private LayoutInflater mInflater;
-    private UserListActivity mActivity;
+    private VideoListActivity mActivity;
 
-    private HashMap<UserViewHolder, BitmapDownloadTask> mHolderMap =
-            new HashMap<UserViewHolder, BitmapDownloadTask>();
+    private HashMap<VideoViewHolder, BitmapDownloadTask> mHolderMap =
+            new HashMap<VideoViewHolder, BitmapDownloadTask>();
 
-    public UserListAdapter(LayoutInflater inflater, UserListActivity activity) {
-        mList = new UserList();
+    public VideoListAdapter(LayoutInflater inflater, VideoListActivity activity) {
+        mList = new VideoList();
         mInflater = inflater;
         mActivity = activity;
     }
 
-    private User getUser(int position) {
+    private Video getVideo(int position) {
         return mList.get(position);
     }
 
@@ -53,51 +53,57 @@ public class UserListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final User currUser = getUser(position);
-        UserViewHolder holder;
+        final Video currVideo = getVideo(position);
+        VideoViewHolder holder;
 
         if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.user_item, null);
+            convertView = mInflater.inflate(R.layout.video_item, null);
 
-            holder = new UserViewHolder();
+            holder = new VideoViewHolder();
 
-            holder.imgUserItem = (ImageView) convertView.findViewById(R.id.imgUserItem);
+            holder.imgVideoItem = (ImageView) convertView.findViewById(R.id.imgVideoItem);
 
-            holder.txtUserItemName  = (TextView) convertView.findViewById(R.id.txtUserItemName);
-            holder.txtUserItemLocation = (TextView) convertView
-                    .findViewById(R.id.txtUserItemLocation);
-            holder.txtUserItemJoined = (TextView) convertView.findViewById(R.id.txtUserItemJoined);
+            holder.txtVideoItemName = (TextView) convertView.findViewById(R.id.txtVideoItemName);
+            holder.txtVideoItemOwner = (TextView) convertView.findViewById(R.id.txtVideoItemOwner);
+
+            holder.txtVideoItemDuration = (TextView)
+                    convertView.findViewById(R.id.txtVideoItemDuration);
+
+            holder.txtVideoItemPlayCount = (TextView)
+                    convertView.findViewById(R.id.txtVideoItemPlayCount);
 
             convertView.setTag(holder);
         } else {
-            holder = (UserViewHolder) convertView.getTag();
+            holder = (VideoViewHolder) convertView.getTag();
         }
 
-        holder.txtUserItemName.setText(currUser.getName());
-        holder.txtUserItemLocation.setText(currUser.getLocation());
-        holder.txtUserItemJoined.setText(currUser.getJoinedString());
+        holder.txtVideoItemName.setText(currVideo.getName());
+        holder.txtVideoItemOwner.setText(currVideo.getOwner().getName());
+        holder.txtVideoItemDuration.setText(currVideo.getDurationString());
+        holder.txtVideoItemPlayCount.setText(Integer.toString(currVideo.getPlayCount()));
 
-        if(currUser.isPictureLoaded()) {
-            holder.imgUserItem.setImageBitmap(currUser.getPicture());
+        if(currVideo.isPictureLoaded()) {
+            holder.imgVideoItem.setImageBitmap(currVideo.getPicture());
         } else {
             BitmapDownloadTask task = mHolderMap.get(holder);
 
-            if( task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+            if(task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
                 task.cancel(false);
             }
 
             mHolderMap.put(holder, (BitmapDownloadTask)
-                    new BitmapDownloadTask(holder, currUser).execute());
+                    new BitmapDownloadTask(holder, currVideo).execute());
+
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent userActivityIntent = new Intent(mActivity, UserActivity.class);
+                Intent videoActivityIntent = new Intent(mActivity, VideoActivity.class);
 
-                userActivityIntent.putExtras(UserActivity.getStartExtras(currUser));
+                videoActivityIntent.putExtras(VideoActivity.getStartExtras(currVideo));
 
-                mActivity.startActivity(userActivityIntent);
+                mActivity.startActivity(videoActivityIntent);
             }
         });
 
@@ -112,19 +118,19 @@ public class UserListAdapter extends BaseAdapter {
         }
     }
 
-    public void updateList(UserList list) {
+    public void updateList(VideoList list) {
         cancelAllTasks();
         mList.update(list);
         notifyDataSetChanged();
     }
 
     private static class BitmapDownloadTask extends AsyncTask<String, Void, Bitmap> {
-        private UserViewHolder mHolder;
-        private User mUser;
+        private VideoViewHolder mHolder;
+        private Video mVideo;
 
-        public BitmapDownloadTask(UserViewHolder holder, User user) {
+        public BitmapDownloadTask(VideoViewHolder holder, Video video) {
             mHolder = holder;
-            mUser = user;
+            mVideo = video;
         }
 
         @Override
@@ -132,7 +138,7 @@ public class UserListAdapter extends BaseAdapter {
             URL url = null;
 
             try {
-                url = new URL(mUser.getPictureUrl());
+                url = new URL(mVideo.getPictureUrl());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -150,8 +156,8 @@ public class UserListAdapter extends BaseAdapter {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            mHolder.imgUserItem.setImageBitmap(bitmap);
-            mUser.setPicture(bitmap);
+            mHolder.imgVideoItem.setImageBitmap(bitmap);
+            mVideo.setPicture(bitmap);
         }
     }
 }

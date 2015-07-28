@@ -10,6 +10,9 @@ import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import java.util.Date;
 
 public class Video implements Parcelable {
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int SECONDS_IN_HOUR = 60 * 60;
+    private static final String DURATION_FORMAT = "%d:%d:%d";
     private static final int CACHE_SIZE = 2 * 1024 * 1024;
 
     private static LruCache<String, Bitmap> sBitmapCache = new LruCache<String, Bitmap>(CACHE_SIZE) {
@@ -84,6 +87,14 @@ public class Video implements Parcelable {
         return mDuration;
     }
 
+    public String getDurationString() {
+        int seconds = mDuration % SECONDS_IN_MINUTE;
+        int minutes = (mDuration % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE;
+        int hours = mDuration / SECONDS_IN_HOUR;
+
+        return String.format(DURATION_FORMAT, hours, minutes, seconds);
+    }
+
     public String getEmbedHtml() {
         return mEmbedHtml;
     }
@@ -110,6 +121,10 @@ public class Video implements Parcelable {
 
     public int getCommentsCount() {
         return mCommentsCount;
+    }
+
+    public boolean isPictureLoaded() {
+        return (sBitmapCache.get(mPictureUrl) != null);
     }
 
     public Bitmap getPicture() {
@@ -143,8 +158,8 @@ public class Video implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mId);
         dest.writeString(mName);
-        dest.writeString(mDescription);
         dest.writeInt(mDuration);
+        dest.writeString(mDescription);
         dest.writeString(mEmbedHtml);
 
         dest.writeSerializable(mDateCreated);

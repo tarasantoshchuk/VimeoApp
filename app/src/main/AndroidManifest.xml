@@ -24,6 +24,10 @@
 
         <activity android:name=".entity.user.UserListActivity"/>
         <activity android:name=".entity.user.UserActivity"/>
+
+        <activity android:name=".entity.video.VideoActivity"/>
+        <activity android:name=".entity.video.VideoListActivity"/>
+
         <service android:name=".service.HttpRequestService"/>
     </application>
 

@@ -41,6 +41,10 @@ public class User implements Parcelable{
     private int mChannelsCount;
     private int mLikesCount;
 
+    public User(String mName) {
+        this.mName = mName;
+    }
+
     public User(String name, String location, Date created, String pictureUrl) {
         mName = name;
         mLocation = location;

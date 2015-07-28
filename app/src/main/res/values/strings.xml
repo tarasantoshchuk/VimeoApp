@@ -16,4 +16,8 @@
     <string name="txt_channels">Channels</string>
     <string name="btn_prev">Previous</string>
     <string name="btn_next">Next</string>
+    <string name="txt_duration">Duration</string>
+    <string name="txt_plays">Plays</string>
+    <string name="txt_empty" />
+    <string name="txt_users">Users</string>
 </resources>

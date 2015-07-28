@@ -1,4 +1,4 @@
-package com.example.tarasantoshchuk.vimeoapp.entity.user;
+package com.example.tarasantoshchuk.vimeoapp.entity.video;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,51 +14,53 @@ import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
-public class UserListActivity extends Activity {
-    private static final String USER_LIST_REQUEST = "UserListRequest";
+public class VideoListActivity extends Activity {
+    private static final String VIDEO_LIST_REQUEST = "VideoListRequest";
     private static final String TITLE = "Title";
 
-    public static Bundle getStartExtras(String title, HttpRequestInfo userListRequest) {
+    public static Bundle getStartExtras(String title, HttpRequestInfo videoListRequest) {
         Bundle bundle = new Bundle();
 
         bundle.putString(TITLE, title);
-        bundle.putSerializable(USER_LIST_REQUEST, userListRequest);
+        bundle.putSerializable(VIDEO_LIST_REQUEST, videoListRequest);
 
         return bundle;
     }
 
     private String mTitle;
 
-    private TextView mTxtUserListTitle;
-    private ListView mUserList;
-    private Button mBtnUserListPrev;
-    private Button mBtnUserListNext;
+    private TextView mTxtVideoListTitle;
+    private ListView mVideoList;
+    private Button mBtnVideoListPrev;
+    private Button mBtnVideoListNext;
 
-    private UserListReceiver mReceiver;
+    private VideoListReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+        setContentView(R.layout.activity_video_list);
 
         mTitle = getIntent().getStringExtra(TITLE);
 
-        mTxtUserListTitle = (TextView) findViewById(R.id.txtUserListTitle);
-        mTxtUserListTitle.setText(mTitle);
+        mTxtVideoListTitle = (TextView) findViewById(R.id.txtVideoListTitle);
+        mTxtVideoListTitle.setText(mTitle);
 
-        mBtnUserListPrev = (Button) findViewById(R.id.btnUserListPrev);
-        mBtnUserListPrev.setEnabled(false);
-        mBtnUserListPrev.setVisibility(View.INVISIBLE);
+        mBtnVideoListPrev = (Button) findViewById(R.id.btnVideoListPrev);
+        mBtnVideoListPrev.setEnabled(false);
+        mBtnVideoListPrev.setVisibility(View.INVISIBLE);
 
-        mBtnUserListNext = (Button) findViewById(R.id.btnUserListNext);
-        mBtnUserListNext.setEnabled(false);
-        mBtnUserListNext.setVisibility(View.INVISIBLE);
+        mBtnVideoListNext = (Button) findViewById(R.id.btnVideoListNext);
+        mBtnVideoListNext.setEnabled(false);
+        mBtnVideoListNext.setVisibility(View.INVISIBLE);
 
-        mUserList = (ListView) findViewById(R.id.listUsers);
+        mVideoList = (ListView) findViewById(R.id.listVideos);
 
-        mUserList.setAdapter(new UserListAdapter(getLayoutInflater(), this));
+        mVideoList.setAdapter(new VideoListAdapter(getLayoutInflater(), this));
 
-        mReceiver = new UserListReceiver();
+        mReceiver = new VideoListReceiver();
+
+        registerReceiver(mReceiver, HttpRequestService.getVideoListIntentFilter());
     }
 
     private void startHttpService(HttpRequestInfo requestInfo) {
@@ -74,51 +75,46 @@ public class UserListActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        registerReceiver(mReceiver, HttpRequestService.getUserListIntentFilter());
+        registerReceiver(mReceiver, HttpRequestService.getVideoListIntentFilter());
 
-        startHttpService((HttpRequestInfo) getIntent().getSerializableExtra(USER_LIST_REQUEST));
+        startHttpService((HttpRequestInfo) getIntent().getSerializableExtra(VIDEO_LIST_REQUEST));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        UserListAdapter listAdapter = (UserListAdapter) mUserList.getAdapter();
-
-        listAdapter.cancelAllTasks();
-
         unregisterReceiver(mReceiver);
     }
 
-
-    private class UserListReceiver extends BroadcastReceiver {
+    private class VideoListReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            UserList list = intent.getParcelableExtra(HttpRequestService.USER_LIST);
+            VideoList list = intent.getParcelableExtra(HttpRequestService.VIDEO_LIST);
 
-            UserListAdapter adapter = (UserListAdapter) mUserList.getAdapter();
+            VideoListAdapter adapter = (VideoListAdapter) mVideoList.getAdapter();
 
             adapter.updateList(list);
 
             final HttpRequestInfo nextPage = (HttpRequestInfo)
                     intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
-            setButton(mBtnUserListNext, nextPage);
+            setButton(mBtnVideoListNext, nextPage);
 
             final HttpRequestInfo prevPage = (HttpRequestInfo)
                     intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
-            setButton(mBtnUserListPrev, prevPage);
+            setButton(mBtnVideoListPrev, prevPage);
         }
 
-        private void setButton(Button button, final HttpRequestInfo nextPage) {
-            if(nextPage != null) {
+        private void setButton(Button button, final HttpRequestInfo requestInfo) {
+            if(requestInfo != null) {
                 button.setEnabled(true);
                 button.setVisibility(View.VISIBLE);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startHttpService(nextPage);
+                        startHttpService(requestInfo);
                     }
                 });
             } else {

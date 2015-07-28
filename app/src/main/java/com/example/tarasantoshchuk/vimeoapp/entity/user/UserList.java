@@ -3,32 +3,21 @@ package com.example.tarasantoshchuk.vimeoapp.entity.user;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
-
 import java.util.ArrayList;
 
 public class UserList implements Parcelable {
     private ArrayList<User> mList;
 
-    private HttpRequestInfo mNextPageRequest;
-    private HttpRequestInfo mPrevPageRequest;
-
     public UserList() {
         mList = new ArrayList<User>();
     }
 
-    public UserList(ArrayList<User> mList, HttpRequestInfo mNextPageRequest,
-                    HttpRequestInfo mPrevPageRequest) {
+    public UserList(ArrayList<User> mList) {
         this.mList = mList;
-        this.mNextPageRequest = mNextPageRequest;
-        this.mPrevPageRequest = mPrevPageRequest;
     }
 
     private UserList(Parcel source) {
         mList = new ArrayList<User>();
-
-        mNextPageRequest = (HttpRequestInfo) source.readSerializable();
-        mPrevPageRequest = (HttpRequestInfo) source.readSerializable();
 
         int length = source.readInt();
 
@@ -48,14 +37,6 @@ public class UserList implements Parcelable {
     public void update(UserList list) {
         mList.clear();
         mList.addAll(list.mList);
-    }
-
-    public HttpRequestInfo getNextPageRequest() {
-        return mNextPageRequest;
-    }
-
-    public HttpRequestInfo getPrevPageRequest() {
-        return mPrevPageRequest;
     }
 
     public static final Parcelable.Creator<UserList> CREATOR =
@@ -79,9 +60,6 @@ public class UserList implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(mNextPageRequest);
-        dest.writeSerializable(mPrevPageRequest);
-
         dest.writeInt(mList.size());
 
         for(User user: mList) {
