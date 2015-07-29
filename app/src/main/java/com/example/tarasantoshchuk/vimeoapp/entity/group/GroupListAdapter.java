@@ -132,7 +132,7 @@ public class GroupListAdapter extends BaseAdapter {
     }
 
 
-    private static class BitmapDownloadTask extends AsyncTask<String, Void, Bitmap> {
+    private static class BitmapDownloadTask extends AsyncTask<Void, Void, Bitmap> {
         private GroupViewHolder mHolder;
         private Group mGroup;
         private Context mContext;
@@ -144,7 +144,7 @@ public class GroupListAdapter extends BaseAdapter {
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
+        protected Bitmap doInBackground(Void... params) {
             try {
 
                 URL url = new URL(mGroup.getPictureUrl());

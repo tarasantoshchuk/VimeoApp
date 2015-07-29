@@ -120,7 +120,7 @@ public class UserListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private static class BitmapDownloadTask extends AsyncTask<String, Void, Bitmap> {
+    private static class BitmapDownloadTask extends AsyncTask<Void, Void, Bitmap> {
         private UserViewHolder mHolder;
         private User mUser;
         private Context mContext;
@@ -132,7 +132,7 @@ public class UserListAdapter extends BaseAdapter {
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
+        protected Bitmap doInBackground(Void... params) {
 
             try {
 

@@ -126,7 +126,7 @@ public class VideoListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private static class BitmapDownloadTask extends AsyncTask<String, Void, Bitmap> {
+    private static class BitmapDownloadTask extends AsyncTask<Void, Void, Bitmap> {
         private VideoViewHolder mHolder;
         private Video mVideo;
         private Context mContext;
@@ -138,7 +138,7 @@ public class VideoListAdapter extends BaseAdapter {
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
+        protected Bitmap doInBackground(Void... params) {
             try {
 
                 URL url = new URL(mVideo.getPictureUrl());
