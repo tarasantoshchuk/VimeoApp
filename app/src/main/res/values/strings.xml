@@ -21,4 +21,5 @@
     <string name="txt_empty" />
     <string name="txt_users">Users</string>
     <string name="txt_bitmap_load_fail">failed to load bitmap</string>
+    <string name="txt_subscribers">Subscribers</string>
 </resources>

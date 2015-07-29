@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.IBinder;
 
+import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
 import com.example.tarasantoshchuk.vimeoapp.entity.group.Group;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserList;
@@ -21,6 +22,7 @@ public class HttpRequestService extends Service {
     public static final String USER_LIST = "UserList";
     public static final String VIDEO_LIST = "VideoList";
     public static final String GROUP_LIST = "GroupList";
+    public static final String CHANNEL_LIST = "ChannelList";
 
     public static final String NEXT_PAGE = "NextPage";
     public static final String PREV_PAGE = "PrevPage";
@@ -30,6 +32,7 @@ public class HttpRequestService extends Service {
     private static final String USER_LIST_ACTION = "UserListAction";
     private static final String VIDEO_LIST_ACTION = "VideoListAction";
     private static final String GROUP_LIST_ACTION = "GroupListAction";
+    private static final String CHANNEL_LIST_ACTION = "ChannelListAction";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -60,6 +63,14 @@ public class HttpRequestService extends Service {
         return groupListFilter;
     }
 
+    public static IntentFilter getChannelListIntentFilter() {
+        IntentFilter channelListFilter = new IntentFilter();
+
+        channelListFilter.addAction(CHANNEL_LIST_ACTION);
+
+        return channelListFilter;
+    }
+
     public static Bundle getStartExtras(HttpRequestInfo info) {
         Bundle bundle = new Bundle();
 
@@ -67,6 +78,7 @@ public class HttpRequestService extends Service {
 
         return bundle;
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

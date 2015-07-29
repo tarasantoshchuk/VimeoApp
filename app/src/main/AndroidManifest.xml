@@ -31,6 +31,9 @@
         <activity android:name=".entity.group.GroupListActivity"/>
         <activity android:name=".entity.group.GroupActivity"/>
 
+        <activity android:name=".entity.channel.ChannelActivity"/>
+        <activity android:name=".entity.channel.ChannelListActivity"/>
+
         <service android:name=".service.HttpRequestService"/>
     </application>
 

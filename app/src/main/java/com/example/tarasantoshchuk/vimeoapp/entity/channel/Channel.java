@@ -29,8 +29,6 @@ public class Channel implements Parcelable {
     private int mUsersCount;
     private int mVideosCount;
 
-
-
     public Channel(String mId, String mName, String mDescription, Date mDateCreated, String mPictureUrl,
                    User mOwner, int mUsersCount, int mVideosCount) {
         this.mId = mId;
@@ -76,7 +74,7 @@ public class Channel implements Parcelable {
         return mPictureUrl;
     }
 
-    public User getUser() {
+    public User getOwner() {
         return mOwner;
     }
 
@@ -86,6 +84,10 @@ public class Channel implements Parcelable {
 
     public int getVideosCount() {
         return mVideosCount;
+    }
+
+    public boolean isPictureLoaded() {
+        return (sBitmapCache.get(mPictureUrl) != null);
     }
 
     public Bitmap getPicture() {
