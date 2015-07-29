@@ -31,18 +31,18 @@ public class Group implements Parcelable {
 
     private User mOwner;
 
-    public Group(String mId, String mName, String mDescription, Date mDateCreated,
-                 String mPictureUrl, int mUsersCount, User mOwner, int mVideosCount) {
-        this.mId = mId;
-        this.mName = mName;
-        this.mDescription = mDescription;
+    public Group(String id, String name, String description, Date dateCreated,
+                 String pictureUrl, int usersCount, User owner, int videosCount) {
+        mId = id;
+        mName = name;
+        mDescription = description;
 
-        this.mDateCreated = mDateCreated;
-        this.mPictureUrl = mPictureUrl;
+        mDateCreated = dateCreated;
+        mPictureUrl = pictureUrl;
 
-        this.mUsersCount = mUsersCount;
-        this.mOwner = mOwner;
-        this.mVideosCount = mVideosCount;
+        mUsersCount = usersCount;
+        mOwner = owner;
+        mVideosCount = videosCount;
     }
 
     private Group(Parcel source) {

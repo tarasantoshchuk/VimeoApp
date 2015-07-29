@@ -18,14 +18,14 @@ public class Comment implements Parcelable {
     private int mRepliesCount;
     private String mVideoId;
 
-    public Comment(String mId, String mText, Date mDateCreated, User mOwner, int mRepliesCount,
-                   String mVideoId) {
-        this.mId = mId;
-        this.mText = mText;
-        this.mDateCreated = mDateCreated;
-        this.mOwner = mOwner;
-        this.mRepliesCount = mRepliesCount;
-        this.mVideoId = mVideoId;
+    public Comment(String id, String text, Date dateCreated, User owner, int repliesCount,
+                   String videoId) {
+        mId = id;
+        mText = text;
+        mDateCreated = dateCreated;
+        mOwner = owner;
+        mRepliesCount = repliesCount;
+        mVideoId = videoId;
     }
 
     private Comment(Parcel source) {

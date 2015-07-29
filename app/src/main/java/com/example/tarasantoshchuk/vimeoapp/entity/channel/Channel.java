@@ -29,17 +29,17 @@ public class Channel implements Parcelable {
     private int mUsersCount;
     private int mVideosCount;
 
-    public Channel(String mId, String mName, String mDescription, Date mDateCreated, String mPictureUrl,
-                   User mOwner, int mUsersCount, int mVideosCount) {
-        this.mId = mId;
-        this.mName = mName;
-        this.mDescription = mDescription;
-        this.mDateCreated = mDateCreated;
-        this.mPictureUrl = mPictureUrl;
-        this.mOwner = mOwner;
+    public Channel(String id, String name, String description, Date dateCreated, String pictureUrl,
+                   User owner, int usersCount, int videosCount) {
+        mId = id;
+        mName = name;
+        mDescription = description;
+        mDateCreated = dateCreated;
+        mPictureUrl = pictureUrl;
+        mOwner = owner;
 
-        this.mUsersCount = mUsersCount;
-        this.mVideosCount = mVideosCount;
+        mUsersCount = usersCount;
+        mVideosCount = videosCount;
     }
 
     private Channel(Parcel source) {

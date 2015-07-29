@@ -36,23 +36,23 @@ public class Video implements Parcelable {
     private int mLikesCount;
     private int mCommentsCount;
 
-    public Video(String mId, String mName, int mDuration, String mDescription,
-                 String mEmbedHtml, Date mDateCreated, String mPictureUrl, int mPlayCount,
-                 User mOwner, int mLikesCount, int mCommentsCount) {
+    public Video(String id, String name, int duration, String description,
+                 String embedHtml, Date dateCreated, String pictureUrl, int playCount,
+                 User owner, int likesCount, int commentsCount) {
 
-        this.mId = mId;
-        this.mName = mName;
-        this.mDuration = mDuration;
-        this.mDescription = mDescription;
-        this.mEmbedHtml = mEmbedHtml;
+        mId = id;
+        mName = name;
+        mDuration = duration;
+        mDescription = description;
+        mEmbedHtml = embedHtml;
 
-        this.mDateCreated = mDateCreated;
-        this.mPictureUrl = mPictureUrl;
-        this.mPlayCount = mPlayCount;
-        this.mOwner = mOwner;
+        mDateCreated = dateCreated;
+        mPictureUrl = pictureUrl;
+        mPlayCount = playCount;
+        mOwner = owner;
 
-        this.mLikesCount = mLikesCount;
-        this.mCommentsCount = mCommentsCount;
+        mLikesCount = likesCount;
+        mCommentsCount = commentsCount;
     }
 
     private Video(Parcel source) {

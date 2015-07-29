@@ -41,22 +41,22 @@ public class User implements Parcelable{
     private int mChannelsCount;
     private int mLikesCount;
 
-    public User(String mId, String mName, String mLocation, String mBio, String mPictureUrl,
-                Date mDateCreated, int mVideoCount, int mFollowingCount, int mFollowersCount,
-                int mGroupsCount, int mChannelsCount, int mLikesCount) {
-        this.mId = mId;
-        this.mName = mName;
-        this.mLocation = mLocation;
-        this.mBio = mBio;
-        this.mPictureUrl = mPictureUrl;
+    public User(String id, String name, String location, String bio, String pictureUrl,
+                Date dateCreated, int videoCount, int followingCount, int followersCount,
+                int groupsCount, int channelsCount, int likesCount) {
+        mId = id;
+        mName = name;
+        mLocation = location;
+        mBio = bio;
+        mPictureUrl = pictureUrl;
 
-        this.mDateCreated = mDateCreated;
-        this.mVideoCount = mVideoCount;
-        this.mFollowingCount = mFollowingCount;
-        this.mFollowersCount = mFollowersCount;
-        this.mGroupsCount = mGroupsCount;
-        this.mChannelsCount = mChannelsCount;
-        this.mLikesCount = mLikesCount;
+        mDateCreated = dateCreated;
+        mVideoCount = videoCount;
+        mFollowingCount = followingCount;
+        mFollowersCount = followersCount;
+        mGroupsCount = groupsCount;
+        mChannelsCount = channelsCount;
+        mLikesCount = likesCount;
     }
 
     private User(Parcel source) {
