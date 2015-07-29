@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
-import com.example.tarasantoshchuk.vimeoapp.entity.video.Video;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 public class Comment implements Parcelable {
@@ -16,16 +16,16 @@ public class Comment implements Parcelable {
     private User mOwner;
 
     private int mRepliesCount;
-    private Video mVideo;
+    private String mVideoId;
 
     public Comment(String mId, String mText, Date mDateCreated, User mOwner, int mRepliesCount,
-                   Video mVideo) {
+                   String mVideoId) {
         this.mId = mId;
         this.mText = mText;
         this.mDateCreated = mDateCreated;
         this.mOwner = mOwner;
         this.mRepliesCount = mRepliesCount;
-        this.mVideo = mVideo;
+        this.mVideoId = mVideoId;
     }
 
     private Comment(Parcel source) {
@@ -36,7 +36,7 @@ public class Comment implements Parcelable {
         mOwner = source.readParcelable(User.class.getClassLoader());
 
         mRepliesCount = source.readInt();
-        mVideo = source.readParcelable(Video.class.getClassLoader());
+        mVideoId = source.readString();
     }
 
     public String getId() {
@@ -59,8 +59,12 @@ public class Comment implements Parcelable {
         return mRepliesCount;
     }
 
-    public Video getVideo() {
-        return mVideo;
+    public String getVideoId() {
+        return mVideoId;
+    }
+
+    public String getTimeStamp() {
+        return DateFormat.getDateTimeInstance().format(mDateCreated);
     }
 
     public static final Parcelable.Creator<Comment> CREATOR =
@@ -91,6 +95,6 @@ public class Comment implements Parcelable {
         dest.writeParcelable(mOwner, 0);
 
         dest.writeInt(mRepliesCount);
-        dest.writeParcelable(mVideo, 0);
+        dest.writeString(mVideoId);
     }
 }

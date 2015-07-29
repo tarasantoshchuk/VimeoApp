@@ -34,6 +34,8 @@
         <activity android:name=".entity.channel.ChannelActivity"/>
         <activity android:name=".entity.channel.ChannelListActivity"/>
 
+        <activity android:name=".entity.comment.CommentListActivity"/>
+
         <service android:name=".service.HttpRequestService"/>
     </application>
 

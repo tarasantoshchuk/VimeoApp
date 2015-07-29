@@ -115,7 +115,7 @@ public class ChannelListAdapter extends BaseAdapter {
     }
 
     public void cancelAllTasks() {
-        for(BitmapDownloadTask task:mHolderMap.values()) {
+        for(BitmapDownloadTask task: mHolderMap.values()) {
             if(task.getStatus() != AsyncTask.Status.FINISHED) {
                 task.cancel(false);
             }
