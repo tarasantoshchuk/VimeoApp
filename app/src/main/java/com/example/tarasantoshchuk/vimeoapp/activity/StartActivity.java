@@ -11,7 +11,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
 import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
+import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
 public class StartActivity extends Activity {
 
@@ -49,16 +51,22 @@ public class StartActivity extends Activity {
                     .show();
         } else {
 
-
+            AuthorizationInfo.Init(this);
 
             if(!AuthorizationInfo.hasAccessToken()) {
+
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(getAuthorizationAddress()));
                 startActivity(intent);
+
             } else {
-                /**
-                 * go to view with logged user profile/videos
-                 */
+
+                Intent loggedUserActivity = new Intent(this, UserActivity.class);
+
+                HttpRequestInfo userRequest = HttpRequestInfo.getMyInfoRequest();
+                loggedUserActivity.putExtras(UserActivity.getStartExtras(userRequest));
+
+                startActivity(loggedUserActivity);
             }
 
         }
@@ -72,7 +80,8 @@ public class StartActivity extends Activity {
                 .append(getString(R.string.client_id))
                 .append("&redirect_uri=")
                 .append(getString(R.string.callback_url))
-                .append("&state=1")
+                .append("&state=")
+                .append(getString(R.string.client_state))
                 .toString();
     }
 }
