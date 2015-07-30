@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
+import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
 import java.util.ArrayList;
@@ -115,17 +116,21 @@ public class ChannelListActivity extends Activity {
             ArrayList<Channel> list =
                     intent.getParcelableArrayListExtra(HttpRequestService.CHANNEL_LIST);
 
-            ChannelListAdapter adapter = (ChannelListAdapter) mChannelList.getAdapter();
+            if (list != null) {
+                ChannelListAdapter adapter = (ChannelListAdapter) mChannelList.getAdapter();
 
-            adapter.updateList(list);
+                adapter.updateList(list);
 
-            final HttpRequestInfo nextPage = (HttpRequestInfo)
-                    intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
-            setButton(mBtnChannelListNext, nextPage);
+                final HttpRequestInfo nextPage = (HttpRequestInfo)
+                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
+                setButton(mBtnChannelListNext, nextPage);
 
-            final HttpRequestInfo prevPage = (HttpRequestInfo)
-                    intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
-            setButton(mBtnChannelListPrev, prevPage);
+                final HttpRequestInfo prevPage = (HttpRequestInfo)
+                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
+                setButton(mBtnChannelListPrev, prevPage);
+            } else {
+                Alerts.showConnectionFailedAlert(ChannelListActivity.this);
+            }
         }
 
         private void setButton(Button button, final HttpRequestInfo request) {

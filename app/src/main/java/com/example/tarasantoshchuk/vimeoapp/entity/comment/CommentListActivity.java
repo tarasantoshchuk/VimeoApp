@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
+import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
 import java.util.ArrayList;
@@ -115,17 +116,21 @@ public class CommentListActivity extends Activity {
             ArrayList<Comment> list =
                     intent.getParcelableArrayListExtra(HttpRequestService.COMMENT_LIST);
 
-            CommentListAdapter adapter = (CommentListAdapter) mCommentList.getAdapter();
+            if(list != null) {
+                CommentListAdapter adapter = (CommentListAdapter) mCommentList.getAdapter();
 
-            adapter.updateList(list);
+                adapter.updateList(list);
 
-            final HttpRequestInfo nextPage = (HttpRequestInfo)
-                    intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
-            setButton(mBtnCommentListNext, nextPage);
+                final HttpRequestInfo nextPage = (HttpRequestInfo)
+                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
+                setButton(mBtnCommentListNext, nextPage);
 
-            final HttpRequestInfo prevPage = (HttpRequestInfo)
-                    intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
-            setButton(mBtnCommentListPrev, prevPage);
+                final HttpRequestInfo prevPage = (HttpRequestInfo)
+                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
+                setButton(mBtnCommentListPrev, prevPage);
+            } else {
+                Alerts.showConnectionFailedAlert(CommentListActivity.this);
+            }
         }
 
         private void setButton(Button button, final HttpRequestInfo request) {

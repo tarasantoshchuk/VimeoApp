@@ -53,6 +53,7 @@ public class HttpRequestService extends Service {
     private static final String CHANNEL_LIST_ACTION = "ChannelListAction";
     private static final String COMMENT_LIST_ACTION = "CommentListAction";
     private static final String ACCESS_TOKEN_ACTION = "AccessTokenAction";
+    private static final String USER_ACTION = "UserAction";
 
     public static IntentFilter getUserListIntentFilter() {
         IntentFilter userListFilter = new IntentFilter();
@@ -100,6 +101,14 @@ public class HttpRequestService extends Service {
         accessTokenFilter.addAction(ACCESS_TOKEN_ACTION);
 
         return accessTokenFilter;
+    }
+
+    public static IntentFilter getUserIntentFilter() {
+        IntentFilter userIntentFilter = new IntentFilter();
+
+        userIntentFilter.addAction(USER_ACTION);
+
+        return userIntentFilter;
     }
 
     public static Bundle getStartExtras(HttpRequestInfo info) {

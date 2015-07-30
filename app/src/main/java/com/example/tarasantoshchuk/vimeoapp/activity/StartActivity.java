@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
+import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
@@ -35,20 +36,9 @@ public class StartActivity extends Activity {
 
 
         if(!isConnected) {
-            /**
-             * create and show alert dialog, then finish application
-             */
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setCancelable(false)
-                    .setTitle(getString(R.string.txt_connection_fail))
-                    .setMessage(getString(R.string.txt_check_connection))
-                    .setNeutralButton(getString(R.string.txt_close), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    })
-                    .show();
+
+            Alerts.showConnectionFailedAlert(this);
+
         } else {
 
             AuthorizationInfo.Init(this);

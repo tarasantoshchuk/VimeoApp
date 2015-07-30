@@ -14,19 +14,12 @@ import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
+import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
-import com.example.tarasantoshchuk.vimeoapp.util.JSONParser;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 
 public class LoginActivity extends Activity {
+    public static final String LOGGED_USER_ACTION = "LoggedUserAction";
+
     private static final String CODE = "code";
     private static final String STATE = "state";
 
@@ -59,19 +52,7 @@ public class LoginActivity extends Activity {
 
             startService(getAccessTokenIntent);
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-            builder.setCancelable(false)
-                    .setTitle(getString(R.string.txt_auth_fail))
-                    .setMessage(getString(R.string.txt_auth_fail_msg))
-                    .setCancelable(false)
-                    .setNeutralButton(getString(R.string.txt_close),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            })
-                    .show();
+            Alerts.showAuthorizationFailedAlert(this);
         }
     }
 
@@ -95,22 +76,12 @@ public class LoginActivity extends Activity {
                 Intent loggedUserActivityIntent =
                         new Intent(LoginActivity.this, UserActivity.class);
 
+                loggedUserActivityIntent.setAction(LOGGED_USER_ACTION);
                 loggedUserActivityIntent.putExtras(UserActivity.getStartExtras(loggedUser));
 
                 startActivity(loggedUserActivityIntent);
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                builder.setCancelable(false)
-                        .setTitle(getString(R.string.txt_connection_fail))
-                        .setMessage(getString(R.string.txt_check_connection))
-                        .setNeutralButton(getString(R.string.txt_close),
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        finish();
-                                    }
-                                })
-                        .show();
+                Alerts.showConnectionFailedAlert(LoginActivity.this);
             }
         }
     }

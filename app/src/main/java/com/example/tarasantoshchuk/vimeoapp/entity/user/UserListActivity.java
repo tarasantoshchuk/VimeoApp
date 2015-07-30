@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
+import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
 public class UserListActivity extends Activity {
@@ -113,17 +114,22 @@ public class UserListActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             UserList list = intent.getParcelableExtra(HttpRequestService.USER_LIST);
 
-            UserListAdapter adapter = (UserListAdapter) mUserList.getAdapter();
+            if(list != null) {
 
-            adapter.updateList(list);
+                UserListAdapter adapter = (UserListAdapter) mUserList.getAdapter();
 
-            final HttpRequestInfo nextPage = (HttpRequestInfo)
-                    intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
-            setButton(mBtnUserListNext, nextPage);
+                adapter.updateList(list);
 
-            final HttpRequestInfo prevPage = (HttpRequestInfo)
-                    intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
-            setButton(mBtnUserListPrev, prevPage);
+                final HttpRequestInfo nextPage = (HttpRequestInfo)
+                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE);
+                setButton(mBtnUserListNext, nextPage);
+
+                final HttpRequestInfo prevPage = (HttpRequestInfo)
+                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE);
+                setButton(mBtnUserListPrev, prevPage);
+            } else {
+                Alerts.showConnectionFailedAlert(UserListActivity.this);
+            }
         }
 
         private void setButton(Button button, final HttpRequestInfo requestInfo) {
