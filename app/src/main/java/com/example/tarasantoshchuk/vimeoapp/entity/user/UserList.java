@@ -2,10 +2,13 @@ package com.example.tarasantoshchuk.vimeoapp.entity.user;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class UserList implements Parcelable {
+    private static final String TAG = UserList.class.getSimpleName();
+
     private ArrayList<User> mList;
 
     public UserList() {
@@ -35,6 +38,7 @@ public class UserList implements Parcelable {
     }
 
     public void update(UserList list) {
+        Log.d(TAG, "update");
         mList.clear();
         mList.addAll(list.mList);
     }
@@ -44,6 +48,7 @@ public class UserList implements Parcelable {
 
                 @Override
                 public UserList createFromParcel(Parcel source) {
+                    Log.d(TAG, "CREATOR.createFromParcel");
                     return new UserList(source);
                 }
 
@@ -60,6 +65,8 @@ public class UserList implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.d(TAG, "writeToParcel");
+
         dest.writeInt(mList.size());
 
         for(User user: mList) {

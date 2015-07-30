@@ -3,6 +3,7 @@ package com.example.tarasantoshchuk.vimeoapp.entity.group;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.util.LruCache;
 
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
@@ -10,6 +11,8 @@ import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import java.util.Date;
 
 public class Group implements Parcelable {
+    private static final String TAG = Group.class.getSimpleName();
+
     private static final int CACHE_SIZE = 2 * 1024 * 1024;
 
     private static LruCache<String, Bitmap> sBitmapCache = new LruCache<String, Bitmap>(CACHE_SIZE) {
@@ -108,6 +111,7 @@ public class Group implements Parcelable {
 
                 @Override
                 public Group createFromParcel(Parcel source) {
+                    Log.d(TAG, "CREATOR.createFromParcel");
                     return new Group(source);
                 }
 
@@ -124,6 +128,7 @@ public class Group implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.d(TAG, "writeToParcel");
         dest.writeString(mId);
         dest.writeString(mName);
         dest.writeString(mDescription);

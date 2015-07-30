@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GroupListAdapter extends BaseAdapter {
+    private static final String TAG = GroupListAdapter.class.getSimpleName();
+
     private ArrayList<Group> mList;
     private LayoutInflater mInflater;
     private GroupListActivity mActivity;
@@ -57,10 +60,13 @@ public class GroupListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "getView");
+
         final Group currGroup = getGroup(position);
         GroupViewHolder holder;
 
         if(convertView == null) {
+            Log.d(TAG, "getView: inflate view");
             convertView = mInflater.inflate(R.layout.group_item, null);
 
             holder = new GroupViewHolder();
@@ -78,6 +84,7 @@ public class GroupListAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
         } else {
+            Log.d(TAG, "reuse view");
             holder = (GroupViewHolder) convertView.getTag();
         }
 
@@ -93,9 +100,11 @@ public class GroupListAdapter extends BaseAdapter {
             BitmapDownloadTask task = mHolderMap.get(holder);
 
             if(task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+                Log.d(TAG, "cancel asyncTask");
                 task.cancel(false);
             }
 
+            Log.d(TAG, "create asyncTask");
             mHolderMap.put(holder, (BitmapDownloadTask)
                     new BitmapDownloadTask(holder, currGroup, mActivity).execute());
         }
@@ -107,6 +116,8 @@ public class GroupListAdapter extends BaseAdapter {
 
                 groupActivityIntent.putExtras(GroupActivity.getStartExtras(currGroup));
 
+                Log.d(TAG, "convertView onClick: start GroupActivity");
+
                 mActivity.startActivity(groupActivityIntent);
             }
         });
@@ -115,6 +126,8 @@ public class GroupListAdapter extends BaseAdapter {
     }
 
     public void cancelAllTasks() {
+        Log.d(TAG, "cancelAllTasks");
+
         for(BitmapDownloadTask task: mHolderMap.values()) {
             if(task.getStatus() != AsyncTask.Status.FINISHED) {
                 task.cancel(false);
@@ -123,6 +136,7 @@ public class GroupListAdapter extends BaseAdapter {
     }
 
     public void updateList(ArrayList<Group> list) {
+        Log.d(TAG, "updateList");
         cancelAllTasks();
 
         mList.clear();
@@ -158,6 +172,7 @@ public class GroupListAdapter extends BaseAdapter {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
+            Log.d(TAG, "BitmapDownloadTask.onPostExecute");
             if(bitmap == null) {
                 Toast.makeText(mContext, mContext.getString(R.string.txt_bitmap_load_fail),
                         Toast.LENGTH_LONG).show();

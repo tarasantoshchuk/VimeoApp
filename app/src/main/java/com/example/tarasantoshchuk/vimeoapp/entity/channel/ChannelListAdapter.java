@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ChannelListAdapter extends BaseAdapter {
+    private static final String TAG = ChannelListAdapter.class.getSimpleName();
+
     private ArrayList<Channel> mList;
     private LayoutInflater mInflater;
     private ChannelListActivity mActivity;
@@ -55,10 +58,12 @@ public class ChannelListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "getView");
         final Channel currChannel = getChannel(position);
         ChannelViewHolder holder;
 
         if(convertView == null) {
+            Log.d(TAG, "getView: inflate view");
             convertView = mInflater.inflate(R.layout.channel_item, null);
 
             holder = new ChannelViewHolder();
@@ -78,6 +83,7 @@ public class ChannelListAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
         } else {
+            Log.d(TAG, "getView: reuse view");
             holder = (ChannelViewHolder) convertView.getTag();
         }
 
@@ -93,9 +99,11 @@ public class ChannelListAdapter extends BaseAdapter {
             BitmapDownloadTask task = mHolderMap.get(holder);
 
             if(task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+                Log.d(TAG, "getView: cancel async task");
                 task.cancel(false);
             }
 
+            Log.d(TAG, "getView: start new async task");
             mHolderMap.put(holder, (BitmapDownloadTask)
                 new BitmapDownloadTask(holder, currChannel, mActivity).execute());
         }
@@ -115,6 +123,7 @@ public class ChannelListAdapter extends BaseAdapter {
     }
 
     public void cancelAllTasks() {
+        Log.d(TAG, "cancelAllTasks");
         for(BitmapDownloadTask task: mHolderMap.values()) {
             if(task.getStatus() != AsyncTask.Status.FINISHED) {
                 task.cancel(false);
@@ -123,6 +132,7 @@ public class ChannelListAdapter extends BaseAdapter {
     }
 
     public void updateList(ArrayList<Channel> list) {
+        Log.d(TAG, "updateList");
         cancelAllTasks();
 
         mList.clear();
@@ -158,6 +168,7 @@ public class ChannelListAdapter extends BaseAdapter {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
+            Log.d(TAG, "BitmapDownloadTask.onPostExecute");
             if(bitmap == null) {
                 Toast.makeText(mContext, mContext.getString(R.string.txt_bitmap_load_fail),
                         Toast.LENGTH_LONG).show();

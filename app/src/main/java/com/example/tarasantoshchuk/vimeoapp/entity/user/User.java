@@ -3,12 +3,15 @@ package com.example.tarasantoshchuk.vimeoapp.entity.user;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.util.LruCache;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class User implements Parcelable{
+    private static final String TAG = User.class.getSimpleName();
+
     private static final String DAY_FORMAT_STRING = "Joined %d day(s) ago";
     private static final String MONTH_FORMAT_STRING = "Joined %d month(s) ago";
     private static final String YEAR_FORMAT_STRING = "Joined %d year(s) ago";
@@ -154,6 +157,7 @@ public class User implements Parcelable{
 
                 @Override
                 public User createFromParcel(Parcel source) {
+                    Log.d(TAG, "CREATOR.createFromParcel");
                     return new User(source);
                 }
 
@@ -170,6 +174,8 @@ public class User implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.d(TAG, "writeToParcel");
+
         dest.writeString(mId);
         dest.writeString(mName);
         dest.writeString(mLocation);

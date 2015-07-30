@@ -2,6 +2,7 @@ package com.example.tarasantoshchuk.vimeoapp.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
@@ -16,6 +17,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class RequestManager {
+    private static final String TAG = RequestManager.class.getSimpleName();
+
     private static final String GRANT_TYPE_VALUE = "authorization_code";
     private static final String ACCESS_TOKEN_QUERY_FORMAT = "grant_type=%s&code=%s&redirect_uri=%s";
 
@@ -33,6 +36,8 @@ public class RequestManager {
     private static final String CONTENT_URL_ENCODED = "application/x-www-form-urlencoded";
 
     public static void getAccessToken(String code, String action, HttpRequestService service) {
+        Log.d(TAG, "getAccessToken");
+
         try {
             String url = service.getString(R.string.access_token_address);
             String grantType = GRANT_TYPE_VALUE;
@@ -78,6 +83,7 @@ public class RequestManager {
             resultIntent.putExtra(HttpRequestService.ACCESS_TOKEN, accessToken);
             resultIntent.putExtra(HttpRequestService.USER, loggedUser);
 
+            Log.d(TAG, "getAccessToken: success");
             service.sendBroadcast(resultIntent);
 
         } catch (Exception e) {
@@ -87,6 +93,7 @@ public class RequestManager {
 
             failIntent.setAction(action);
 
+            Log.d(TAG, "getAccessToken: fail");
             service.sendBroadcast(failIntent);
         }
     }

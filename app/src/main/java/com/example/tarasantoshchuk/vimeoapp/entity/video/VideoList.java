@@ -2,10 +2,12 @@ package com.example.tarasantoshchuk.vimeoapp.entity.video;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class VideoList implements Parcelable {
+    private static final String TAG = VideoList.class.getSimpleName();
     private ArrayList<Video> mList;
 
     public VideoList() {
@@ -35,6 +37,7 @@ public class VideoList implements Parcelable {
     }
 
     public void update(VideoList list) {
+        Log.d(TAG, "update");
         mList.clear();
         mList.addAll(list.mList);
     }
@@ -45,6 +48,7 @@ public class VideoList implements Parcelable {
 
                 @Override
                 public VideoList createFromParcel(Parcel source) {
+                    Log.d(TAG, "CREATOR.createFromParcel");
                     return new VideoList(source);
                 }
 
@@ -61,6 +65,8 @@ public class VideoList implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.d(TAG, "writeToParcel");
+
         dest.writeInt(mList.size());
 
         for(Video video: mList) {

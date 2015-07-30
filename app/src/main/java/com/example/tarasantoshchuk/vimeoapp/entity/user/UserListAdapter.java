@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import java.net.URL;
 import java.util.HashMap;
 
 public class UserListAdapter extends BaseAdapter {
+    private static final String TAG = UserListAdapter.class.getSimpleName();
+
     private UserList mList;
     private LayoutInflater mInflater;
     private UserListActivity mActivity;
@@ -55,10 +58,13 @@ public class UserListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "getView");
+
         final User currUser = getUser(position);
         UserViewHolder holder;
 
         if(convertView == null) {
+            Log.d(TAG, "getView: inflate view");
             convertView = mInflater.inflate(R.layout.user_item, null);
 
             holder = new UserViewHolder();
@@ -72,6 +78,7 @@ public class UserListAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
         } else {
+            Log.d(TAG, "getView: reuse view");
             holder = (UserViewHolder) convertView.getTag();
         }
 
@@ -85,9 +92,11 @@ public class UserListAdapter extends BaseAdapter {
             BitmapDownloadTask task = mHolderMap.get(holder);
 
             if(task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+                Log.d(TAG, "cancel async task");
                 task.cancel(false);
             }
 
+            Log.d(TAG, "create async task");
             mHolderMap.put(holder, (BitmapDownloadTask)
                     new BitmapDownloadTask(holder, currUser, mActivity).execute());
         }
@@ -99,6 +108,7 @@ public class UserListAdapter extends BaseAdapter {
 
                 userActivityIntent.putExtras(UserActivity.getStartExtras(currUser));
 
+                Log.d(TAG, "convertView onClick: start UserActivity");
                 mActivity.startActivity(userActivityIntent);
             }
         });
@@ -107,6 +117,7 @@ public class UserListAdapter extends BaseAdapter {
     }
 
     public void cancelAllTasks() {
+        Log.d(TAG, "cancelAllTasks");
         for(BitmapDownloadTask task: mHolderMap.values()) {
             if(task.getStatus() != AsyncTask.Status.FINISHED) {
                 task.cancel(false);
@@ -115,6 +126,8 @@ public class UserListAdapter extends BaseAdapter {
     }
 
     public void updateList(UserList list) {
+        Log.d(TAG, "updateList");
+
         cancelAllTasks();
         mList.update(list);
         notifyDataSetChanged();
@@ -147,6 +160,7 @@ public class UserListAdapter extends BaseAdapter {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
+            Log.d(TAG, "BitmapDownloadTask.opPostExecute");
             if (bitmap == null) {
 
                 Toast.makeText(mContext, mContext.getString(R.string.txt_bitmap_load_fail),

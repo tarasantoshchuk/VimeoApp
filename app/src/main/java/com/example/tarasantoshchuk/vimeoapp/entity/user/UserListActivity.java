@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,6 +17,8 @@ import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
 public class UserListActivity extends Activity {
+    private static final String TAG = UserListActivity.class.getSimpleName();
+
     private static final String USER_LIST_REQUEST = "UserListRequest";
     private static final String TITLE = "Title";
 
@@ -43,6 +46,8 @@ public class UserListActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
@@ -73,6 +78,8 @@ public class UserListActivity extends Activity {
     }
 
     private void startHttpService(HttpRequestInfo requestInfo) {
+        Log.d(TAG, "startHttpService");
+
         Intent httpServiceIntent = new Intent(this, HttpRequestService.class);
 
         httpServiceIntent.putExtras(HttpRequestService.getStartExtras(requestInfo));
@@ -82,6 +89,8 @@ public class UserListActivity extends Activity {
 
     @Override
     protected void onStart() {
+        Log.d(TAG, "onStart");
+
         super.onStart();
 
         registerReceiver(mReceiver, HttpRequestService.getUserListIntentFilter());
@@ -91,6 +100,7 @@ public class UserListActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState");
         super.onSaveInstanceState(outState);
 
         outState.putSerializable(LAST_REQUEST, mLastRequest);
@@ -98,6 +108,7 @@ public class UserListActivity extends Activity {
 
     @Override
     protected void onStop() {
+        Log.d(TAG, "onStop");
         super.onStop();
 
         UserListAdapter listAdapter = (UserListAdapter) mUserList.getAdapter();
@@ -112,6 +123,8 @@ public class UserListActivity extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "UserListReceiver.onReceive");
+
             UserList list = intent.getParcelableExtra(HttpRequestService.USER_LIST);
 
             if(list != null) {

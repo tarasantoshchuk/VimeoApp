@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
@@ -20,6 +21,7 @@ import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
 public class LoginActivity extends Activity {
     public static final String LOGGED_USER_ACTION = "LoggedUserAction";
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private static final String CODE = "code";
     private static final String STATE = "state";
 
@@ -29,6 +31,7 @@ public class LoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
@@ -41,6 +44,7 @@ public class LoginActivity extends Activity {
 
     @Override
     protected void onStart() {
+        Log.d(TAG, "onStart");
         super.onStart();
 
         registerReceiver(mReceiver, HttpRequestService.getAccessTokenIntentFilter());
@@ -57,7 +61,8 @@ public class LoginActivity extends Activity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop(){
+        Log.d(TAG, "onStop");
         super.onStop();
 
         unregisterReceiver(mReceiver);
@@ -67,6 +72,7 @@ public class LoginActivity extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "AccessTokenReceiver.onReceive");
             String accessToken = intent.getStringExtra(HttpRequestService.ACCESS_TOKEN);
             User loggedUser = intent.getParcelableExtra(HttpRequestService.USER);
 

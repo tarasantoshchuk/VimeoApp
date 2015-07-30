@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
@@ -17,9 +18,11 @@ import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 
 public class StartActivity extends Activity {
+    private static final String TAG = StartActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 

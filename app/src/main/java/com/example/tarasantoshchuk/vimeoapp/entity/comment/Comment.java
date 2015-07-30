@@ -2,6 +2,7 @@ package com.example.tarasantoshchuk.vimeoapp.entity.comment;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 
@@ -9,6 +10,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class Comment implements Parcelable {
+    private static final String TAG = Comment.class.getSimpleName();
     private String mId;
     private String mText;
 
@@ -72,6 +74,7 @@ public class Comment implements Parcelable {
 
                 @Override
                 public Comment createFromParcel(Parcel source) {
+                    Log.d(TAG, "CREATOR.createFromParcel");
                     return new Comment(source);
                 }
 
@@ -88,6 +91,7 @@ public class Comment implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.d(TAG, "writeToParcel");
         dest.writeString(mId);
         dest.writeString(mText);
 

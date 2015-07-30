@@ -3,6 +3,7 @@ package com.example.tarasantoshchuk.vimeoapp.entity.video;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.util.LruCache;
 
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
@@ -10,6 +11,8 @@ import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import java.util.Date;
 
 public class Video implements Parcelable {
+    private static final String TAG = Video.class.getSimpleName();
+
     private static final int SECONDS_IN_MINUTE = 60;
     private static final int SECONDS_IN_HOUR = 60 * 60;
     private static final String DURATION_FORMAT = "%d:%d:%d";
@@ -140,6 +143,7 @@ public class Video implements Parcelable {
 
                 @Override
                 public Video createFromParcel(Parcel source) {
+                    Log.d(TAG, "CREATOR.createFromParcel");
                     return new Video(source);
                 }
 
@@ -156,6 +160,8 @@ public class Video implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.d(TAG, "writeToParcel");
+
         dest.writeString(mId);
         dest.writeString(mName);
         dest.writeInt(mDuration);

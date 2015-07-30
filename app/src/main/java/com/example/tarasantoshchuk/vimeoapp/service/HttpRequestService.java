@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
@@ -38,6 +39,8 @@ public class HttpRequestService extends Service {
 
     public static final String NEXT_PAGE = "NextPage";
     public static final String PREV_PAGE = "PrevPage";
+
+    private static final String TAG = HttpRequestService.class.getSimpleName();
 
     private static final String HTTP_REQUEST_INFO = "HttpRequestInfo";
     private static final String AUTHORIZATION_CODE = "AuthorizationCode";
@@ -133,6 +136,7 @@ public class HttpRequestService extends Service {
 
     @Override
     public void onCreate() {
+        Log.d(TAG, "onCreate");
         super.onCreate();
 
         mExecutor = Executors.newCachedThreadPool();
@@ -140,13 +144,16 @@ public class HttpRequestService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        Log.d(TAG, "onBind");
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "onStartCommand");
         switch((ExtrasType) intent.getSerializableExtra(EXTRAS_TYPE)) {
             case AUTHORIZATION_CODE:
+                Log.d(TAG, "onStartCommand: handle accessToken request");
                 final String code = intent.getStringExtra(AUTHORIZATION_CODE);
                 mExecutor.execute(new Runnable() {
                     @Override
@@ -164,6 +171,7 @@ public class HttpRequestService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
 
         mExecutor.shutdownNow();

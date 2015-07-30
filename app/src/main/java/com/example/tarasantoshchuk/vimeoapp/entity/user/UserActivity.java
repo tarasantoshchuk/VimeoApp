@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +28,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class UserActivity extends Activity {
+    private static final String TAG = UserActivity.class.getSimpleName();
+
     private static final String USER = "User";
     private static final String USER_REQUEST = "UserRequest";
     private static final String STARTUP_EXTRA = "StartupExtra";
@@ -93,6 +96,7 @@ public class UserActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
@@ -125,6 +129,7 @@ public class UserActivity extends Activity {
 
     @Override
     protected void onStart() {
+        Log.d(TAG, "onStart");
         super.onStart();
 
         registerReceiver(mReceiver, HttpRequestService.getUserIntentFilter());
@@ -134,6 +139,7 @@ public class UserActivity extends Activity {
 
     @Override
     protected void onStop() {
+        Log.d(TAG, "onStop");
         super.onStop();
 
         if(mLoadPictureTask != null && mLoadPictureTask.getStatus() != AsyncTask.Status.FINISHED) {
@@ -192,6 +198,7 @@ public class UserActivity extends Activity {
                 userVideoListIntent.putExtras(VideoListActivity
                         .getStartExtras(VIDEO_LIST_TITLE, userVideosRequest));
 
+                Log.d(TAG, "start VideoListActivity of user videos");
                 startActivity(userVideoListIntent);
             }
         });
@@ -207,6 +214,7 @@ public class UserActivity extends Activity {
                 likedVideosIntent.putExtras(VideoListActivity
                         .getStartExtras(LIKED_VIDEOS_TITLE, likedVideosRequest));
 
+                Log.d(TAG, "start VideoListActivity of videos liked by user");
                 startActivity(likedVideosIntent);
             }
         });
@@ -222,6 +230,7 @@ public class UserActivity extends Activity {
                 fllwngUsersIntent.putExtras(UserListActivity
                         .getStartExtras(FOLLOWED_USERS_TITLE, fllwngUsersRequest));
 
+                Log.d(TAG, "start UserListActivity of followed users");
                 startActivity(fllwngUsersIntent);
             }
         });
@@ -237,6 +246,7 @@ public class UserActivity extends Activity {
                 fllwrsIntent.putExtras(UserListActivity
                         .getStartExtras(FOLLOWERS_TITLE, fllwrsRequest));
 
+                Log.d(TAG, "start UserListActivity of user followers");
                 startActivity(fllwrsIntent);
             }
         });
@@ -250,6 +260,7 @@ public class UserActivity extends Activity {
                 groupsIntent.putExtras(GroupListActivity
                         .getStartExtras(GROUP_LIST_TITLE, groupsRequest));
 
+                Log.d(TAG, "start GroupListActivity of user's groups");
                 startActivity(groupsIntent);
             }
         });
@@ -265,6 +276,7 @@ public class UserActivity extends Activity {
                 channelsIntent.putExtras(ChannelListActivity
                         .getStartExtras(CHANNEL_LIST_TITLE, channelsRequest));
 
+                Log.d(TAG, "start ChannelListActivity of user's channels");
                 startActivity(channelsIntent);
             }
         });
@@ -292,6 +304,7 @@ public class UserActivity extends Activity {
 
                 @Override
                 protected void onPostExecute(Bitmap bitmap) {
+                    Log.d(TAG, "LoadPictureTask.onPostExecute");
                     if (bitmap == null) {
 
                         Toast.makeText(UserActivity.this, getString(R.string.txt_bitmap_load_fail),
@@ -310,6 +323,7 @@ public class UserActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK &&
                 getIntent().getAction().equals(LoginActivity.LOGGED_USER_ACTION)) {
+            Log.d(TAG, "back key press intercepted");
             return true;
         } else {
             return false;
@@ -320,6 +334,7 @@ public class UserActivity extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "UserReceiver.onReceive");
             User user = intent.getParcelableExtra(HttpRequestService.USER);
 
             if(user != null) {
