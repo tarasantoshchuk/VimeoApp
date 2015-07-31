@@ -14,6 +14,8 @@ import android.util.Log;
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
 import com.example.tarasantoshchuk.vimeoapp.entity.channel.ChannelActivity;
+import com.example.tarasantoshchuk.vimeoapp.entity.group.Group;
+import com.example.tarasantoshchuk.vimeoapp.entity.group.GroupActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
@@ -57,11 +59,13 @@ public class LoginActivity extends Activity {
         registerReceiver(mReceiver, HttpRequestService.getAccessTokenIntentFilter());
 
         if(mCode != null && mState.equals(getString(R.string.client_state))) {
+
             Intent getAccessTokenIntent = new Intent(this, HttpRequestService.class);
 
             getAccessTokenIntent.putExtras(HttpRequestService.getStartExtras(mCode));
 
             startService(getAccessTokenIntent);
+
         } else {
             Alerts.showAuthorizationFailedAlert(this);
         }

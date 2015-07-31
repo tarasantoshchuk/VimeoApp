@@ -36,4 +36,6 @@
     <string name="txt_no_groups">groups list is empty</string>
     <string name="txt_no_channels">channels list is empty</string>
     <string name="txt_no_subscribers">subscribers list is empty</string>
+    <string name="txt_no_members">member list is empty</string>
+    <string name="txt_members">Members</string>
 </resources>

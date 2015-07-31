@@ -37,6 +37,7 @@ public class HttpRequestService extends Service {
     public static final String ACCESS_TOKEN = "AccessToken";
     public static final String USER = "User";
     public static final String CHANNEL = "Channel";
+    public static final String GROUP = "Group";
 
     public static final String NEXT_PAGE = "NextPage";
     public static final String PREV_PAGE = "PrevPage";
@@ -59,6 +60,7 @@ public class HttpRequestService extends Service {
     private static final String ACCESS_TOKEN_ACTION = "AccessTokenAction";
     private static final String USER_ACTION = "UserAction";
     private static final String CHANNEL_ACTION = "ChannelAction";
+    private static final String GROUP_ACTION = "GroupAction";
 
     public static IntentFilter getUserListIntentFilter() {
         IntentFilter userListFilter = new IntentFilter();
@@ -124,6 +126,14 @@ public class HttpRequestService extends Service {
         return channelIntentFilter;
     }
 
+    public static IntentFilter getGroupIntentFilter() {
+        IntentFilter groupIntentFilter = new IntentFilter();
+
+        groupIntentFilter.addAction(GROUP_ACTION);
+
+        return groupIntentFilter;
+    }
+
     public static Bundle getStartExtras(HttpRequestInfo info) {
         Bundle bundle = new Bundle();
 
@@ -174,7 +184,22 @@ public class HttpRequestService extends Service {
                 });
                 break;
             case HTTP_REQUEST_INFO:
+                Log.d(TAG, "onStartCommand: handle request");
 
+
+                final HttpRequestInfo requestInfo = (HttpRequestInfo)
+                        intent.getSerializableExtra(HTTP_REQUEST_INFO);
+                /**
+                 * TODO: get action from request info
+                 */
+                final String action = null;
+                mExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        RequestManager.handleRequest(requestInfo, action,
+                                HttpRequestService.this);
+                    }
+                });
                 break;
         }
 
