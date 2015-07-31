@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/channelRelativeLayout">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txtChannelHorizontalCenter"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/txtChannelVerticalCenter"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgChannelPicture"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/txtChannelVerticalCenter"
+        android:layout_toLeftOf="@+id/txtChannelHorizontalCenter"
+        android:layout_toStartOf="@+id/txtChannelHorizontalCenter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/txtChannelName"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/txtChannelHorizontalCenter"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtChannelDescription"
+        android:layout_toRightOf="@+id/imgChannelPicture"
+        android:layout_alignBottom="@+id/imgChannelPicture"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/txtChannelCreated" />
+
+    <TextView
+        style="@style/ChannelInfoTitle"
+        android:text="@string/txt_owner"
+        android:id="@+id/txtChannelOwnerTitle"
+        android:layout_below="@+id/txtChannelVerticalCenter" />
+
+    <TextView
+        style="@style/ChannelInfoTitle"
+        android:text="@string/txt_subscribers"
+        android:id="@+id/txtChannelUsersTitle"
+        android:layout_below="@+id/txtChannelOwnerTitle" />
+
+    <TextView
+        style="@style/ChannelInfoTitle"
+        android:text="@string/txt_videos"
+        android:id="@+id/txtChannelVideosTitle"
+        android:layout_below="@+id/txtChannelUsersTitle" />
+
+    <TextView
+        style="@style/ChannelInfoValue"
+        android:id="@+id/txtChannelOwnerName"
+        android:layout_alignTop="@+id/txtChannelVerticalCenter"
+        android:layout_above="@+id/txtChannelUsersTitle" />
+
+    <TextView
+        style="@style/ChannelInfoValue"
+        android:layout_below="@+id/txtChannelOwnerTitle"
+        android:layout_alignBottom="@+id/txtChannelUsersTitle"
+        android:id="@+id/txtChannelUsersCount" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtChannelCreated"
+        android:layout_below="@+id/txtChannelName"
+        android:layout_toRightOf="@+id/imgChannelPicture"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        style="@style/ChannelInfoValue"
+        android:id="@+id/txtChannelVideosCount"
+        android:layout_below="@+id/txtChannelUsersTitle"
+        android:layout_alignBottom="@+id/txtChannelVideosTitle" />
+
+</RelativeLayout>

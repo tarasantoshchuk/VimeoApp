@@ -12,11 +12,18 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
+import com.example.tarasantoshchuk.vimeoapp.entity.channel.ChannelActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
+import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
+import com.example.tarasantoshchuk.vimeoapp.util.JSONParser;
+
+import java.util.Date;
+import java.util.Random;
 
 public class LoginActivity extends Activity {
     public static final String LOGGED_USER_ACTION = "LoggedUserAction";

@@ -120,6 +120,8 @@ public class UserActivity extends Activity {
     }
 
     private void startHttpService(HttpRequestInfo requestInfo) {
+        Log.d(TAG, "startHttpService");
+
         Intent userRequestIntent = new Intent(this, HttpRequestService.class);
 
         userRequestIntent.putExtras(HttpRequestService.getStartExtras(requestInfo));
@@ -134,7 +136,9 @@ public class UserActivity extends Activity {
 
         registerReceiver(mReceiver, HttpRequestService.getUserIntentFilter());
 
-        startHttpService(mRequestInfo);
+        if(mUser == null) {
+            startHttpService(mRequestInfo);
+        }
     }
 
     @Override
@@ -190,94 +194,129 @@ public class UserActivity extends Activity {
         mTxtVideosTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent userVideoListIntent = new Intent(UserActivity.this, VideoListActivity.class);
+                if (mUser.getVideoCount() != 0){
+                    Intent userVideoListIntent = new Intent(UserActivity.this, VideoListActivity.class);
 
-                HttpRequestInfo userVideosRequest =
-                        HttpRequestInfo.getUserVideosRequest(mUser.getId());
+                    HttpRequestInfo userVideosRequest =
+                            HttpRequestInfo.getUserVideosRequest(mUser.getId());
 
-                userVideoListIntent.putExtras(VideoListActivity
-                        .getStartExtras(VIDEO_LIST_TITLE, userVideosRequest));
+                    userVideoListIntent.putExtras(VideoListActivity
+                            .getStartExtras(VIDEO_LIST_TITLE, userVideosRequest));
 
-                Log.d(TAG, "start VideoListActivity of user videos");
-                startActivity(userVideoListIntent);
+                    Log.d(TAG, "start VideoListActivity of user videos");
+                    startActivity(userVideoListIntent);
+                } else {
+                    Toast.makeText(UserActivity.this, getString(R.string.txt_no_videos),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
 
         mTxtLikesTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent likedVideosIntent = new Intent(UserActivity.this, VideoListActivity.class);
+                if (mUser.getLikesCount() != 0) {
+                    Intent likedVideosIntent = new Intent(UserActivity.this, VideoListActivity.class);
 
-                HttpRequestInfo likedVideosRequest =
-                        HttpRequestInfo.getUserLikes(mUser.getId());
+                    HttpRequestInfo likedVideosRequest =
+                            HttpRequestInfo.getUserLikes(mUser.getId());
 
-                likedVideosIntent.putExtras(VideoListActivity
-                        .getStartExtras(LIKED_VIDEOS_TITLE, likedVideosRequest));
+                    likedVideosIntent.putExtras(VideoListActivity
+                            .getStartExtras(LIKED_VIDEOS_TITLE, likedVideosRequest));
 
-                Log.d(TAG, "start VideoListActivity of videos liked by user");
-                startActivity(likedVideosIntent);
+                    Log.d(TAG, "start VideoListActivity of videos liked by user");
+                    startActivity(likedVideosIntent);
+                } else {
+                    Toast.makeText(UserActivity.this, getString(R.string.txt_no_likes),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
 
         mTxtFllwngTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent fllwngUsersIntent = new Intent(UserActivity.this, UserListActivity.class);
+                if (mUser.getFollowingCount() != 0) {
+                    Intent fllwngUsersIntent = new Intent(UserActivity.this, UserListActivity.class);
 
-                HttpRequestInfo fllwngUsersRequest =
-                        HttpRequestInfo.getFollowedUsersRequest(mUser.getId());
+                    HttpRequestInfo fllwngUsersRequest =
+                            HttpRequestInfo.getFollowedUsersRequest(mUser.getId());
 
-                fllwngUsersIntent.putExtras(UserListActivity
-                        .getStartExtras(FOLLOWED_USERS_TITLE, fllwngUsersRequest));
+                    fllwngUsersIntent.putExtras(UserListActivity
+                            .getStartExtras(FOLLOWED_USERS_TITLE, fllwngUsersRequest));
 
-                Log.d(TAG, "start UserListActivity of followed users");
-                startActivity(fllwngUsersIntent);
+                    Log.d(TAG, "start UserListActivity of followed users");
+                    startActivity(fllwngUsersIntent);
+                } else {
+                    Toast.makeText(UserActivity.this, getString(R.string.txt_no_following),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
 
         mTxtFllwrsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent fllwrsIntent = new Intent(UserActivity.this, UserListActivity.class);
+                if (mUser.getFollowersCount() != 0) {
+                    Intent fllwrsIntent = new Intent(UserActivity.this, UserListActivity.class);
 
-                HttpRequestInfo fllwrsRequest =
-                        HttpRequestInfo.getFollowedUsersRequest(mUser.getId());
+                    HttpRequestInfo fllwrsRequest =
+                            HttpRequestInfo.getFollowedUsersRequest(mUser.getId());
 
-                fllwrsIntent.putExtras(UserListActivity
-                        .getStartExtras(FOLLOWERS_TITLE, fllwrsRequest));
+                    fllwrsIntent.putExtras(UserListActivity
+                            .getStartExtras(FOLLOWERS_TITLE, fllwrsRequest));
 
-                Log.d(TAG, "start UserListActivity of user followers");
-                startActivity(fllwrsIntent);
+                    Log.d(TAG, "start UserListActivity of user followers");
+                    startActivity(fllwrsIntent);
+                } else {
+                    Toast.makeText(UserActivity.this, getString(R.string.txt_no_followers),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
         mTxtGroupsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent groupsIntent = new Intent(UserActivity.this, GroupListActivity.class);
+                if (mUser.getGroupsCount() != 0) {
+                    Intent groupsIntent = new Intent(UserActivity.this, GroupListActivity.class);
 
-                HttpRequestInfo groupsRequest = HttpRequestInfo.getUserGroupsRequest(mUser.getId());
+                    HttpRequestInfo groupsRequest = HttpRequestInfo.getUserGroupsRequest(mUser.getId());
 
-                groupsIntent.putExtras(GroupListActivity
-                        .getStartExtras(GROUP_LIST_TITLE, groupsRequest));
+                    groupsIntent.putExtras(GroupListActivity
+                            .getStartExtras(GROUP_LIST_TITLE, groupsRequest));
 
-                Log.d(TAG, "start GroupListActivity of user's groups");
-                startActivity(groupsIntent);
+                    Log.d(TAG, "start GroupListActivity of user's groups");
+                    startActivity(groupsIntent);
+                } else {
+                    Toast.makeText(UserActivity.this, getString(R.string.txt_no_groups),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
 
         mTxtChannelsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent channelsIntent = new Intent(UserActivity.this, ChannelListActivity.class);
+                if (mUser.getChannelsCount() != 0) {
+                    Intent channelsIntent = new Intent(UserActivity.this, ChannelListActivity.class);
 
-                HttpRequestInfo channelsRequest =
-                        HttpRequestInfo.getUserChannelsRequest(mUser.getId());
+                    HttpRequestInfo channelsRequest =
+                            HttpRequestInfo.getUserChannelsRequest(mUser.getId());
 
-                channelsIntent.putExtras(ChannelListActivity
-                        .getStartExtras(CHANNEL_LIST_TITLE, channelsRequest));
+                    channelsIntent.putExtras(ChannelListActivity
+                            .getStartExtras(CHANNEL_LIST_TITLE, channelsRequest));
 
-                Log.d(TAG, "start ChannelListActivity of user's channels");
-                startActivity(channelsIntent);
+                    Log.d(TAG, "start ChannelListActivity of user's channels");
+                    startActivity(channelsIntent);
+                } else {
+                    Toast.makeText(UserActivity.this, getString(R.string.txt_no_channels), Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
     }
@@ -321,12 +360,14 @@ public class UserActivity extends Activity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        String action = getIntent().getAction();
         if(keyCode == KeyEvent.KEYCODE_BACK &&
-                getIntent().getAction().equals(LoginActivity.LOGGED_USER_ACTION)) {
+                action != null &&
+                action.equals(LoginActivity.LOGGED_USER_ACTION)) {
             Log.d(TAG, "back key press intercepted");
             return true;
         } else {
-            return false;
+            return super.onKeyDown(keyCode, event);
         }
     }
 

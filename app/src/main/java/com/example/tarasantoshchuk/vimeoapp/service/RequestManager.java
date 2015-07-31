@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
+import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 import com.example.tarasantoshchuk.vimeoapp.util.JSONParser;
 
 import org.json.JSONObject;
@@ -15,6 +17,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
+import java.util.Random;
 
 public class RequestManager {
     private static final String TAG = RequestManager.class.getSimpleName();
@@ -96,5 +100,10 @@ public class RequestManager {
             Log.d(TAG, "getAccessToken: fail");
             service.sendBroadcast(failIntent);
         }
+    }
+
+    public static void handleRequest(HttpRequestInfo requestInfo, String action,
+                                     HttpRequestService service) {
+
     }
 }

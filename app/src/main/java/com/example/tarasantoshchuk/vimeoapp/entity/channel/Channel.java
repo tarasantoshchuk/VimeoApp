@@ -9,9 +9,17 @@ import android.util.LruCache;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Channel implements Parcelable {
     private static final String TAG = Channel.class.getSimpleName();
+
+    private static final long DAYS_IN_MONTH = 30;
+    private static final long DAYS_IN_YEAR = 365;
+
+    private static final String DAY_FORMAT_STRING = "Created %d day(s) ago";
+    private static final String MONTH_FORMAT_STRING = "Created %d month(s) ago";
+    private static final String YEAR_FORMAT_STRING = "Created %d year(s) ago";
 
     private static final int CACHE_SIZE = 2 * 1024 * 1024;
 
@@ -71,6 +79,20 @@ public class Channel implements Parcelable {
 
     public Date getDateCreated() {
         return mDateCreated;
+    }
+
+    public String getCreatedString() {
+        long createdMillisCount = System.currentTimeMillis() - mDateCreated.getTime();
+
+        long createdDaysCount = TimeUnit.DAYS.convert(createdMillisCount, TimeUnit.MILLISECONDS);
+
+        if(createdDaysCount < DAYS_IN_MONTH) {
+            return String.format(DAY_FORMAT_STRING, createdDaysCount);
+        } else if (createdDaysCount < DAYS_IN_YEAR) {
+            return String.format(MONTH_FORMAT_STRING, createdDaysCount / DAYS_IN_MONTH);
+        } else {
+            return String.format(YEAR_FORMAT_STRING, createdDaysCount / DAYS_IN_YEAR);
+        }
     }
 
     public String getPictureUrl() {

@@ -36,6 +36,7 @@ public class HttpRequestService extends Service {
     public static final String COMMENT_LIST = "CommentList";
     public static final String ACCESS_TOKEN = "AccessToken";
     public static final String USER = "User";
+    public static final String CHANNEL = "Channel";
 
     public static final String NEXT_PAGE = "NextPage";
     public static final String PREV_PAGE = "PrevPage";
@@ -57,6 +58,7 @@ public class HttpRequestService extends Service {
     private static final String COMMENT_LIST_ACTION = "CommentListAction";
     private static final String ACCESS_TOKEN_ACTION = "AccessTokenAction";
     private static final String USER_ACTION = "UserAction";
+    private static final String CHANNEL_ACTION = "ChannelAction";
 
     public static IntentFilter getUserListIntentFilter() {
         IntentFilter userListFilter = new IntentFilter();
@@ -114,6 +116,14 @@ public class HttpRequestService extends Service {
         return userIntentFilter;
     }
 
+    public static IntentFilter getChannelIntentFilter() {
+        IntentFilter channelIntentFilter = new IntentFilter();
+
+        channelIntentFilter.addAction(CHANNEL_ACTION);
+
+        return channelIntentFilter;
+    }
+
     public static Bundle getStartExtras(HttpRequestInfo info) {
         Bundle bundle = new Bundle();
 
@@ -162,6 +172,9 @@ public class HttpRequestService extends Service {
                                 HttpRequestService.this);
                     }
                 });
+                break;
+            case HTTP_REQUEST_INFO:
+
                 break;
         }
 

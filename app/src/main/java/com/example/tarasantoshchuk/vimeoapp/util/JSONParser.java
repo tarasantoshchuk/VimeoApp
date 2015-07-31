@@ -28,6 +28,6 @@ public class JSONParser {
          * TODO: get user from json
          */
         return new User("id", "name", "UK", "BIO", "https://goo.gl/vbRLx8",
-                new Date(System.currentTimeMillis() - new Random().nextInt(999999999)), 10, 100, 1000, 1, 3, 29);
+                new Date(System.currentTimeMillis() - new Random().nextInt(999999999)), 0, 0, 0, 0, 0, 0);
     }
 }

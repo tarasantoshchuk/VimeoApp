@@ -28,4 +28,12 @@
     <string name="txt_auth_fail">Authorization fail</string>
     <string name="txt_auth_fail_msg">You rejected to connect VimeoApp to your account</string>
     <string name="access_token_address">" https://api.vimeo.com/oauth/access_token"</string>
+    <string name="txt_owner">Owner</string>
+    <string name="txt_no_videos">video list is empty</string>
+    <string name="txt_no_likes">likes list is empty</string>
+    <string name="txt_no_following">following list is empty</string>
+    <string name="txt_no_followers">followers list is empty</string>
+    <string name="txt_no_groups">groups list is empty</string>
+    <string name="txt_no_channels">channels list is empty</string>
+    <string name="txt_no_subscribers">subscribers list is empty</string>
 </resources>
