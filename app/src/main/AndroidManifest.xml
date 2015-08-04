@@ -38,6 +38,8 @@
 
         <activity android:name=".entity.comment.CommentListActivity"/>
 
+        <activity android:name=".activity.SearchActivity"/>
+
         <service android:name=".service.HttpRequestService"/>
     </application>
 

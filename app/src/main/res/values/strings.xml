@@ -47,4 +47,7 @@
     <string name="txt_day_created_format">Created %d day(s) ago</string>
     <string name="txt_month_created_format">Created %d month(s) ago</string>
     <string name="txt_year_created_format">Created %d year(s) ago</string>
+    <string name="txt_enter_search_name">enter name to search</string>
+    <string name="txt_choose_search_type">choose entity to search for</string>
+    <string name="txt_search_result">Search result</string>
 </resources>
