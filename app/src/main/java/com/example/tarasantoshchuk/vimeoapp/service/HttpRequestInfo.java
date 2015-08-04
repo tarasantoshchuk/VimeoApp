@@ -11,7 +11,6 @@ import java.util.HashMap;
  */
 public class HttpRequestInfo implements Serializable {
     static final String BASIC_URL = "https://api.vimeo.com";
-    private static final String EMPTY = "";
 
     /**
      * endpoint strings
@@ -51,24 +50,26 @@ public class HttpRequestInfo implements Serializable {
 
     enum ExpectedResult {
         USER, USER_LIST, VIDEO, VIDEO_LIST, GROUP, GROUP_LIST, CHANNEL, CHANNEL_LIST, COMMENT_LIST,
-        BOOLEAN, VOID;
+        BOOLEAN
     }
 
     RequestMethod mMethod;
+    String mAction;
     ExpectedResult mResult;
     String mEndpoint;
     HashMap<String, String> mParameters;
 
     private HttpRequestInfo() {
         mParameters = new HashMap<String, String>();
-        mEndpoint = EMPTY;
+        mEndpoint = "";
     }
 
-    private HttpRequestInfo(RequestMethod method, ExpectedResult result) {
+    private HttpRequestInfo(RequestMethod method, ExpectedResult result, String action) {
         this();
 
         mMethod = method;
         mResult = result;
+        mAction = action;
     }
 
     private void appendToEndpoint(String str) {
@@ -82,7 +83,8 @@ public class HttpRequestInfo implements Serializable {
 
 
     public static HttpRequestInfo getMyInfoRequest() {
-        HttpRequestInfo myInfoRequest = new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER);
+        HttpRequestInfo myInfoRequest = new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER,
+                HttpRequestService.USER_ACTION);
 
         myInfoRequest.appendToEndpoint(ME);
 
@@ -92,7 +94,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getIsChannelSubscriberRequest(String channelId) {
         HttpRequestInfo isChannelSubscriber =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN,
+                        HttpRequestService.IS_SUBSCRIBER_ACTION);
 
         isChannelSubscriber.appendToEndpoint(ME);
         isChannelSubscriber.appendToEndpoint(CHANNELS);
@@ -102,31 +105,34 @@ public class HttpRequestInfo implements Serializable {
     }
 
     public static HttpRequestInfo getSubscribeRequest(String channelId) {
-        HttpRequestInfo isChannelSubscriber =
-                new HttpRequestInfo(RequestMethod.PUT, ExpectedResult.VOID);
+        HttpRequestInfo subscribeRequest =
+                new HttpRequestInfo(RequestMethod.PUT, ExpectedResult.BOOLEAN,
+                        HttpRequestService.CHANGE_SUBSCRIBE_STATE_ACTION);
 
-        isChannelSubscriber.appendToEndpoint(ME);
-        isChannelSubscriber.appendToEndpoint(CHANNELS);
-        isChannelSubscriber.appendToEndpoint(channelId);
+        subscribeRequest.appendToEndpoint(ME);
+        subscribeRequest.appendToEndpoint(CHANNELS);
+        subscribeRequest.appendToEndpoint(channelId);
 
-        return isChannelSubscriber;
+        return subscribeRequest;
     }
 
     public static HttpRequestInfo getUnsubscribeRequest(String channelId) {
-        HttpRequestInfo isChannelSubscriber =
-                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.VOID);
+        HttpRequestInfo unsubscribeRequest =
+                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.BOOLEAN,
+                        HttpRequestService.CHANGE_SUBSCRIBE_STATE_ACTION);
 
-        isChannelSubscriber.appendToEndpoint(ME);
-        isChannelSubscriber.appendToEndpoint(CHANNELS);
-        isChannelSubscriber.appendToEndpoint(channelId);
+        unsubscribeRequest.appendToEndpoint(ME);
+        unsubscribeRequest.appendToEndpoint(CHANNELS);
+        unsubscribeRequest.appendToEndpoint(channelId);
 
-        return isChannelSubscriber;
+        return unsubscribeRequest;
     }
 
 
     public static HttpRequestInfo getIsInGroupRequest(String groupId) {
         HttpRequestInfo isInGroup =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN,
+                        HttpRequestService.IS_MEMBER_ACTION);
 
         isInGroup.appendToEndpoint(ME);
         isInGroup.appendToEndpoint(GROUPS);
@@ -137,7 +143,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getJoinGroupRequest(String groupId) {
         HttpRequestInfo joinGroup =
-                new HttpRequestInfo(RequestMethod.PUT, ExpectedResult.VOID);
+                new HttpRequestInfo(RequestMethod.PUT, ExpectedResult.BOOLEAN,
+                        HttpRequestService.CHANGE_MEMBER_STATE_ACTION);
 
         joinGroup.appendToEndpoint(ME);
         joinGroup.appendToEndpoint(GROUPS);
@@ -148,7 +155,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getLeaveGroupRequest(String groupId) {
         HttpRequestInfo leaveGroup =
-                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.VOID);
+                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.BOOLEAN,
+                        HttpRequestService.CHANGE_MEMBER_STATE_ACTION);
 
         leaveGroup.appendToEndpoint(ME);
         leaveGroup.appendToEndpoint(GROUPS);
@@ -160,7 +168,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getIsFollowingRequest(String userId) {
         HttpRequestInfo isFollowing =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN,
+                        HttpRequestService.IS_FOLLOWING_ACTION);
 
         isFollowing.appendToEndpoint(ME);
         isFollowing.appendToEndpoint(FOLLOWING);
@@ -171,7 +180,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getFollowRequest(String userId) {
         HttpRequestInfo followRequest = new
-                HttpRequestInfo(RequestMethod.PUT, ExpectedResult.VOID);
+                HttpRequestInfo(RequestMethod.PUT, ExpectedResult.BOOLEAN,
+                HttpRequestService.CHANGE_FOLLOW_STATE_ACTION);
 
         followRequest.appendToEndpoint(ME);
         followRequest.appendToEndpoint(FOLLOWING);
@@ -182,7 +192,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUnfollowRequest(String userId) {
         HttpRequestInfo unfollowRequest =
-                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.VOID);
+                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.BOOLEAN,
+                        HttpRequestService.CHANGE_FOLLOW_STATE_ACTION);
 
         unfollowRequest.appendToEndpoint(ME);
         unfollowRequest.appendToEndpoint(FOLLOWING);
@@ -194,7 +205,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getIsLikedRequest(String videoId) {
         HttpRequestInfo isLiked =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.BOOLEAN,
+                        HttpRequestService.IS_LIKED_ACTION);
 
         isLiked.appendToEndpoint(ME);
         isLiked.appendToEndpoint(LIKES);
@@ -205,7 +217,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getLikeRequest(String videoId) {
         HttpRequestInfo likeRequest =
-                new HttpRequestInfo(RequestMethod.PUT, ExpectedResult.VOID);
+                new HttpRequestInfo(RequestMethod.PUT, ExpectedResult.BOOLEAN,
+                        HttpRequestService.CHANGE_LIKE_STATE_ACTION);
 
         likeRequest.appendToEndpoint(ME);
         likeRequest.appendToEndpoint(LIKES);
@@ -216,7 +229,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getDislikeRequest(String videoId) {
         HttpRequestInfo dislikeRequest =
-                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.VOID);
+                new HttpRequestInfo(RequestMethod.DELETE, ExpectedResult.BOOLEAN,
+                        HttpRequestService.CHANGE_LIKE_STATE_ACTION);
 
         dislikeRequest.appendToEndpoint(ME);
         dislikeRequest.appendToEndpoint(LIKES);
@@ -228,7 +242,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUserSearchRequest(String query) {
         HttpRequestInfo userSearchRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST,
+                        HttpRequestService.USER_LIST_ACTION);
 
         userSearchRequest.appendToEndpoint(USERS);
 
@@ -239,7 +254,9 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getVideoSearchRequest(String query) {
         HttpRequestInfo userSearchRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST,
+
+                        HttpRequestService.VIDEO_LIST_ACTION);
 
         userSearchRequest.appendToEndpoint(VIDEOS);
 
@@ -250,7 +267,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getChannelSearchRequest(String query) {
         HttpRequestInfo userSearchRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.CHANNEL_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.CHANNEL_LIST,
+                        HttpRequestService.CHANNEL_LIST_ACTION);
 
         userSearchRequest.appendToEndpoint(CHANNELS);
 
@@ -261,7 +279,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getGroupSearchRequest(String query) {
         HttpRequestInfo userSearchRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.GROUP_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.GROUP_LIST,
+                        HttpRequestService.GROUP_LIST_ACTION);
 
         userSearchRequest.appendToEndpoint(GROUPS);
 
@@ -273,7 +292,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUserInfoRequest(String userId) {
         HttpRequestInfo userInfoRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER,
+                        HttpRequestService.USER_ACTION);
 
         userInfoRequest.appendToEndpoint(USERS);
         userInfoRequest.appendToEndpoint(userId);
@@ -283,7 +303,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getGroupInfoRequest(String groupId) {
         HttpRequestInfo groupInfoRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.GROUP);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.GROUP,
+                        HttpRequestService.GROUP_ACTION);
 
         groupInfoRequest.appendToEndpoint(GROUPS);
         groupInfoRequest.appendToEndpoint(groupId);
@@ -293,7 +314,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getChannelInfoRequest(String channelId) {
         HttpRequestInfo channelInfoRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.CHANNEL);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.CHANNEL,
+                        HttpRequestService.CHANNEL_ACTION);
 
         channelInfoRequest.appendToEndpoint(CHANNELS);
         channelInfoRequest.appendToEndpoint(channelId);
@@ -303,7 +325,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getVideoInfoRequest(String videoId) {
         HttpRequestInfo videoInfoRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO,
+                        HttpRequestService.VIDEO_ACTION);
 
         videoInfoRequest.appendToEndpoint(VIDEOS);
         videoInfoRequest.appendToEndpoint(videoId);
@@ -314,7 +337,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUserVideosRequest(String userId) {
         HttpRequestInfo userVideosRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST,
+                        HttpRequestService.VIDEO_LIST_ACTION);
 
         userVideosRequest.appendToEndpoint(USERS);
         userVideosRequest.appendToEndpoint(userId);
@@ -325,7 +349,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUserChannelsRequest(String userId) {
         HttpRequestInfo userChannelsRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.CHANNEL_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.CHANNEL_LIST,
+                        HttpRequestService.CHANNEL_LIST_ACTION);
 
         userChannelsRequest.appendToEndpoint(USERS);
         userChannelsRequest.appendToEndpoint(userId);
@@ -336,7 +361,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUserGroupsRequest(String userId) {
         HttpRequestInfo userGroupsRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.GROUP_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.GROUP_LIST,
+                        HttpRequestService.GROUP_LIST_ACTION);
 
         userGroupsRequest.appendToEndpoint(USERS);
         userGroupsRequest.appendToEndpoint(userId);
@@ -347,7 +373,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUserFollowersRequest(String userId) {
         HttpRequestInfo userFollowersRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST,
+                        HttpRequestService.USER_LIST_ACTION);
 
         userFollowersRequest.appendToEndpoint(USERS);
         userFollowersRequest.appendToEndpoint(userId);
@@ -358,7 +385,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getFollowedUsersRequest(String userId) {
         HttpRequestInfo followingUsersRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST,
+                        HttpRequestService.USER_LIST_ACTION);
 
         followingUsersRequest.appendToEndpoint(USERS);
         followingUsersRequest.appendToEndpoint(userId);
@@ -369,7 +397,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getUserLikes(String userId) {
         HttpRequestInfo userLikesRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST,
+                        HttpRequestService.VIDEO_LIST_ACTION);
 
         userLikesRequest.appendToEndpoint(USERS);
         userLikesRequest.appendToEndpoint(userId);
@@ -381,7 +410,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getRelatedVideosRequest(String videoId) {
         HttpRequestInfo relatedVideosRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST,
+                        HttpRequestService.VIDEO_LIST_ACTION);
 
         relatedVideosRequest.appendToEndpoint(VIDEOS);
         relatedVideosRequest.appendToEndpoint(videoId);
@@ -392,7 +422,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getCommentsRequest(String videoId) {
         HttpRequestInfo commentsRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.COMMENT_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.COMMENT_LIST,
+                        HttpRequestService.CHANNEL_LIST_ACTION);
 
         commentsRequest.appendToEndpoint(VIDEOS);
         commentsRequest.appendToEndpoint(videoId);
@@ -403,7 +434,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getCommentRepliesRequest(String videoId, String commentId) {
         HttpRequestInfo repliesRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.COMMENT_LIST );
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.COMMENT_LIST,
+                        HttpRequestService.COMMENT_LIST_ACTION);
 
         repliesRequest.appendToEndpoint(VIDEOS);
         repliesRequest.appendToEndpoint(videoId);
@@ -416,7 +448,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getVideoLikesRequest(String videoId) {
         HttpRequestInfo videoLikesRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST,
+                        HttpRequestService.USER_LIST_ACTION);
 
         videoLikesRequest.appendToEndpoint(VIDEOS);
         videoLikesRequest.appendToEndpoint(videoId);
@@ -428,7 +461,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getChannelVideosRequest(String channelId) {
         HttpRequestInfo channelVideosRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST,
+                        HttpRequestService.VIDEO_LIST_ACTION);
 
         channelVideosRequest.appendToEndpoint(CHANNELS);
         channelVideosRequest.appendToEndpoint(channelId);
@@ -439,7 +473,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getChannelUsersRequest(String channelId) {
         HttpRequestInfo channelUsersRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST,
+                        HttpRequestService.USER_LIST_ACTION);
 
         channelUsersRequest.appendToEndpoint(CHANNELS);
         channelUsersRequest.appendToEndpoint(channelId);
@@ -451,7 +486,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getGroupVideosRequest(String groupId) {
         HttpRequestInfo groupVideosRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.VIDEO_LIST,
+                        HttpRequestService.VIDEO_LIST_ACTION);
 
         groupVideosRequest.appendToEndpoint(GROUPS);
         groupVideosRequest.appendToEndpoint(groupId);
@@ -462,7 +498,8 @@ public class HttpRequestInfo implements Serializable {
 
     public static HttpRequestInfo getGroupUsersRequest(String groupId) {
         HttpRequestInfo groupUsersRequest =
-                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST);
+                new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER_LIST,
+                        HttpRequestService.USER_LIST_ACTION);
 
         groupUsersRequest.appendToEndpoint(GROUPS);
         groupUsersRequest.appendToEndpoint(groupId);

@@ -35,16 +35,24 @@ public class HttpRequestService extends Service {
         HTTP_REQUEST_INFO, AUTHORIZATION_CODE
     }
 
-    private static final String USER_LIST_ACTION = "UserListAction";
-    private static final String VIDEO_LIST_ACTION = "VideoListAction";
-    private static final String GROUP_LIST_ACTION = "GroupListAction";
-    private static final String CHANNEL_LIST_ACTION = "ChannelListAction";
-    private static final String COMMENT_LIST_ACTION = "CommentListAction";
-    private static final String ACCESS_TOKEN_ACTION = "AccessTokenAction";
-    private static final String USER_ACTION = "UserAction";
-    private static final String CHANNEL_ACTION = "ChannelAction";
-    private static final String GROUP_ACTION = "GroupAction";
-    private static final String VIDEO_ACTION = "VideoAction";
+    static final String USER_LIST_ACTION = "UserListAction";
+    static final String VIDEO_LIST_ACTION = "VideoListAction";
+    static final String GROUP_LIST_ACTION = "GroupListAction";
+    static final String CHANNEL_LIST_ACTION = "ChannelListAction";
+    static final String COMMENT_LIST_ACTION = "CommentListAction";
+    static final String ACCESS_TOKEN_ACTION = "AccessTokenAction";
+    static final String USER_ACTION = "UserAction";
+    static final String CHANNEL_ACTION = "ChannelAction";
+    static final String GROUP_ACTION = "GroupAction";
+    static final String VIDEO_ACTION = "VideoAction";
+    static final String IS_SUBSCRIBER_ACTION = "IsSubscriberAction";
+    static final String CHANGE_SUBSCRIBE_STATE_ACTION = "ChangeSubscribeStateAction";
+    static final String IS_MEMBER_ACTION = "IsMemberAction";
+    static final String CHANGE_MEMBER_STATE_ACTION = "ChangeMemberStateAction";
+    static final String IS_FOLLOWING_ACTION = "IsFollowingAction";
+    static final String CHANGE_FOLLOW_STATE_ACTION = "ChangeFollowStateAction";
+    static final String IS_LIKED_ACTION = "IsLikedAction";
+    static final String CHANGE_LIKE_STATE_ACTION = "ChangeLikeStateAction";
 
     public static IntentFilter getUserListIntentFilter() {
         IntentFilter userListFilter = new IntentFilter();
@@ -181,15 +189,11 @@ public class HttpRequestService extends Service {
 
                 final HttpRequestInfo requestInfo = (HttpRequestInfo)
                         intent.getSerializableExtra(HTTP_REQUEST_INFO);
-                /**
-                 * TODO: get action from request info
-                 */
-                final String action = null;
+
                 mExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        RequestManager.handleRequest(requestInfo, action,
-                                HttpRequestService.this);
+                        RequestManager.handleRequest(requestInfo, HttpRequestService.this);
                     }
                 });
                 break;

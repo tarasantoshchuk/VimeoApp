@@ -97,7 +97,7 @@ public class RequestManager {
         }
     }
 
-    public static void handleRequest(HttpRequestInfo requestInfo, String action,
-                                     HttpRequestService service) {
+    public static void handleRequest(HttpRequestInfo requestInfo, HttpRequestService service) {
+
     }
 }
