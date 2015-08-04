@@ -3,13 +3,11 @@ package com.example.tarasantoshchuk.vimeoapp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -18,7 +16,7 @@ import com.example.tarasantoshchuk.vimeoapp.entity.channel.ChannelListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.group.GroupListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.video.VideoListActivity;
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
+import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
 
 public class SearchActivity extends Activity {
     private static final String TAG = SearchActivity.class.getSimpleName();

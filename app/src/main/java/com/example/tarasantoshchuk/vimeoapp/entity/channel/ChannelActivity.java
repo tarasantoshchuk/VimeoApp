@@ -20,7 +20,7 @@ import com.example.tarasantoshchuk.vimeoapp.entity.user.UserListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.video.VideoListActivity;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
+import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
 
 import java.io.IOException;
 import java.net.URL;

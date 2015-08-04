@@ -1,8 +1,4 @@
-package com.example.tarasantoshchuk.vimeoapp.util;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.provider.MediaStore;
+package com.example.tarasantoshchuk.vimeoapp.service;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -14,7 +10,7 @@ import java.util.HashMap;
  * nested class
  */
 public class HttpRequestInfo implements Serializable {
-    private static final String BASIC_URL = "https://api.vimeo.com";
+    static final String BASIC_URL = "https://api.vimeo.com";
     private static final String EMPTY = "";
 
     /**
@@ -36,7 +32,7 @@ public class HttpRequestInfo implements Serializable {
      */
     private static final String QUERY = "query";
 
-    private enum RequestMethod {
+    enum RequestMethod {
         GET("GET"),
         POST("POST"),
         PUT("PUT"),
@@ -53,15 +49,15 @@ public class HttpRequestInfo implements Serializable {
         }
     }
 
-    private enum ExpectedResult {
+    enum ExpectedResult {
         USER, USER_LIST, VIDEO, VIDEO_LIST, GROUP, GROUP_LIST, CHANNEL, CHANNEL_LIST, COMMENT_LIST,
         BOOLEAN, VOID;
     }
 
-    private RequestMethod mMethod;
-    private ExpectedResult mResult;
-    private String mEndpoint;
-    private HashMap<String, String> mParameters;
+    RequestMethod mMethod;
+    ExpectedResult mResult;
+    String mEndpoint;
+    HashMap<String, String> mParameters;
 
     private HttpRequestInfo() {
         mParameters = new HashMap<String, String>();
@@ -82,6 +78,8 @@ public class HttpRequestInfo implements Serializable {
     /**
      * methods that create HttpRequestInfo for specific requests
      */
+
+
 
     public static HttpRequestInfo getMyInfoRequest() {
         HttpRequestInfo myInfoRequest = new HttpRequestInfo(RequestMethod.GET, ExpectedResult.USER);

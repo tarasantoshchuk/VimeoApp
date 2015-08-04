@@ -1,15 +1,10 @@
 package com.example.tarasantoshchuk.vimeoapp.service;
 
-import android.app.Service;
 import android.content.Intent;
 import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
-import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
-import com.example.tarasantoshchuk.vimeoapp.entity.group.Group;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
-import com.example.tarasantoshchuk.vimeoapp.entity.video.Video;
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 import com.example.tarasantoshchuk.vimeoapp.util.JSONParser;
 
 import org.json.JSONObject;
@@ -19,8 +14,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.Random;
 
 public class RequestManager {
     private static final String TAG = RequestManager.class.getSimpleName();

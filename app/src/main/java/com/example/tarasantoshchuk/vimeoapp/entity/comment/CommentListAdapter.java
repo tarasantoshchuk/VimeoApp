@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
+import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
 
 import java.io.IOException;
 import java.net.URL;

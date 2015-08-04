@@ -7,24 +7,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.example.tarasantoshchuk.vimeoapp.R;
-import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
-import com.example.tarasantoshchuk.vimeoapp.entity.comment.Comment;
-import com.example.tarasantoshchuk.vimeoapp.entity.group.Group;
-import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
-import com.example.tarasantoshchuk.vimeoapp.entity.user.UserList;
-import com.example.tarasantoshchuk.vimeoapp.entity.video.Video;
-import com.example.tarasantoshchuk.vimeoapp.entity.video.VideoList;
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
-import com.example.tarasantoshchuk.vimeoapp.util.JSONParser;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

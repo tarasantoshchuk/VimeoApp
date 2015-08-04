@@ -1,35 +1,19 @@
 package com.example.tarasantoshchuk.vimeoapp.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Point;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
-import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
-import com.example.tarasantoshchuk.vimeoapp.entity.channel.ChannelActivity;
-import com.example.tarasantoshchuk.vimeoapp.entity.group.Group;
-import com.example.tarasantoshchuk.vimeoapp.entity.group.GroupActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
-import com.example.tarasantoshchuk.vimeoapp.entity.video.Video;
-import com.example.tarasantoshchuk.vimeoapp.entity.video.VideoActivity;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
-import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
-import com.example.tarasantoshchuk.vimeoapp.util.JSONParser;
-
-import java.util.Date;
-import java.util.Random;
 
 public class LoginActivity extends Activity {
     public static final String LOGGED_USER_ACTION = "LoggedUserAction";
