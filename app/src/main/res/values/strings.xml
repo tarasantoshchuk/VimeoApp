@@ -38,4 +38,13 @@
     <string name="txt_no_subscribers">subscribers list is empty</string>
     <string name="txt_no_members">member list is empty</string>
     <string name="txt_members">Members</string>
+    <string name="txt_comments">Comments</string>
+    <string name="txt_no_comments">comments list is empty</string>
+    <string name="txt_search_type_title">Choose entity to search for:</string>
+    <string name="txt_search_title">Search</string>
+    <string name="txt_search_query_hint">enter name to search</string>
+    <string name="btn_find">Find</string>
+    <string name="txt_day_created_format">Created %d day(s) ago</string>
+    <string name="txt_month_created_format">Created %d month(s) ago</string>
+    <string name="txt_year_created_format">Created %d year(s) ago</string>
 </resources>

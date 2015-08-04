@@ -8,6 +8,7 @@ import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.channel.Channel;
 import com.example.tarasantoshchuk.vimeoapp.entity.group.Group;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
+import com.example.tarasantoshchuk.vimeoapp.entity.video.Video;
 import com.example.tarasantoshchuk.vimeoapp.util.HttpRequestInfo;
 import com.example.tarasantoshchuk.vimeoapp.util.JSONParser;
 
@@ -105,6 +106,5 @@ public class RequestManager {
 
     public static void handleRequest(HttpRequestInfo requestInfo, String action,
                                      HttpRequestService service) {
-
     }
 }

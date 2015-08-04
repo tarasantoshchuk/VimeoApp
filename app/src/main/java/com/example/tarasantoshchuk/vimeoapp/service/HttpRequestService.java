@@ -38,6 +38,7 @@ public class HttpRequestService extends Service {
     public static final String USER = "User";
     public static final String CHANNEL = "Channel";
     public static final String GROUP = "Group";
+    public static final String VIDEO = "Video";
 
     public static final String NEXT_PAGE = "NextPage";
     public static final String PREV_PAGE = "PrevPage";
@@ -61,6 +62,7 @@ public class HttpRequestService extends Service {
     private static final String USER_ACTION = "UserAction";
     private static final String CHANNEL_ACTION = "ChannelAction";
     private static final String GROUP_ACTION = "GroupAction";
+    private static final String VIDEO_ACTION = "VideoAction";
 
     public static IntentFilter getUserListIntentFilter() {
         IntentFilter userListFilter = new IntentFilter();
@@ -132,6 +134,14 @@ public class HttpRequestService extends Service {
         groupIntentFilter.addAction(GROUP_ACTION);
 
         return groupIntentFilter;
+    }
+
+    public static IntentFilter getVideoIntentFilter() {
+        IntentFilter videoIntentFilter = new IntentFilter();
+
+        videoIntentFilter.addAction(VIDEO_ACTION);
+
+        return videoIntentFilter;
     }
 
     public static Bundle getStartExtras(HttpRequestInfo info) {

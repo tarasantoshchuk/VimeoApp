@@ -9,9 +9,12 @@ import android.util.LruCache;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Video implements Parcelable {
     private static final String TAG = Video.class.getSimpleName();
+    private static final String EMBED_CODE_FORMAT_STRING =
+            "<html><body style=\"margin: 0; padding: 0;height: 100%%\">%s</body></html>";
 
     private static final int SECONDS_IN_MINUTE = 60;
     private static final int SECONDS_IN_HOUR = 60 * 60;
@@ -99,7 +102,7 @@ public class Video implements Parcelable {
     }
 
     public String getEmbedHtml() {
-        return mEmbedHtml;
+        return String.format(EMBED_CODE_FORMAT_STRING, mEmbedHtml);
     }
 
     public Date getDateCreated() {
