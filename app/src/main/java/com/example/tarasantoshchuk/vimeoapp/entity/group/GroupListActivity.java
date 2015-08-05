@@ -125,7 +125,7 @@ public class GroupListActivity extends Activity {
             Log.d(TAG, "GroupListReceiver.onReceive");
 
             ArrayList<Group> list =
-                    intent.getParcelableArrayListExtra(HttpRequestService.GROUP_LIST_RESULT_KEY);
+                    intent.getParcelableArrayListExtra(HttpRequestService.KEY_GROUP_LIST_RESULT);
 
             if(list != null) {
 
@@ -134,11 +134,11 @@ public class GroupListActivity extends Activity {
                 adapter.updateList(list);
 
                 final HttpRequestInfo nextPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_NEXT_PAGE_RESULT);
                 setButton(mBtnGroupListNext, nextPage);
 
                 final HttpRequestInfo prevPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_PREV_PAGE_RESULT);
                 setButton(mBtnGroupListPrev, prevPage);
             } else {
                 Alerts.showConnectionFailedAlert(GroupListActivity.this);

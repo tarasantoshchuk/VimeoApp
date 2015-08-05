@@ -71,6 +71,7 @@ public class StartActivity extends Activity {
                 .append(getString(R.string.client_id))
                 .append("&redirect_uri=")
                 .append(getString(R.string.callback_url))
+                .append("&scope=public private interact")
                 .append("&state=")
                 .append(getString(R.string.client_state))
                 .toString();

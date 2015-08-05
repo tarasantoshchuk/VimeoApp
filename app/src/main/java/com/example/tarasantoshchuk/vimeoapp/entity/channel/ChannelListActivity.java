@@ -126,7 +126,7 @@ public class ChannelListActivity extends Activity {
             Log.d(TAG, "ChannelListReceiver.onReceive");
 
             ArrayList<Channel> list =
-                    intent.getParcelableArrayListExtra(HttpRequestService.CHANNEL_LIST_RESULT_KEY);
+                    intent.getParcelableArrayListExtra(HttpRequestService.KEY_CHANNEL_LIST_RESULT);
 
             if (list != null) {
                 ChannelListAdapter adapter = (ChannelListAdapter) mChannelList.getAdapter();
@@ -134,11 +134,11 @@ public class ChannelListActivity extends Activity {
                 adapter.updateList(list);
 
                 final HttpRequestInfo nextPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_NEXT_PAGE_RESULT);
                 setButton(mBtnChannelListNext, nextPage);
 
                 final HttpRequestInfo prevPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_PREV_PAGE_RESULT);
                 setButton(mBtnChannelListPrev, prevPage);
             } else {
                 Alerts.showConnectionFailedAlert(ChannelListActivity.this);

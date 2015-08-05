@@ -11,19 +11,23 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HttpRequestService extends Service {
-    public static final String USER_LIST = "UserList";
-    public static final String VIDEO_LIST = "VideoList";
-    public static final String GROUP_LIST = "GroupList";
-    public static final String CHANNEL_LIST = "ChannelList";
-    public static final String COMMENT_LIST = "CommentList";
-    public static final String ACCESS_TOKEN = "AccessToken";
-    public static final String USER = "User";
-    public static final String CHANNEL = "Channel";
-    public static final String GROUP = "Group";
-    public static final String VIDEO = "Video";
+    /**
+     * keys for intent extras in broadcasts
+     */
+    public static final String KEY_USER_LIST_RESULT = "UserList";
+    public static final String KEY_VIDEO_LIST_RESULT = "VideoList";
+    public static final String KEY_GROUP_LIST_RESULT = "GroupList";
+    public static final String KEY_CHANNEL_LIST_RESULT = "ChannelList";
+    public static final String KEY_COMMENT_LIST_RESULT = "CommentList";
+    public static final String KEY_ACCESS_TOKEN_RESULT = "AccessToken";
+    public static final String KEY_USER_RESULT = "User";
+    public static final String KEY_CHANNEL_RESULT = "Channel";
+    public static final String KEY_GROUP_RESULT = "Group";
+    public static final String KEY_VIDEO_RESULT = "Video";
+    public static final String KEY_BOOLEAN_RESULT = "Boolean";
 
-    public static final String NEXT_PAGE = "NextPage";
-    public static final String PREV_PAGE = "PrevPage";
+    public static final String KEY_NEXT_PAGE_RESULT = "NextPage";
+    public static final String KEY_PREV_PAGE_RESULT = "PrevPage";
 
     private static final String TAG = HttpRequestService.class.getSimpleName();
 
@@ -35,29 +39,29 @@ public class HttpRequestService extends Service {
         HTTP_REQUEST_INFO, AUTHORIZATION_CODE
     }
 
-    static final String USER_LIST_ACTION = "UserListAction";
-    static final String VIDEO_LIST_ACTION = "VideoListAction";
-    static final String GROUP_LIST_ACTION = "GroupListAction";
-    static final String CHANNEL_LIST_ACTION = "ChannelListAction";
-    static final String COMMENT_LIST_ACTION = "CommentListAction";
-    static final String ACCESS_TOKEN_ACTION = "AccessTokenAction";
-    static final String USER_ACTION = "UserAction";
-    static final String CHANNEL_ACTION = "ChannelAction";
-    static final String GROUP_ACTION = "GroupAction";
-    static final String VIDEO_ACTION = "VideoAction";
-    static final String IS_SUBSCRIBER_ACTION = "IsSubscriberAction";
-    static final String CHANGE_SUBSCRIBE_STATE_ACTION = "ChangeSubscribeStateAction";
-    static final String IS_MEMBER_ACTION = "IsMemberAction";
-    static final String CHANGE_MEMBER_STATE_ACTION = "ChangeMemberStateAction";
-    static final String IS_FOLLOWING_ACTION = "IsFollowingAction";
-    static final String CHANGE_FOLLOW_STATE_ACTION = "ChangeFollowStateAction";
-    static final String IS_LIKED_ACTION = "IsLikedAction";
-    static final String CHANGE_LIKE_STATE_ACTION = "ChangeLikeStateAction";
+    static final String ACTION_USER_LIST = "UserListAction";
+    static final String ACTION_VIDEO_LIST = "VideoListAction";
+    static final String ACTION_GROUP_LIST = "GroupListAction";
+    static final String ACTION_CHANNEL_LIST = "ChannelListAction";
+    static final String ACTION_COMMENT_LIST = "CommentListAction";
+    static final String ACTION_ACCESS_TOKEN = "AccessTokenAction";
+    static final String ACTION_USER = "UserAction";
+    static final String ACTION_CHANNEL = "ChannelAction";
+    static final String ACTION_GROUP = "GroupAction";
+    static final String ACTION_VIDEO = "VideoAction";
+    static final String ACTION_IS_SUBSCRIBER = "IsSubscriberAction";
+    static final String ACTION_CHANGE_SUBSCRIBE_STATE = "ChangeSubscribeStateAction";
+    static final String ACTION_IS_MEMBER = "IsMemberAction";
+    static final String ACTION_CHANGE_MEMBER_STATE = "ChangeMemberStateAction";
+    static final String ACTION_IS_FOLLOWING = "IsFollowingAction";
+    static final String ACTION_CHANGE_FOLLOW_STATE = "ChangeFollowStateAction";
+    static final String ACTION_IS_LIKED = "IsLikedAction";
+    static final String ACTION_CHANGE_LIKE_STATE = "ChangeLikeStateAction";
 
     public static IntentFilter getUserListIntentFilter() {
         IntentFilter userListFilter = new IntentFilter();
 
-        userListFilter.addAction(USER_LIST_ACTION);
+        userListFilter.addAction(ACTION_USER_LIST);
 
         return userListFilter;
     }
@@ -65,7 +69,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getVideoListIntentFilter() {
         IntentFilter videoListFilter = new IntentFilter();
 
-        videoListFilter.addAction(VIDEO_LIST_ACTION);
+        videoListFilter.addAction(ACTION_VIDEO_LIST);
 
         return videoListFilter;
     }
@@ -73,7 +77,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getGroupListIntentFilter() {
         IntentFilter groupListFilter = new IntentFilter();
 
-        groupListFilter.addAction(GROUP_LIST_ACTION);
+        groupListFilter.addAction(ACTION_GROUP_LIST);
 
         return groupListFilter;
     }
@@ -81,7 +85,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getChannelListIntentFilter() {
         IntentFilter channelListFilter = new IntentFilter();
 
-        channelListFilter.addAction(CHANNEL_LIST_ACTION);
+        channelListFilter.addAction(ACTION_CHANNEL_LIST);
 
         return channelListFilter;
     }
@@ -89,7 +93,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getCommentListIntentFilter() {
         IntentFilter commentListFilter = new IntentFilter();
 
-        commentListFilter.addAction(COMMENT_LIST_ACTION);
+        commentListFilter.addAction(ACTION_COMMENT_LIST);
 
         return commentListFilter;
     }
@@ -97,7 +101,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getAccessTokenIntentFilter() {
         IntentFilter accessTokenFilter = new IntentFilter();
 
-        accessTokenFilter.addAction(ACCESS_TOKEN_ACTION);
+        accessTokenFilter.addAction(ACTION_ACCESS_TOKEN);
 
         return accessTokenFilter;
     }
@@ -105,7 +109,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getUserIntentFilter() {
         IntentFilter userIntentFilter = new IntentFilter();
 
-        userIntentFilter.addAction(USER_ACTION);
+        userIntentFilter.addAction(ACTION_USER);
 
         return userIntentFilter;
     }
@@ -113,7 +117,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getChannelIntentFilter() {
         IntentFilter channelIntentFilter = new IntentFilter();
 
-        channelIntentFilter.addAction(CHANNEL_ACTION);
+        channelIntentFilter.addAction(ACTION_CHANNEL);
 
         return channelIntentFilter;
     }
@@ -121,7 +125,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getGroupIntentFilter() {
         IntentFilter groupIntentFilter = new IntentFilter();
 
-        groupIntentFilter.addAction(GROUP_ACTION);
+        groupIntentFilter.addAction(ACTION_GROUP);
 
         return groupIntentFilter;
     }
@@ -129,7 +133,7 @@ public class HttpRequestService extends Service {
     public static IntentFilter getVideoIntentFilter() {
         IntentFilter videoIntentFilter = new IntentFilter();
 
-        videoIntentFilter.addAction(VIDEO_ACTION);
+        videoIntentFilter.addAction(ACTION_VIDEO);
 
         return videoIntentFilter;
     }
@@ -178,14 +182,13 @@ public class HttpRequestService extends Service {
                 mExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        RequestManager.getAccessToken(code, ACCESS_TOKEN_ACTION,
+                        RequestManager.getAccessToken(code, ACTION_ACCESS_TOKEN,
                                 HttpRequestService.this);
                     }
                 });
                 break;
             case HTTP_REQUEST_INFO:
                 Log.d(TAG, "onStartCommand: handle request");
-
 
                 final HttpRequestInfo requestInfo = (HttpRequestInfo)
                         intent.getSerializableExtra(HTTP_REQUEST_INFO);

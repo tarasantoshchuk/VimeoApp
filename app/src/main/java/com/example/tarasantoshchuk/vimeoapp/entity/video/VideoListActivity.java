@@ -120,7 +120,7 @@ public class VideoListActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "VideoListReceiver.onReceive");
 
-            VideoList list = intent.getParcelableExtra(HttpRequestService.VIDEO_LIST_RESULT_KEY);
+            VideoList list = intent.getParcelableExtra(HttpRequestService.KEY_VIDEO_LIST_RESULT);
 
             if(list != null) {
                 VideoListAdapter adapter = (VideoListAdapter) mVideoList.getAdapter();
@@ -128,11 +128,11 @@ public class VideoListActivity extends Activity {
                 adapter.updateList(list);
 
                 final HttpRequestInfo nextPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_NEXT_PAGE_RESULT);
                 setButton(mBtnVideoListNext, nextPage);
 
                 final HttpRequestInfo prevPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_PREV_PAGE_RESULT);
                 setButton(mBtnVideoListPrev, prevPage);
             } else {
                 Alerts.showConnectionFailedAlert(VideoListActivity.this);

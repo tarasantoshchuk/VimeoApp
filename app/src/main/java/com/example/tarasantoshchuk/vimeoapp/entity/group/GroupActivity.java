@@ -33,7 +33,7 @@ public class GroupActivity extends Activity {
     private static final String STARTUP_EXTRA = "StartupExtra";
 
     private static final String MEMBER_LIST_TITLE = "Members";
-    private static final String VIDEOS_LIST_TITLE = "VideosTitle";
+    private static final String VIDEOS_LIST_TITLE = "Group's videos";
 
     public GroupActivity() {
     }
@@ -269,7 +269,7 @@ public class GroupActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "GroupReceiver.onReceive");
-            Group group = intent.getParcelableExtra(HttpRequestService.GROUP_RESULT_KEY);
+            Group group = intent.getParcelableExtra(HttpRequestService.KEY_GROUP_RESULT);
 
             if (group != null) {
                 mGroup = group;

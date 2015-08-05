@@ -123,7 +123,7 @@ public class CommentListActivity extends Activity {
             Log.d(TAG, "CommentListReceiver.onReceive");
 
             ArrayList<Comment> list =
-                    intent.getParcelableArrayListExtra(HttpRequestService.COMMENT_LIST_RESULT_KEY);
+                    intent.getParcelableArrayListExtra(HttpRequestService.KEY_COMMENT_LIST_RESULT);
 
             if(list != null) {
                 CommentListAdapter adapter = (CommentListAdapter) mCommentList.getAdapter();
@@ -131,11 +131,11 @@ public class CommentListActivity extends Activity {
                 adapter.updateList(list);
 
                 final HttpRequestInfo nextPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_NEXT_PAGE_RESULT);
                 setButton(mBtnCommentListNext, nextPage);
 
                 final HttpRequestInfo prevPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_PREV_PAGE_RESULT);
                 setButton(mBtnCommentListPrev, prevPage);
             } else {
                 Alerts.showConnectionFailedAlert(CommentListActivity.this);

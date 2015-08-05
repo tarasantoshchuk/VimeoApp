@@ -303,7 +303,7 @@ public class VideoActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "VideoReceiver.onReceive");
-            Video video = intent.getParcelableExtra(HttpRequestService.VIDEO_RESULT_KEY);
+            Video video = intent.getParcelableExtra(HttpRequestService.KEY_VIDEO_RESULT);
 
             if(video != null) {
                 mVideo = video;

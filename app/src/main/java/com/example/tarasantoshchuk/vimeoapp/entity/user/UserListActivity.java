@@ -125,7 +125,7 @@ public class UserListActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "UserListReceiver.onReceive");
 
-            UserList list = intent.getParcelableExtra(HttpRequestService.USER_LIST_RESULT_KEY);
+            UserList list = intent.getParcelableExtra(HttpRequestService.KEY_USER_LIST_RESULT);
 
             if(list != null) {
 
@@ -134,11 +134,11 @@ public class UserListActivity extends Activity {
                 adapter.updateList(list);
 
                 final HttpRequestInfo nextPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.NEXT_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_NEXT_PAGE_RESULT);
                 setButton(mBtnUserListNext, nextPage);
 
                 final HttpRequestInfo prevPage = (HttpRequestInfo)
-                        intent.getSerializableExtra(HttpRequestService.PREV_PAGE_RESULT_KEY);
+                        intent.getSerializableExtra(HttpRequestService.KEY_PREV_PAGE_RESULT);
                 setButton(mBtnUserListPrev, prevPage);
             } else {
                 Alerts.showConnectionFailedAlert(UserListActivity.this);
