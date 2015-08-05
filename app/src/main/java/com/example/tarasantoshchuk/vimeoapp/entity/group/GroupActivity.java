@@ -269,7 +269,7 @@ public class GroupActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "GroupReceiver.onReceive");
-            Group group = intent.getParcelableExtra(HttpRequestService.GROUP);
+            Group group = intent.getParcelableExtra(HttpRequestService.GROUP_RESULT_KEY);
 
             if (group != null) {
                 mGroup = group;

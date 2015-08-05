@@ -376,7 +376,7 @@ public class UserActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "UserReceiver.onReceive");
-            User user = intent.getParcelableExtra(HttpRequestService.USER);
+            User user = intent.getParcelableExtra(HttpRequestService.USER_RESULT_KEY);
 
             if(user != null) {
                 mUser = user;

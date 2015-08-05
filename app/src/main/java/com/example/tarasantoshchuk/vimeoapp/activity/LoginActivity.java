@@ -70,8 +70,8 @@ public class LoginActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "AccessTokenReceiver.onReceive");
-            String accessToken = intent.getStringExtra(HttpRequestService.ACCESS_TOKEN);
-            User loggedUser = intent.getParcelableExtra(HttpRequestService.USER);
+            String accessToken = intent.getStringExtra(HttpRequestService.ACCESS_TOKEN_RESULT_KEY);
+            User loggedUser = intent.getParcelableExtra(HttpRequestService.USER_RESULT_KEY);
 
             if(accessToken != null) {
                 AuthorizationInfo.setAccessToken(accessToken);

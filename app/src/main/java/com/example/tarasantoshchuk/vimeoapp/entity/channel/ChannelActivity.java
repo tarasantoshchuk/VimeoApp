@@ -271,7 +271,7 @@ public class ChannelActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "ChannelReceiver.onReceive");
-            Channel channel = intent.getParcelableExtra(HttpRequestService.CHANNEL);
+            Channel channel = intent.getParcelableExtra(HttpRequestService.CHANNEL_RESULT_KEY);
 
             if(channel != null) {
                 mChannel = channel;
