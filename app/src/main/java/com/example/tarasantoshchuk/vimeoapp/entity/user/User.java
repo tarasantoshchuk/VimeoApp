@@ -30,6 +30,9 @@ public class User implements Parcelable{
         }
     };
 
+    private static final String DEFAULT_USER_PICTURE_URL =
+            "https://i1.wp.com/i.vimeocdn.com/portrait/default-yellow_300x300.png?ssl=1";
+
     private String mId;
     private String mName;
     private String mLocation;
@@ -49,9 +52,9 @@ public class User implements Parcelable{
                 int groupsCount, int channelsCount, int likesCount) {
         mId = id;
         mName = name;
-        mLocation = location;
-        mBio = bio;
-        mPictureUrl = pictureUrl;
+        setLocation(location);
+        setBio(bio);
+        setPictureUrl(pictureUrl);
 
         mDateCreated = dateCreated;
         mVideoCount = videoCount;
@@ -60,6 +63,30 @@ public class User implements Parcelable{
         mGroupsCount = groupsCount;
         mChannelsCount = channelsCount;
         mLikesCount = likesCount;
+    }
+
+    private void setPictureUrl(String pictureUrl) {
+        if(pictureUrl != null) {
+            mPictureUrl = pictureUrl;
+        } else {
+            mPictureUrl = DEFAULT_USER_PICTURE_URL;
+        }
+    }
+
+    private void setBio(String bio) {
+        if(bio != null) {
+            mBio = bio;
+        } else {
+            mBio = "";
+        }
+    }
+
+    private void setLocation(String location) {
+        if(location != null) {
+            mLocation = location;
+        } else {
+            mLocation = "";
+        }
     }
 
     private User(Parcel source) {

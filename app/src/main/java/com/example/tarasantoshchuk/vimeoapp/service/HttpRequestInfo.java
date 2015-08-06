@@ -72,6 +72,17 @@ public class HttpRequestInfo implements Serializable {
         mAction = action;
     }
 
+
+
+    public HttpRequestInfo(HttpRequestInfo other) {
+        mParameters = new LinkedHashMap<String, String>();
+        mEndpoint = other.mEndpoint;
+
+        mMethod = other.mMethod;
+        mResult = other.mResult;
+        mAction = other.mAction;
+    }
+
     private void appendToEndpoint(String str) {
         mEndpoint += "/" + str;
     }
@@ -506,5 +517,14 @@ public class HttpRequestInfo implements Serializable {
         groupUsersRequest.appendToEndpoint(USERS);
 
         return groupUsersRequest;
+    }
+
+    public static HttpRequestInfo updateEndpoint(String newEndpoint,
+                                                 HttpRequestInfo outOldRequestInfo) {
+        HttpRequestInfo newRequestInfo = new HttpRequestInfo(outOldRequestInfo);
+
+        newRequestInfo.mEndpoint = newEndpoint;
+
+        return newRequestInfo;
     }
 }

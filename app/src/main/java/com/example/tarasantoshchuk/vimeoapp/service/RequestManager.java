@@ -93,7 +93,7 @@ public class RequestManager {
             JSONObject json = new JSONObject(response.toString());
 
             String accessToken = JSONParser.getAccessToken(json);
-            User loggedUser = JSONParser.getUser(json);
+            User loggedUser = JSONParser.getUserFromAccessTokenRequest(json);
 
             Intent resultIntent = new Intent();
 
@@ -173,28 +173,30 @@ public class RequestManager {
                 putUserResultExtras(responseCode, responseJSON, broadcastExtras);
                 break;
             case USER_LIST:
-                putUserListResultExtras(responseCode, responseJSON, broadcastExtras);
+                putUserListResultExtras(responseCode, responseJSON, requestInfo, broadcastExtras);
                 break;
             case VIDEO:
                 putVideoResultExtras(responseCode, responseJSON, broadcastExtras);
                 break;
             case VIDEO_LIST:
-                putVideoListResultExtras(responseCode, responseJSON, broadcastExtras);
+                putVideoListResultExtras(responseCode, responseJSON, requestInfo, broadcastExtras);
                 break;
             case GROUP:
                 putGroupResultExtras(responseCode, responseJSON, broadcastExtras);
                 break;
             case GROUP_LIST:
-                putGroupListResultExtras(responseCode, responseJSON, broadcastExtras);
+                putGroupListResultExtras(responseCode, responseJSON, requestInfo, broadcastExtras);
                 break;
             case CHANNEL:
                 putChannelResultExtras(responseCode, responseJSON, broadcastExtras);
                 break;
             case CHANNEL_LIST:
-                putChannelListResultExtras(responseCode, responseJSON, broadcastExtras);
+                putChannelListResultExtras(responseCode, responseJSON, requestInfo,
+                        broadcastExtras);
                 break;
             case COMMENT_LIST:
-                putCommentListResultExtras(responseCode, responseJSON, broadcastExtras);
+                putCommentListResultExtras(responseCode, responseJSON, requestInfo,
+                        broadcastExtras);
                 break;
             case BOOLEAN:
                 putBooleanResultExtras(responseCode, responseJSON, broadcastExtras);
@@ -222,26 +224,26 @@ public class RequestManager {
     }
 
     private static void putCommentListResultExtras(Integer responseCode, JSONObject responseJSON,
-                                                   Bundle outBundle) {
+                                                   HttpRequestInfo requestInfo, Bundle outBundle) {
         if(isSuccessfulRequest(responseCode)) {
             ArrayList<Comment> commentList = JSONParser.getCommentList(responseJSON);
 
             outBundle.putParcelableArrayList(HttpRequestService.KEY_COMMENT_LIST_RESULT,
                     commentList);
 
-            putAdjacentPagesRequests(responseJSON, outBundle);
+            putAdjacentPagesRequests(responseJSON, requestInfo, outBundle);
         }
     }
 
     private static void putChannelListResultExtras(Integer responseCode, JSONObject responseJSON,
-                                                   Bundle outBundle) {
+                                                   HttpRequestInfo requestInfo, Bundle outBundle) {
         if (isSuccessfulRequest(responseCode)) {
             ArrayList<Channel> channelList = JSONParser.getChannelList(responseJSON);
 
             outBundle.putParcelableArrayList(HttpRequestService.KEY_CHANNEL_LIST_RESULT,
                     channelList);
 
-            putAdjacentPagesRequests(responseJSON, outBundle);
+            putAdjacentPagesRequests(responseJSON, requestInfo,  outBundle);
         }
     }
 
@@ -255,13 +257,13 @@ public class RequestManager {
     }
 
     private static void putGroupListResultExtras(Integer responseCode, JSONObject responseJSON,
-                                                 Bundle outBundle) {
+                                                 HttpRequestInfo requestInfo, Bundle outBundle) {
         if(isSuccessfulRequest(responseCode)) {
             ArrayList<Group> groupList = JSONParser.getGroupList(responseJSON);
 
             outBundle.putParcelableArrayList(HttpRequestService.KEY_GROUP_LIST_RESULT, groupList);
 
-            putAdjacentPagesRequests(responseJSON, outBundle);
+            putAdjacentPagesRequests(responseJSON, requestInfo, outBundle);
         }
     }
 
@@ -275,13 +277,13 @@ public class RequestManager {
     }
 
     private static void putVideoListResultExtras(Integer responseCode, JSONObject responseJSON,
-                                                 Bundle outBundle) {
+                                                 HttpRequestInfo requestInfo, Bundle outBundle) {
         if(isSuccessfulRequest(responseCode)) {
             VideoList videoList = JSONParser.getVideoList(responseJSON);
 
             outBundle.putParcelable(HttpRequestService.KEY_VIDEO_LIST_RESULT, videoList);
 
-            putAdjacentPagesRequests(responseJSON, outBundle);
+            putAdjacentPagesRequests(responseJSON, requestInfo,  outBundle);
         }
     }
 
@@ -295,22 +297,29 @@ public class RequestManager {
     }
 
     private static void putUserListResultExtras(Integer responseCode, JSONObject responseJSON,
-                                                Bundle outBundle) {
+                                                HttpRequestInfo requestInfo, Bundle outBundle) {
         if(isSuccessfulRequest(responseCode)) {
             UserList userList = JSONParser.getUserList(responseJSON);
 
             outBundle.putParcelable(HttpRequestService.KEY_USER_LIST_RESULT, userList);
 
-            putAdjacentPagesRequests(responseJSON, outBundle);
+            putAdjacentPagesRequests(responseJSON, requestInfo, outBundle);
         }
     }
 
-    private static void putAdjacentPagesRequests(JSONObject responseJSON, Bundle outBundle) {
-        HttpRequestInfo nextPage = JSONParser.getNextPage(responseJSON);
-        HttpRequestInfo prevPage = JSONParser.getPrevPage(responseJSON);
+    private static void putAdjacentPagesRequests(JSONObject responseJSON,
+                                                 HttpRequestInfo requestInfo, Bundle outBundle) {
+        String nextPage = JSONParser.getNextPageEndpoint(responseJSON);
+        if(nextPage != null) {
+            outBundle.putSerializable(HttpRequestService.KEY_NEXT_PAGE_RESULT,
+                    HttpRequestInfo.updateEndpoint(nextPage, requestInfo));
+        }
 
-        outBundle.putSerializable(HttpRequestService.KEY_NEXT_PAGE_RESULT, nextPage);
-        outBundle.putSerializable(HttpRequestService.KEY_PREV_PAGE_RESULT, prevPage);
+        String prevPage = JSONParser.getPrevPageEndpoint(responseJSON);
+        if(prevPage != null) {
+            outBundle.putSerializable(HttpRequestService.KEY_PREV_PAGE_RESULT,
+                    HttpRequestInfo.updateEndpoint(prevPage, requestInfo));
+        }
     }
 
     private static void putUserResultExtras(Integer responseCode, JSONObject responseJSON,

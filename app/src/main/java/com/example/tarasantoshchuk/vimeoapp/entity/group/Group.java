@@ -30,6 +30,9 @@ public class Group implements Parcelable {
         }
     };
 
+    private static final String DEFAULT_GROUP_PICTURE_URL =
+            "https://i1.wp.com/i.vimeocdn.com/portrait/default-yellow_300x300.png?ssl=1";
+
     private String mId;
     private String mName;
     private String mDescription;
@@ -46,14 +49,29 @@ public class Group implements Parcelable {
                  String pictureUrl, int usersCount, User owner, int videosCount) {
         mId = id;
         mName = name;
-        mDescription = description;
+        setDescription(description);
 
         mDateCreated = dateCreated;
-        mPictureUrl = pictureUrl;
-
+        setPictureUrl(pictureUrl);
         mUsersCount = usersCount;
         mOwner = owner;
         mVideosCount = videosCount;
+    }
+
+    private void setPictureUrl(String pictureUrl) {
+        if (pictureUrl != null) {
+            mPictureUrl = pictureUrl;
+        } else {
+            mPictureUrl = DEFAULT_GROUP_PICTURE_URL;
+        }
+    }
+
+    private void setDescription(String description) {
+        if(description != null) {
+            mDescription = description;
+        } else {
+            description = "";
+        }
     }
 
     private Group(Parcel source) {

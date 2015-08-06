@@ -7,9 +7,9 @@ import android.util.Log;
 import android.util.LruCache;
 
 import com.example.tarasantoshchuk.vimeoapp.entity.user.User;
+import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class Video implements Parcelable {
     private static final String TAG = Video.class.getSimpleName();
@@ -27,6 +27,15 @@ public class Video implements Parcelable {
             return value.getByteCount();
         }
     };
+
+    private static final String DEFAULT_VIDEO_PICTURE_URL =
+            "https://i1.wp.com/i.vimeocdn.com/portrait/default-yellow_300x300.png?ssl=1";
+
+    private static final String HTML_HEIGHT_ATTR = "height=";
+    private static final String HTML_WIDTH_ATTR = "width=";
+    private static final String HTML_SIZE_ATTR_VALUE = "100%";
+
+    private static final int DESCRIPTION_MAX_LENGTH = 140;
 
     private String mId;
     private String mName;
@@ -49,16 +58,34 @@ public class Video implements Parcelable {
         mId = id;
         mName = name;
         mDuration = duration;
-        mDescription = description;
-        mEmbedHtml = embedHtml;
+        setDescription(description);
+        setEmbedHtml(embedHtml);
 
         mDateCreated = dateCreated;
-        mPictureUrl = pictureUrl;
+        setPictureUrl(pictureUrl);
         mPlayCount = playCount;
         mOwner = owner;
 
         mLikesCount = likesCount;
         mCommentsCount = commentsCount;
+    }
+
+    private void setEmbedHtml(String embedHtml) {
+        int indexOfWidthAttrStart = embedHtml.indexOf(HTML_WIDTH_ATTR);
+        int indexOfWidthAttrEnd = embedHtml.indexOf(" ", indexOfWidthAttrStart);
+
+        String widthAttr = embedHtml.substring(indexOfWidthAttrStart, indexOfWidthAttrEnd);
+
+        String embedHtmlWidthReplaced = embedHtml
+                .replace(widthAttr, HTML_WIDTH_ATTR + HTML_SIZE_ATTR_VALUE);
+
+        int indexOfHeightAttrStart = embedHtml.indexOf(HTML_HEIGHT_ATTR);
+        int indexOfHeightAttrEnd = embedHtml.indexOf(" ", indexOfHeightAttrStart);
+
+        String heightAttr = embedHtml.substring(indexOfHeightAttrStart, indexOfHeightAttrEnd);
+
+        mEmbedHtml = embedHtmlWidthReplaced
+                .replace(heightAttr, HTML_HEIGHT_ATTR + HTML_SIZE_ATTR_VALUE);
     }
 
     private Video(Parcel source) {
@@ -89,6 +116,18 @@ public class Video implements Parcelable {
         return mDescription;
     }
 
+    private void setDescription(String description) {
+        if(description != null) {
+            if(description.length() > DESCRIPTION_MAX_LENGTH) {
+                mDescription = description.substring(0, DESCRIPTION_MAX_LENGTH) + "...";
+            } else {
+                mDescription = description;
+            }
+        } else {
+            mDescription = "";
+        }
+    }
+
     public int getDuration() {
         return mDuration;
     }
@@ -111,6 +150,14 @@ public class Video implements Parcelable {
 
     public String getPictureUrl() {
         return mPictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        if(pictureUrl != null) {
+            mPictureUrl = pictureUrl;
+        } else {
+            mPictureUrl = DEFAULT_VIDEO_PICTURE_URL;
+        }
     }
 
     public int getPlayCount() {

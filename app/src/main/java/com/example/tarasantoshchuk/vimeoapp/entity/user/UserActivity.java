@@ -264,7 +264,7 @@ public class UserActivity extends Activity {
                     Intent fllwrsIntent = new Intent(UserActivity.this, UserListActivity.class);
 
                     HttpRequestInfo fllwrsRequest =
-                            HttpRequestInfo.getFollowedUsersRequest(mUser.getId());
+                            HttpRequestInfo.getUserFollowersRequest(mUser.getId());
 
                     fllwrsIntent.putExtras(UserListActivity
                             .getStartExtras(FOLLOWERS_TITLE, fllwrsRequest));

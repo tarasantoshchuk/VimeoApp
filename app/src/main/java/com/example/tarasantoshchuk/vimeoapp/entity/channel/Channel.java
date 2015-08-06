@@ -30,6 +30,9 @@ public class Channel implements Parcelable {
         }
     };
 
+    private static final String DEFAULT_CHANNEL_PICTURE_URL =
+            "https://i1.wp.com/i.vimeocdn.com/portrait/default-yellow_300x300.png?ssl=1";
+
     private String mId;
     private String mName;
     private String mDescription;
@@ -44,13 +47,29 @@ public class Channel implements Parcelable {
                    User owner, int usersCount, int videosCount) {
         mId = id;
         mName = name;
-        mDescription = description;
+        setDescription(description);
         mDateCreated = dateCreated;
-        mPictureUrl = pictureUrl;
+        setPictureUrl(pictureUrl);
         mOwner = owner;
 
         mUsersCount = usersCount;
         mVideosCount = videosCount;
+    }
+
+    private void setDescription(String description) {
+        if(description != null) {
+            mDescription = description;
+        } else {
+            mDescription = "";
+        }
+    }
+
+    private void setPictureUrl(String pictureUrl) {
+        if(pictureUrl != null) {
+            mPictureUrl = pictureUrl;
+        } else {
+            mPictureUrl = DEFAULT_CHANNEL_PICTURE_URL;
+        }
     }
 
     private Channel(Parcel source) {
