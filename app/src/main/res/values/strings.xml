@@ -50,4 +50,8 @@
     <string name="txt_enter_search_name">enter name to search</string>
     <string name="txt_choose_search_type">choose entity to search for</string>
     <string name="txt_search_result">Search result</string>
+    <string name="txt_logout_alert_title">Logout</string>
+    <string name="txt_logout_alert_msg">Are you sure you want to logout?</string>
+    <string name="txt_logout_confirm">Logout</string>
+    <string name="txt_logout_cancel">Cancel</string>
 </resources>

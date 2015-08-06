@@ -42,7 +42,7 @@ public class StartActivity extends Activity {
 
         } else {
 
-            AuthorizationInfo.Init(this);
+            AuthorizationInfo.init(this);
 
             if(!AuthorizationInfo.hasAccessToken()) {
 

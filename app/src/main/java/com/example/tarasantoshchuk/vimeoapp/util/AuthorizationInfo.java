@@ -2,6 +2,7 @@ package com.example.tarasantoshchuk.vimeoapp.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
@@ -11,26 +12,25 @@ public class AuthorizationInfo {
 
     private static final String SHARED_PREFS_KEY = "com.example.tarasantoshchuk.vimeoapp";
     private static final String ACCESS_TOKEN_KEY = "AccessTokenKey";
-    private static final String EMPTY = "";
 
     private static String sAccessToken;
 
     private static Context context;
 
-    public static void Init(Context context) {
+    public static void init(Context context) {
         AuthorizationInfo.context = context;
 
         SharedPreferences preferences = context
                 .getSharedPreferences(AuthorizationInfo.SHARED_PREFS_KEY, Context.MODE_PRIVATE);
 
-        sAccessToken = preferences.getString(AuthorizationInfo.ACCESS_TOKEN_KEY, EMPTY);
+        sAccessToken = preferences.getString(AuthorizationInfo.ACCESS_TOKEN_KEY, "");
     }
 
     public static boolean hasAccessToken() {
         Log.d(TAG, "hasAccessToken");
 
         return (sAccessToken != null) &&
-                !sAccessToken.equals(EMPTY);
+                !TextUtils.isEmpty(sAccessToken);
     }
 
     public static String getAccessToken() {
@@ -52,5 +52,19 @@ public class AuthorizationInfo {
         editor.putString(ACCESS_TOKEN_KEY, sAccessToken);
 
         editor.commit();
+    }
+
+    public static void clear(Context context) {
+        Log.d(TAG, "clear");
+
+        sAccessToken = null;
+
+        SharedPreferences preferences = context
+                .getSharedPreferences(AuthorizationInfo.SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+
+        preferences
+                .edit()
+                .clear()
+                .commit();
     }
 }

@@ -40,6 +40,8 @@
 
         <activity android:name=".activity.SearchActivity"/>
 
+        <activity android:name=".activity.LogoutActivity"/>
+
         <service android:name=".service.HttpRequestService"/>
     </application>
 
