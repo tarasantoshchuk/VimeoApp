@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.example.tarasantoshchuk.vimeoapp.activity.LoginActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.channel.ChannelListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.group.GroupListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.video.VideoListActivity;
+import com.example.tarasantoshchuk.vimeoapp.navigation.NavigationDrawerAdapter;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
@@ -89,6 +91,8 @@ public class UserActivity extends Activity {
     private TextView mTxtFllwrsCount;
     private TextView mTxtGroupsCount;
     private TextView mTxtChannelsCount;
+
+    private ListView mLeftDrawer;
 
     private UserReceiver mReceiver;
 
@@ -176,6 +180,9 @@ public class UserActivity extends Activity {
         mTxtFllwrsCount = (TextView) findViewById(R.id.txtFllwrsCount);
         mTxtGroupsCount = (TextView) findViewById(R.id.txtGroupsCount);
         mTxtChannelsCount = (TextView) findViewById(R.id.txtChannelsCount);
+
+        mLeftDrawer = (ListView) findViewById(R.id.leftDrawer);
+        mLeftDrawer.setAdapter(new NavigationDrawerAdapter(this));
     }
 
     private void setTexts() {

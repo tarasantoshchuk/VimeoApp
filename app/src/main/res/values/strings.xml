@@ -54,4 +54,11 @@
     <string name="txt_logout_alert_msg">Are you sure you want to logout?</string>
     <string name="txt_logout_confirm">Logout</string>
     <string name="txt_logout_cancel">Cancel</string>
+
+    <string-array name="navigation_names">
+        <item>My profile</item>
+        <item>Search</item>
+        <item>Logout</item>
+    </string-array>
+
 </resources>

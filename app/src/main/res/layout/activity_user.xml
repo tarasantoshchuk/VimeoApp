@@ -1,141 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layoutUser">
+    android:id="@+id/drawerLayout">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- main content view -->
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/txtUserHorizontalCenter"
-        android:layout_alignParentTop="false"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/layoutUser">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:id="@+id/txtUserVerticalCenter"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/txtUserHorizontalCenter"
+            android:layout_alignParentTop="false"
+            android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgUserPicture"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_above="@+id/txtUserVerticalCenter"
-        android:layout_toStartOf="@+id/txtUserHorizontalCenter"
-        android:layout_toLeftOf="@+id/txtUserHorizontalCenter" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/txtUserVerticalCenter"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/txtUserName"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/txtUserHorizontalCenter"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/txtUserHorizontalCenter"
-        android:layout_alignParentRight="true" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgUserPicture"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/txtUserVerticalCenter"
+            android:layout_toStartOf="@+id/txtUserHorizontalCenter"
+            android:layout_toLeftOf="@+id/txtUserHorizontalCenter" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtUserLocation"
-        android:layout_below="@+id/txtUserJoined"
-        android:layout_toEndOf="@+id/txtUserHorizontalCenter"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/txtUserHorizontalCenter"
-        android:layout_alignParentRight="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/txtUserName"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/txtUserHorizontalCenter"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/txtUserHorizontalCenter"
+            android:layout_alignParentRight="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtUserBio"
-        android:layout_below="@+id/txtUserLocation"
-        android:layout_toEndOf="@+id/imgUserPicture"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/imgUserPicture"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/txtUserVerticalCenter" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtUserLocation"
+            android:layout_below="@+id/txtUserJoined"
+            android:layout_toEndOf="@+id/txtUserHorizontalCenter"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/txtUserHorizontalCenter"
+            android:layout_alignParentRight="true" />
 
-    <TextView
-        style="@style/UserInfoTitle"
-        android:text="@string/txt_videos"
-        android:id="@+id/txtVideosTitle"
-        android:layout_below="@+id/txtUserVerticalCenter" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtUserBio"
+            android:layout_below="@+id/txtUserLocation"
+            android:layout_toEndOf="@+id/imgUserPicture"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/imgUserPicture"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/txtUserVerticalCenter" />
 
-    <TextView
-        style="@style/UserInfoTitle"
-        android:text="@string/txt_likes"
-        android:id="@+id/txtLikesTitle"
-        android:layout_below="@+id/txtVideosTitle" />
+        <TextView
+            style="@style/UserInfoTitle"
+            android:text="@string/txt_videos"
+            android:id="@+id/txtVideosTitle"
+            android:layout_below="@+id/txtUserVerticalCenter" />
 
-    <TextView
-        style="@style/UserInfoTitle"
-        android:text="@string/txt_following"
-        android:id="@+id/txtFllwngTitle"
-        android:layout_below="@+id/txtLikesTitle" />
+        <TextView
+            style="@style/UserInfoTitle"
+            android:text="@string/txt_likes"
+            android:id="@+id/txtLikesTitle"
+            android:layout_below="@+id/txtVideosTitle" />
 
-    <TextView
-        style="@style/UserInfoTitle"
-        android:text="@string/txt_followers"
-        android:id="@+id/txtFllwrsTitle"
-        android:layout_below="@+id/txtFllwngTitle" />
+        <TextView
+            style="@style/UserInfoTitle"
+            android:text="@string/txt_following"
+            android:id="@+id/txtFllwngTitle"
+            android:layout_below="@+id/txtLikesTitle" />
 
-    <TextView
-        style="@style/UserInfoTitle"
-        android:text="@string/txt_groups"
-        android:id="@+id/txtGroupsTitle"
-        android:layout_below="@+id/txtFllwrsTitle" />
+        <TextView
+            style="@style/UserInfoTitle"
+            android:text="@string/txt_followers"
+            android:id="@+id/txtFllwrsTitle"
+            android:layout_below="@+id/txtFllwngTitle" />
 
-    <TextView
-        style="@style/UserInfoTitle"
-        android:text="@string/txt_channels"
-        android:id="@+id/txtChannelsTitle"
-        android:layout_below="@+id/txtGroupsTitle" />
+        <TextView
+            style="@style/UserInfoTitle"
+            android:text="@string/txt_groups"
+            android:id="@+id/txtGroupsTitle"
+            android:layout_below="@+id/txtFllwrsTitle" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtUserJoined"
-        android:layout_below="@+id/txtUserName"
-        android:layout_toEndOf="@+id/txtUserHorizontalCenter"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/txtUserHorizontalCenter"
-        android:layout_alignParentRight="true" />
+        <TextView
+            style="@style/UserInfoTitle"
+            android:text="@string/txt_channels"
+            android:id="@+id/txtChannelsTitle"
+            android:layout_below="@+id/txtGroupsTitle" />
 
-    <TextView
-        style="@style/UserInfoValue"
-        android:id="@+id/txtVideosCount"
-        android:layout_below="@+id/txtUserBio" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtUserJoined"
+            android:layout_below="@+id/txtUserName"
+            android:layout_toEndOf="@+id/txtUserHorizontalCenter"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/txtUserHorizontalCenter"
+            android:layout_alignParentRight="true" />
 
-    <TextView
-        style="@style/UserInfoValue"
-        android:id="@+id/txtLikesCount"
-        android:layout_below="@+id/txtVideosCount" />
+        <TextView
+            style="@style/UserInfoValue"
+            android:id="@+id/txtVideosCount"
+            android:layout_below="@+id/txtUserBio" />
 
-    <TextView
-        style="@style/UserInfoValue"
-        android:id="@+id/txtFllwngCount"
-        android:layout_below="@+id/txtLikesCount" />
+        <TextView
+            style="@style/UserInfoValue"
+            android:id="@+id/txtLikesCount"
+            android:layout_below="@+id/txtVideosCount" />
 
-    <TextView
-        style="@style/UserInfoValue"
-        android:id="@+id/txtFllwrsCount"
-        android:layout_below="@+id/txtFllwngCount" />
+        <TextView
+            style="@style/UserInfoValue"
+            android:id="@+id/txtFllwngCount"
+            android:layout_below="@+id/txtLikesCount" />
 
-    <TextView
-        style="@style/UserInfoValue"
-        android:id="@+id/txtGroupsCount"
-        android:layout_below="@+id/txtFllwrsCount" />
+        <TextView
+            style="@style/UserInfoValue"
+            android:id="@+id/txtFllwrsCount"
+            android:layout_below="@+id/txtFllwngCount" />
 
-    <TextView
-        style="@style/UserInfoValue"
-        android:id="@+id/txtChannelsCount"
-        android:layout_below="@+id/txtGroupsCount" />
+        <TextView
+            style="@style/UserInfoValue"
+            android:id="@+id/txtGroupsCount"
+            android:layout_below="@+id/txtFllwrsCount" />
 
-</RelativeLayout>
+        <TextView
+            style="@style/UserInfoValue"
+            android:id="@+id/txtChannelsCount"
+            android:layout_below="@+id/txtGroupsCount" />
+
+    </RelativeLayout>
+
+    <!-- navigation drawer -->
+
+    <ListView
+        android:id="@+id/leftDrawer"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="none"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+
+</android.support.v4.widget.DrawerLayout>

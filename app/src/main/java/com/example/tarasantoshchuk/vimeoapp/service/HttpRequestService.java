@@ -175,33 +175,38 @@ public class HttpRequestService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand");
-        switch((ExtrasType) intent.getSerializableExtra(EXTRAS_TYPE)) {
-            case AUTHORIZATION_CODE:
-                Log.d(TAG, "onStartCommand: handle accessToken request");
-                final String code = intent.getStringExtra(AUTHORIZATION_CODE);
-                mExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        RequestManager.getAccessToken(code, ACTION_ACCESS_TOKEN,
-                                HttpRequestService.this);
-                    }
-                });
-                break;
-            case HTTP_REQUEST_INFO:
-                Log.d(TAG, "onStartCommand: handle request");
 
-                final HttpRequestInfo requestInfo = (HttpRequestInfo)
-                        intent.getSerializableExtra(HTTP_REQUEST_INFO);
+        /**
+         * if service is not restarted by OS
+         */
+        if(intent != null) {
+            switch ((ExtrasType) intent.getSerializableExtra(EXTRAS_TYPE)) {
+                case AUTHORIZATION_CODE:
+                    Log.d(TAG, "onStartCommand: handle accessToken request");
+                    final String code = intent.getStringExtra(AUTHORIZATION_CODE);
+                    mExecutor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            RequestManager.getAccessToken(code, ACTION_ACCESS_TOKEN,
+                                    HttpRequestService.this);
+                        }
+                    });
+                    break;
+                case HTTP_REQUEST_INFO:
+                    Log.d(TAG, "onStartCommand: handle request");
 
-                mExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        RequestManager.handleRequest(requestInfo, HttpRequestService.this);
-                    }
-                });
-                break;
+                    final HttpRequestInfo requestInfo = (HttpRequestInfo)
+                            intent.getSerializableExtra(HTTP_REQUEST_INFO);
+
+                    mExecutor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            RequestManager.handleRequest(requestInfo, HttpRequestService.this);
+                        }
+                    });
+                    break;
+            }
         }
-
 
         return super.onStartCommand(intent, flags, startId);
     }
