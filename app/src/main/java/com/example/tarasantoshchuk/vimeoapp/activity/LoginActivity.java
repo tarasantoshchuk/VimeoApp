@@ -16,8 +16,6 @@ import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.util.AuthorizationInfo;
 
 public class LoginActivity extends Activity {
-    public static final String LOGGED_USER_ACTION = "LoggedUserAction";
-
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final String CODE = "code";
     private static final String STATE = "state";
@@ -79,7 +77,7 @@ public class LoginActivity extends Activity {
                 Intent loggedUserActivityIntent =
                         new Intent(LoginActivity.this, UserActivity.class);
 
-                loggedUserActivityIntent.setAction(LOGGED_USER_ACTION);
+                loggedUserActivityIntent.setAction(UserActivity.LOGGED_USER_ACTION);
                 loggedUserActivityIntent.putExtras(UserActivity.getStartExtras(loggedUser));
 
                 startActivity(loggedUserActivityIntent);

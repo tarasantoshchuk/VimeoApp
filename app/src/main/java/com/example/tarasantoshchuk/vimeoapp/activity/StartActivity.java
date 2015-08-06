@@ -55,6 +55,8 @@ public class StartActivity extends Activity {
                 Intent loggedUserActivity = new Intent(this, UserActivity.class);
 
                 HttpRequestInfo userRequest = HttpRequestInfo.getMyInfoRequest();
+
+                loggedUserActivity.setAction(UserActivity.LOGGED_USER_ACTION);
                 loggedUserActivity.putExtras(UserActivity.getStartExtras(userRequest));
 
                 startActivity(loggedUserActivity);

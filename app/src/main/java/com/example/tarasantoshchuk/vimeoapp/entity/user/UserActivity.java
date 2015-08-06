@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class UserActivity extends Activity {
+    public static final String LOGGED_USER_ACTION = "LoggedUserAction";
+
     private static final String TAG = UserActivity.class.getSimpleName();
 
     private static final String USER = "User";
@@ -363,7 +365,7 @@ public class UserActivity extends Activity {
         String action = getIntent().getAction();
         if(keyCode == KeyEvent.KEYCODE_BACK &&
                 action != null &&
-                action.equals(LoginActivity.LOGGED_USER_ACTION)) {
+                action.equals(UserActivity.LOGGED_USER_ACTION)) {
             Log.d(TAG, "back key press intercepted");
             return true;
         } else {
