@@ -11,7 +11,9 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import com.example.tarasantoshchuk.vimeoapp.R;
 import com.example.tarasantoshchuk.vimeoapp.entity.comment.CommentListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserListActivity;
+import com.example.tarasantoshchuk.vimeoapp.navigation.NavigationDrawerAdapter;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
@@ -69,7 +72,7 @@ public class VideoActivity extends Activity {
     private Video mVideo;
 
     private WebView mWebView;
-    private LinearLayout mWebViewPlaceholder;
+    private FrameLayout mWebViewPlaceholder;
 
     private TextView mTxtVideoName;
     private TextView mTxtVideoCreated;
@@ -84,6 +87,8 @@ public class VideoActivity extends Activity {
     private TextView mTxtVideoPlaysCount;
     private TextView mTxtVideoLikesCount;
     private TextView mTxtVideoCommentsCount;
+
+    private ListView mLeftDrawer;
 
     private VideoReceiver mReceiver;
 
@@ -161,11 +166,12 @@ public class VideoActivity extends Activity {
     }
 
     private void initViews() {
-        mWebViewPlaceholder = (LinearLayout) findViewById(R.id.webViewPlaceholder);
+        mWebViewPlaceholder = (FrameLayout) findViewById(R.id.webViewPlaceholder);
         if(mWebView == null) {
             mWebView = new WebView(this);
         }
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         mWebViewPlaceholder.addView(mWebView, 0, layoutParams);
 
@@ -183,6 +189,9 @@ public class VideoActivity extends Activity {
             mTxtVideoPlaysCount = (TextView) findViewById(R.id.txtVideoPlaysCount);
             mTxtVideoLikesCount = (TextView) findViewById(R.id.txtVideoLikesCount);
             mTxtVideoCommentsCount = (TextView) findViewById(R.id.txtVideoCommentsCount);
+
+            mLeftDrawer = (ListView) findViewById(R.id.leftDrawer);
+            mLeftDrawer.setAdapter(new NavigationDrawerAdapter(this));
         }
     }
 
@@ -292,7 +301,8 @@ public class VideoActivity extends Activity {
         if(createdDaysCount < DAYS_IN_MONTH) {
             return String.format(getString(DAY_FORMAT_STRING_ID), createdDaysCount);
         } else if (createdDaysCount < DAYS_IN_YEAR) {
-            return String.format(getString(MONTH_FORMAT_STRING_ID), createdDaysCount / DAYS_IN_MONTH);
+            return String.format(getString(MONTH_FORMAT_STRING_ID),
+                    createdDaysCount / DAYS_IN_MONTH);
         } else {
             return String.format(getString(YEAR_FORMAT_STRING_ID), createdDaysCount / DAYS_IN_YEAR);
         }

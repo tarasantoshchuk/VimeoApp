@@ -1,109 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/videoRelativeLayout">
+    android:id="@+id/drawerLayout">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/txtVideoHorizontalCenter"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
+    <!-- main content view -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/txtVideoVerticalCenter"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="match_parent"
+        android:id="@+id/videoRelativeLayout">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/txtVideoHorizontalCenter"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/txtVideoVerticalCenter"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtVideoDescription"
-        android:layout_below="@+id/txtVideoName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtVideoDescription"
+            android:layout_below="@+id/txtVideoName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtVideoCreated"
-        android:layout_below="@+id/txtVideoDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtVideoCreated"
+            android:layout_below="@+id/txtVideoDescription"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <TextView
-        style="@style/VideoInfoTitle"
-        android:id="@+id/txtVideoOwnerTitle"
-        android:layout_below="@+id/txtVideoCreated"
-        android:text="@string/txt_owner" />
+        <TextView
+            style="@style/VideoInfoTitle"
+            android:id="@+id/txtVideoOwnerTitle"
+            android:layout_below="@+id/txtVideoCreated"
+            android:text="@string/txt_owner" />
 
-    <TextView
-        style="@style/VideoInfoTitle"
-        android:id="@+id/txtVideoPlaysCountTitle"
-        android:layout_below="@+id/txtVideoOwnerTitle"
-        android:text="@string/txt_plays" />
+        <TextView
+            style="@style/VideoInfoTitle"
+            android:id="@+id/txtVideoPlaysCountTitle"
+            android:layout_below="@+id/txtVideoOwnerTitle"
+            android:text="@string/txt_plays" />
 
-    <TextView
-        style="@style/VideoInfoTitle"
-        android:id="@+id/txtVideoLikesCountTitle"
-        android:layout_below="@+id/txtVideoPlaysCountTitle"
-        android:text="@string/txt_likes" />
+        <TextView
+            style="@style/VideoInfoTitle"
+            android:id="@+id/txtVideoLikesCountTitle"
+            android:layout_below="@+id/txtVideoPlaysCountTitle"
+            android:text="@string/txt_likes" />
 
-    <TextView
-        style="@style/VideoInfoTitle"
-        android:id="@+id/txtVideoCommentsCountTitle"
-        android:layout_below="@+id/txtVideoLikesCountTitle"
-        android:text="@string/txt_comments" />
+        <TextView
+            style="@style/VideoInfoTitle"
+            android:id="@+id/txtVideoCommentsCountTitle"
+            android:layout_below="@+id/txtVideoLikesCountTitle"
+            android:text="@string/txt_comments" />
 
-    <TextView
-        style="@style/VideoInfoValue"
-        android:id="@+id/txtVideoOwnerName"
-        android:layout_alignTop="@+id/txtVideoOwnerTitle"/>
+        <TextView
+            style="@style/VideoInfoValue"
+            android:id="@+id/txtVideoOwnerName"
+            android:layout_alignTop="@+id/txtVideoOwnerTitle"/>
 
-    <TextView
-        style="@style/VideoInfoValue"
-        android:id="@+id/txtVideoPlaysCount"
-        android:layout_below="@+id/txtVideoOwnerName" />
+        <TextView
+            style="@style/VideoInfoValue"
+            android:id="@+id/txtVideoPlaysCount"
+            android:layout_below="@+id/txtVideoOwnerName" />
 
-    <TextView
-        style="@style/VideoInfoValue"
-        android:id="@+id/txtVideoLikesCount"
-        android:layout_below="@+id/txtVideoPlaysCount" />
+        <TextView
+            style="@style/VideoInfoValue"
+            android:id="@+id/txtVideoLikesCount"
+            android:layout_below="@+id/txtVideoPlaysCount" />
 
-    <TextView
-        style="@style/VideoInfoValue"
-        android:id="@+id/txtVideoCommentsCount"
-        android:layout_below="@+id/txtVideoLikesCount" />
+        <TextView
+            style="@style/VideoInfoValue"
+            android:id="@+id/txtVideoCommentsCount"
+            android:layout_below="@+id/txtVideoLikesCount" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/txtVideoName"
-        android:layout_alignTop="@+id/txtVideoVerticalCenter"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/txtVideoName"
+            android:layout_alignTop="@+id/txtVideoVerticalCenter"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/webViewPlaceholder"
-        android:layout_above="@+id/txtVideoVerticalCenter" />
-</RelativeLayout>
+        <FrameLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/webViewPlaceholder"
+            android:layout_above="@+id/txtVideoVerticalCenter" />
+    </RelativeLayout>
+
+    <!-- navigation drawer -->
+
+    <ListView
+        android:id="@+id/leftDrawer"
+        android:layout_width="@dimen/drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="none"
+        android:dividerHeight="@dimen/drawer_divider_height"
+        android:background="@color/drawer_background"/>
+
+</android.support.v4.widget.DrawerLayout>
