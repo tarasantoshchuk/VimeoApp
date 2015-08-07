@@ -1,93 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawerLayout">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/txtGroupHorizontalCenter"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
+    <!-- main content view -->
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/txtGroupVerticalCenter"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgGroupPicture"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/txtGroupVerticalCenter"
-        android:layout_toLeftOf="@+id/txtGroupHorizontalCenter"
-        android:layout_toStartOf="@+id/txtGroupHorizontalCenter" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/txtGroupHorizontalCenter"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/txtGroupName"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/txtGroupHorizontalCenter"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/txtGroupVerticalCenter"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtGroupCreated"
-        android:layout_below="@+id/txtGroupName"
-        android:layout_toRightOf="@+id/imgGroupPicture"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgGroupPicture"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/txtGroupVerticalCenter"
+            android:layout_toLeftOf="@+id/txtGroupHorizontalCenter"
+            android:layout_toStartOf="@+id/txtGroupHorizontalCenter" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtGroupDescription"
-        android:layout_below="@+id/txtGroupCreated"
-        android:layout_toRightOf="@+id/imgGroupPicture"
-        android:layout_alignBottom="@+id/imgGroupPicture"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/txtGroupName"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/txtGroupHorizontalCenter"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <TextView
-        style="@style/GroupInfoTitle"
-        android:id="@+id/txtGroupOwnerTitle"
-        android:layout_below="@+id/txtGroupVerticalCenter"
-        android:text="@string/txt_owner" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtGroupCreated"
+            android:layout_below="@+id/txtGroupName"
+            android:layout_toRightOf="@+id/imgGroupPicture"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <TextView
-        style="@style/GroupInfoTitle"
-        android:id="@+id/txtGroupUsersTitle"
-        android:layout_below="@+id/txtGroupOwnerTitle"
-        android:text="@string/txt_members" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtGroupDescription"
+            android:layout_below="@+id/txtGroupCreated"
+            android:layout_toRightOf="@+id/imgGroupPicture"
+            android:layout_alignBottom="@+id/imgGroupPicture"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <TextView
-        style="@style/GroupInfoTitle"
-        android:id="@+id/txtGroupVideosTitle"
-        android:layout_below="@+id/txtGroupUsersTitle"
-        android:text="@string/txt_videos" />
+        <TextView
+            style="@style/GroupInfoTitle"
+            android:id="@+id/txtGroupOwnerTitle"
+            android:layout_below="@+id/txtGroupVerticalCenter"
+            android:text="@string/txt_owner" />
 
-    <TextView
-        style="@style/GroupInfoValue"
-        android:id="@+id/txtGroupOwnerName"
-        android:layout_below="@+id/txtGroupVerticalCenter" />
+        <TextView
+            style="@style/GroupInfoTitle"
+            android:id="@+id/txtGroupUsersTitle"
+            android:layout_below="@+id/txtGroupOwnerTitle"
+            android:text="@string/txt_members" />
 
-    <TextView
-        style="@style/GroupInfoValue"
-        android:id="@+id/txtGroupUserCount"
-        android:layout_below="@+id/txtGroupOwnerName"/>
+        <TextView
+            style="@style/GroupInfoTitle"
+            android:id="@+id/txtGroupVideosTitle"
+            android:layout_below="@+id/txtGroupUsersTitle"
+            android:text="@string/txt_videos" />
 
-    <TextView
-        style="@style/GroupInfoValue"
-        android:id="@+id/txtGroupVideosCount"
-        android:layout_below="@+id/txtGroupUserCount"/>
-</RelativeLayout>
+        <TextView
+            style="@style/GroupInfoValue"
+            android:id="@+id/txtGroupOwnerName"
+            android:layout_below="@+id/txtGroupVerticalCenter" />
+
+        <TextView
+            style="@style/GroupInfoValue"
+            android:id="@+id/txtGroupUserCount"
+            android:layout_below="@+id/txtGroupOwnerName"/>
+
+        <TextView
+            style="@style/GroupInfoValue"
+            android:id="@+id/txtGroupVideosCount"
+            android:layout_below="@+id/txtGroupUserCount"/>
+    </RelativeLayout>
+
+    <!-- navigation drawer -->
+
+    <ListView
+        android:id="@+id/leftDrawer"
+        android:layout_width="@dimen/drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="none"
+        android:dividerHeight="@dimen/drawer_divider_height"
+        android:background="@color/drawer_background"/>
+
+</android.support.v4.widget.DrawerLayout>

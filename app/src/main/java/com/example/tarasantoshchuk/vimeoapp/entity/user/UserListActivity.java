@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.navigation.NavigationDrawerAdapter;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
@@ -40,6 +41,8 @@ public class UserListActivity extends Activity {
     private Button mBtnUserListPrev;
     private Button mBtnUserListNext;
 
+    private ListView mLeftDrawer;
+
     private UserListReceiver mReceiver;
 
     private HttpRequestInfo mLastRequest;
@@ -65,8 +68,10 @@ public class UserListActivity extends Activity {
         mBtnUserListNext.setVisibility(View.INVISIBLE);
 
         mUserList = (ListView) findViewById(R.id.listUsers);
-
         mUserList.setAdapter(new UserListAdapter(getLayoutInflater(), this));
+
+        mLeftDrawer = (ListView) findViewById(R.id.leftDrawer);
+        mLeftDrawer.setAdapter(new NavigationDrawerAdapter(this));
 
         mReceiver = new UserListReceiver();
 

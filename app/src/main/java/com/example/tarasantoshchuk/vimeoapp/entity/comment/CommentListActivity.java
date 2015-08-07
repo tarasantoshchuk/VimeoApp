@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.navigation.NavigationDrawerAdapter;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
@@ -41,6 +42,8 @@ public class CommentListActivity extends Activity {
     private Button mBtnCommentListPrev;
     private Button mBtnCommentListNext;
 
+    private ListView mLeftDrawer;
+
     private CommentListReceiver mReceiver;
 
     private HttpRequestInfo mLastRequest;
@@ -65,8 +68,10 @@ public class CommentListActivity extends Activity {
         mBtnCommentListNext.setVisibility(View.INVISIBLE);
 
         mCommentList = (ListView) findViewById(R.id.listComments);
-
         mCommentList.setAdapter(new CommentListAdapter(getLayoutInflater(), this));
+
+        mLeftDrawer = (ListView) findViewById(R.id.leftDrawer);
+        mLeftDrawer.setAdapter(new NavigationDrawerAdapter(this));
 
         mReceiver = new CommentListReceiver();
 

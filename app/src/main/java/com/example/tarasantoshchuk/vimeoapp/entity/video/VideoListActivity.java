@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.navigation.NavigationDrawerAdapter;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
@@ -39,6 +40,8 @@ public class VideoListActivity extends Activity {
     private Button mBtnVideoListPrev;
     private Button mBtnVideoListNext;
 
+    private ListView mLeftDrawer;
+
     private VideoListReceiver mReceiver;
 
     private HttpRequestInfo mLastRequest;
@@ -64,8 +67,10 @@ public class VideoListActivity extends Activity {
         mBtnVideoListNext.setVisibility(View.INVISIBLE);
 
         mVideoList = (ListView) findViewById(R.id.listVideos);
-
         mVideoList.setAdapter(new VideoListAdapter(getLayoutInflater(), this));
+
+        mLeftDrawer = (ListView) findViewById(R.id.leftDrawer);
+        mLeftDrawer.setAdapter(new NavigationDrawerAdapter(this));
 
         mReceiver = new VideoListReceiver();
 

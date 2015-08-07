@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.tarasantoshchuk.vimeoapp.R;
+import com.example.tarasantoshchuk.vimeoapp.navigation.NavigationDrawerAdapter;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestService;
 import com.example.tarasantoshchuk.vimeoapp.util.Alerts;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
@@ -42,6 +43,8 @@ public class ChannelListActivity extends Activity {
     private Button mBtnChannelListPrev;
     private Button mBtnChannelListNext;
 
+    private ListView mLeftDrawer;
+
     private ChannelListReceiver mReceiver;
 
     private HttpRequestInfo mLastRequest;
@@ -67,8 +70,10 @@ public class ChannelListActivity extends Activity {
         mBtnChannelListNext.setVisibility(View.INVISIBLE);
 
         mChannelList = (ListView) findViewById(R.id.listChannels);
-
         mChannelList.setAdapter(new ChannelListAdapter(getLayoutInflater(), this));
+
+        mLeftDrawer = (ListView) findViewById(R.id.leftDrawer);
+        mLeftDrawer.setAdapter(new NavigationDrawerAdapter(this));
 
         mReceiver = new ChannelListReceiver();
 

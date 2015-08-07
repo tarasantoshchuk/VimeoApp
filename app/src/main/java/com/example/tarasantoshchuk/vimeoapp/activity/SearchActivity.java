@@ -3,11 +3,14 @@ package com.example.tarasantoshchuk.vimeoapp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -16,6 +19,7 @@ import com.example.tarasantoshchuk.vimeoapp.entity.channel.ChannelListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.group.GroupListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.user.UserListActivity;
 import com.example.tarasantoshchuk.vimeoapp.entity.video.VideoListActivity;
+import com.example.tarasantoshchuk.vimeoapp.navigation.NavigationDrawerAdapter;
 import com.example.tarasantoshchuk.vimeoapp.service.HttpRequestInfo;
 
 public class SearchActivity extends Activity {
@@ -28,6 +32,9 @@ public class SearchActivity extends Activity {
     private RadioGroup mRgSearchType;
     private Button mBtnFind;
     private EditText mEdtQuery;
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mLeftDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,5 +134,38 @@ public class SearchActivity extends Activity {
         mRgSearchType = (RadioGroup) findViewById(R.id.rgSearchType);
         mBtnFind = (Button) findViewById(R.id.btnFind);
         mEdtQuery = (EditText) findViewById(R.id.edtQuery);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                hideKeyboard();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
+
+        mLeftDrawer = (ListView) findViewById(R.id.leftDrawer);
+        mLeftDrawer.setAdapter(new NavigationDrawerAdapter(this));
+
+    }
+
+    private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if(view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
